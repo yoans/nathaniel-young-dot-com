@@ -1,0 +1,21 @@
+{
+  "name": "nathaniel-young-dot-com",
+  "version": "0.0.1",
+  "description": "I am the master of my domain.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "engines": {
+    "node": "8.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoans/nathaniel-young-dot-com"
+  },
+  "author": "Nathaniel Young",
+  "license": "MIT"
+}
