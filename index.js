@@ -43,7 +43,6 @@ const nextGrid = (grid) => {
 };
 
 const renderItem = (item) => {
-  console.log(item);
   if(item.length == 1){
     return (
       <td>
@@ -52,10 +51,10 @@ const renderItem = (item) => {
     )
   }
   else if(item.length){
-      
+      const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]).join(' ');
     return (
       <td>
-        <div className={'full-space'}/>
+        <div className={classes}/>
       </td>
     )
   }
@@ -93,7 +92,4 @@ const Application = (grid) => <div>
       </table>
     </div>
 
-ReactDOM.render(Application(newGrid(10, 20)), document.getElementById('root'));
-
-
-console.log('Hello World')
+ReactDOM.render(Application(newGrid(10, 60)), document.getElementById('root'));
