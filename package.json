@@ -4,18 +4,37 @@
   "description": "I am the master of my domain.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "babel": "babel --presets es2017 index.js -o babel/main.bundle.js",
+    "start": "http-server",
+    "webpack": "webpack --config webpack.config.js",
+    "super-start":"npm run babel && npm run webpack && npm run start"
   },
   "dependencies": {
-    "express": "^4.13.3"
+    "chance": "1.0.13",
+    "express": "^4.13.3",
+    "ramda": "0.25.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "engines": {
     "node": "8.2.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yoans/nathaniel-young-dot-com"
+    "url": "https://github.com/yoans/nathaniel-young-dot-com"
   },
   "author": "Nathaniel Young",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "http-server": "^0.11.1",
+    "path": "^0.12.7",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
+  }
 }
