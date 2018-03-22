@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+}
+body {
+    background: #444;
+    font-family: Helvetica Neue;
+}
+h1 {
+    font-size: 2em;
+    color: #eee;
+    display: inline-block;
+}
+a{
+    color: white;
+}
+p{
+    margin-top: 1em;
+    text-align: center;
+    color: #aaa;
+}
+div {
+    width: 0;
+    height: 0;
+
+    border-top: solid 5px transparent;
+    border-left: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px transparent;
+}
+.arrow-up {
+    border-top: solid 5px #000;
+}
+.arrow-left {
+    border-left: solid 5px #f00;
+}
+.arrow-down {
+    border-bottom: solid 5px #0f0;
+}
+.arrow-right {
+    border-right: solid 5px #00f;
+}
