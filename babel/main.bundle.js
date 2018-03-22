@@ -1,5 +1,20 @@
 'use strict';
 
+let demo = (() => {
+  var _ref = _asyncToGenerator(function* () {
+    let cyclingGrid = seedGrid();
+    while (true) {
+      cyclingGrid = seedGrid();
+      yield sleep(1000);
+      _reactDom2.default.render(Application(cyclingGrid), document.getElementById('root'));
+    }
+  });
+
+  return function demo() {
+    return _ref.apply(this, arguments);
+  };
+})();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -20,12 +35,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 const chance = new _chance2.default();
 const vectors = ['arrow-up', 'arrow-left', 'arrow-down', 'arrow-right'];
 const getVector = () => chance.natural({
   min: 0,
   max: 3
 });
+const cycleVector = vector => {
+  return (vector + 1) % 4;
+};
 
 const getRandomNumber = size => chance.natural({
   min: 0,
@@ -48,10 +68,17 @@ const newGrid = (size, numberOfArrows) => {
   return Object.assign(getGrid(size), { arrows });
 };
 
-const nextGrid = grid => {};
+const seedGrid = () => newGrid(getRandomNumber(20) + 1, getRandomNumber(100) + 1);
+
+const nextGrid = grid => {
+
+  const size = grid.rows.length;
+  const arrows = grid.arrows;
+  arrows;
+  return grid;
+};
 
 const renderItem = item => {
-  console.log(item);
   if (item.length == 1) {
     return _react2.default.createElement(
       'td',
@@ -110,6 +137,8 @@ const Application = grid => _react2.default.createElement(
   )
 );
 
-_reactDom2.default.render(Application(newGrid(10, 60)), document.getElementById('root'));
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-console.log('Hello World');
+demo();

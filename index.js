@@ -17,6 +17,10 @@ const getVector = () => chance.natural({
   max: 3
 });
 
+const cycleVector = (vector) => {
+  return (vector + 1) % 4
+}
+
 const getRandomNumber = (size) => chance.natural({
   min: 0,
   max: size - 1
@@ -38,8 +42,14 @@ const newGrid = (size, numberOfArrows) => {
   return Object.assign(getGrid(size), {arrows});
 }
 
+const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
+
 const nextGrid = (grid) => {
 
+  const size = grid.rows.length;
+  const arrows = grid.arrows;
+  // arrows.map();
+  return grid;
 };
 
 const renderItem = (item) => {
@@ -81,15 +91,32 @@ const renderGrid = (grid) => {
   return populatedGrid.map(renderRow);
 };
 
-const Application = (grid) => <div>
-      <h1>Arrows</h1>
-      <br/>
-      <br/>
-      <table>
-        <tbody>
+const Application = (grid) => (
+  <div>
+    <h1>Arrows</h1>
+    <br/>
+    <br/>
+    <table>
+      <tbody>
         {renderGrid(grid)}
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
+  </div>
+)
 
-ReactDOM.render(Application(newGrid(10, 60)), document.getElementById('root'));
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+  let cyclingGrid = seedGrid();
+  while(true){
+    cyclingGrid = nextGrid(cyclingGrid);
+    await sleep(1000);
+    ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
+
+  }
+}
+
+demo();
+
