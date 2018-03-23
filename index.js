@@ -6,15 +6,15 @@ import * as R from 'ramda';
 const chance = new Chance();
 const vectors = [
   'arrow-up',
-  'arrow-left',
+  'arrow-right',
   'arrow-down',
-  'arrow-right'
+  'arrow-left'
 ];
 const vectorOperations = [
-  {func:({x, y})=>({x, y: y+1})},
-  {func:({x, y})=>({x: x-1, y})},
-  {func:({x, y})=>({x, y: y-1})},
-  {func:({x, y})=>({x: x+1, y})}
+  ({x, y, vector})=>({x, y: y-1, vector}),
+  ({x, y, vector})=>({x: x+1, y, vector}),
+  ({x, y, vector})=>({x, y: y+1, vector}),
+  ({x, y, vector})=>({x: x-1, y, vector})
 ];
 const getVector = () => chance.natural({
   min: 0,
@@ -41,25 +41,20 @@ const newGrid = (size, numberOfArrows) => {
   return Object.assign(getGrid(size), {arrows});
 };
 const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
-const moveArrow = arrow => {
-  return {
-    ...arrow,
-    ...vectorOperations[arrow.vector].func(arrow)
-  }
-};
+const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
 const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
 const arrowBoundaryKey = (arrow, size)=> {
-  if(arrow.x === size && arrow.vector === 3) {
-    return 3;
+  if(arrow.y === 0 && arrow.vector === 0) {
+    return 'v0';
+  }
+  if(arrow.x === size && arrow.vector === 1) {
+    return 'v1';
   }
   if(arrow.y === size && arrow.vector === 2) {
-    return 2;
+    return 'v2';
   }
-  if(arrow.x === 0 && arrow.vector === 1) {
-    return 1;
-  }
-  if(arrow.y === 0 && arrow.vector === 0) {
-    return 0;
+  if(arrow.x === 0 && arrow.vector === 3) {
+    return 'v3';
   }
   return 'no-boundary';
 };
@@ -69,6 +64,7 @@ const rotateArrow = number => arrow => ({
   vector: cycleVector(arrow.vector, number)
 });
 const rotateSet = set => set.map(rotateArrow(set.length));
+const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
 const nextGrid = (grid) => {
   const size = grid.rows.length;
   const arrows = grid.arrows;
@@ -102,16 +98,11 @@ const nextGrid = (grid) => {
       ,{});
 
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
+
   const movedBoundaryArrows = vectorOperations.map((operation, key) => {
-    console.log(arrowBoundaryDictionary[(key+2)%4]);
-    console.log(newArrayIfFalsey(arrowBoundaryDictionary[(key+2)%4]));
-    console.log(operation)
-
-    console.log({key});
-    console.log({mod: (key+2)%4});
-
-    return newArrayIfFalsey(arrowBoundaryDictionary[(key+2)%4]).map(operation.func)
-  });
+    const index = 'v'+key;
+    return newArrayIfFalsey(arrowBoundaryDictionary[index]).map(flipArrow).map(operation)
+  }).reduce((arr1,arr2)=>[...arr1, ...arr2],[]);
   newGrid.arrows = [
     ...movedArrowsInMiddle,
     ...movedBoundaryArrows
@@ -120,15 +111,9 @@ const nextGrid = (grid) => {
 };
 
 const renderItem = (item) => {
-  if(item.length == 1){
-    return (
-      <td>
-        <div className={vectors[item[0].vector]}/>
-      </td>
-    )
-  }
-  else if(item.length){
-      const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]).join(' ');
+  if(item.length){
+    const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]).join(' ');
+
     return (
       <td>
         <div className={classes}/>
@@ -151,7 +136,7 @@ const renderRow = (row, index) => {
 };
 const renderGrid = (grid) => {
   
-  const populateArrow = x => y => grid.arrows.filter(arrow => arrow.x===x && arrow.y===y);
+  const populateArrow = y => x => grid.arrows.filter(arrow => arrow.x===x && arrow.y===y);
   const populateRow = (row, index) => row.map(populateArrow(index));
 
   const populatedGrid = grid.rows.map(populateRow);
@@ -179,7 +164,7 @@ async function demo() {
   let cyclingGrid = seedGrid();
   while(true){
     cyclingGrid = nextGrid(cyclingGrid);
-    await sleep(10000);
+    await sleep(500);
     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
   }
 }

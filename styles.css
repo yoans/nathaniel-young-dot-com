@@ -28,14 +28,14 @@ div {
     border-right: solid 5px transparent;
 }
 .arrow-up {
-    border-top: solid 5px #000;
+    border-bottom: solid 5px #000;
 }
 .arrow-left {
-    border-left: solid 5px #f00;
+    border-right: solid 5px #f00;
 }
 .arrow-down {
-    border-bottom: solid 5px #0f0;
+    border-top: solid 5px #0f0;
 }
 .arrow-right {
-    border-right: solid 5px #00f;
+    border-lefft: solid 5px #00f;
 }
