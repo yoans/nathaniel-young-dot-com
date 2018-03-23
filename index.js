@@ -65,7 +65,7 @@ const rotateArrow = number => arrow => ({
 });
 const rotateSet = set => set.map(rotateArrow(set.length));
 const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
-const nextGrid = (grid) => {
+export const nextGrid = (grid) => {
   const size = grid.rows.length;
   const arrows = grid.arrows;
   const newGrid = {
