@@ -63,13 +63,10 @@ export const rotateArrow = number => arrow => ({
 });
 export const rotateSet = set => set.map(rotateArrow(set.length));
 export const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
+
 export const nextGrid = (grid) => {
   const size = grid.size;
   const arrows = grid.arrows;
-  const newGrid = {
-    size,
-    arrows:[]
-  };
 
   const arrowSetDictionary = arrows.reduce(
       (arrowDictionary, arrow) => {
@@ -98,26 +95,30 @@ export const nextGrid = (grid) => {
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
   const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
-  newGrid.arrows = [
-    ...movedArrowsInMiddle,
-    ...movedFlippedBoundaryArrows
-  ];
-  return newGrid;
+    return {
+        size,
+        arrows: [
+            ...movedArrowsInMiddle,
+            ...movedFlippedBoundaryArrows
+        ]
+    };
 };
 
 const renderItem = (item) => {
   if(item.length){
-    const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]).join(' ');
+    const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]);
 
     return (
       <td>
-        <div className={classes}/>
+          <div className={'space'}>
+              {classes.map(divClass=>(<div className={divClass}/>))}
+          </div>
       </td>
     )
   }
   return (
     <td>
-      <div className={'empty-space'}/>
+      <div className={'space'}/>
     </td>
     )
 };
@@ -149,7 +150,7 @@ export const Application = (grid) => (
       </tbody>
     </table>
   </div>
-)
+);
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -159,7 +160,7 @@ async function demo() {
   let cyclingGrid = seedGrid();
   while(true){
     cyclingGrid = nextGrid(cyclingGrid);
-    await sleep(100);
+    await sleep(500);
     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
   }
 }

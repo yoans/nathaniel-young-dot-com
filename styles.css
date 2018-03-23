@@ -1,4 +1,5 @@
 html, body {
+    margin: 0;
     height: 100%;
 }
 body {
@@ -18,24 +19,77 @@ p{
     text-align: center;
     color: #aaa;
 }
-div {
-    width: 0;
-    height: 0;
+td{
+    margin: 0;
+    width: 10px;
+    height: 10px;
+}
 
+@keyframes go-up {
+    0%   {left:0px; top:10px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-right {
+    0%   {left:-10px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-down {
+    0%   {left:0px; top:-10px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-left {
+    0%   {left:10px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+
+.space {
+    margin: 0;
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+.arrow-up {
+    margin: 0;
+    animation-name: go-up;
+    animation-duration: .5s;
+    position: absolute;
+    z-index: 0;
     border-top: solid 5px transparent;
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-bottom: solid 5px #6f6;
+}
+.arrow-down {
+    margin: 0;
+    animation-name: go-down;
+    animation-duration: .5s;
+    position: absolute;
+    z-index: 2;
     border-left: solid 5px transparent;
     border-bottom: solid 5px transparent;
     border-right: solid 5px transparent;
-}
-.arrow-up {
-    border-bottom: solid 5px #000;
-}
-.arrow-left {
-    border-right: solid 5px #f00;
-}
-.arrow-down {
     border-top: solid 5px #0f0;
 }
 .arrow-right {
-    border-left: solid 5px #00f;
+    margin: 0;
+    animation-name: go-right;
+    animation-duration: .5s;
+    position: absolute;
+    z-index: 2;
+    border-top: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-left: solid 5px #6f0;
+}
+.arrow-left {
+    margin: 0;
+    animation-name: go-left;
+    animation-duration: .5s;
+    position: absolute;
+    z-index: 3;
+    border-top: solid 5px transparent;
+    border-left: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px #0f6;
 }

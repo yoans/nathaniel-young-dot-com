@@ -12,7 +12,7 @@ let demo = function () {
     let cyclingGrid = seedGrid();
     while (true) {
       cyclingGrid = nextGrid(cyclingGrid);
-      yield sleep(100);
+      yield sleep(500);
       _reactDom2.default.render(Application(cyclingGrid), document.getElementById('root'));
     }
   });
@@ -134,14 +134,11 @@ const flipArrow = function (_ref) {
 
   return _extends({ vector: (vector + 2) % 4 }, rest);
 };
+
 exports.flipArrow = flipArrow;
 const nextGrid = exports.nextGrid = function (grid) {
   const size = grid.size;
   const arrows = grid.arrows;
-  const newGrid = {
-    size,
-    arrows: []
-  };
 
   const arrowSetDictionary = arrows.reduce(function (arrowDictionary, arrow) {
     arrowDictionary[arrowKey(arrow)] = [...newArrayIfFalsey(arrowDictionary[arrowKey(arrow)]), arrow];
@@ -164,8 +161,10 @@ const nextGrid = exports.nextGrid = function (grid) {
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
   const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
-  newGrid.arrows = [...movedArrowsInMiddle, ...movedFlippedBoundaryArrows];
-  return newGrid;
+  return {
+    size,
+    arrows: [...movedArrowsInMiddle, ...movedFlippedBoundaryArrows]
+  };
 };
 
 const renderItem = function (item) {
@@ -174,18 +173,24 @@ const renderItem = function (item) {
       return x.vector;
     }, item).map(function ({ vector }) {
       return vectors[vector];
-    }).join(' ');
+    });
 
     return _react2.default.createElement(
       'td',
       null,
-      _react2.default.createElement('div', { className: classes })
+      _react2.default.createElement(
+        'div',
+        { className: 'space' },
+        classes.map(function (divClass) {
+          return _react2.default.createElement('div', { className: divClass });
+        })
+      )
     );
   }
   return _react2.default.createElement(
     'td',
     null,
-    _react2.default.createElement('div', { className: 'empty-space' })
+    _react2.default.createElement('div', { className: 'space' })
   );
 };
 
