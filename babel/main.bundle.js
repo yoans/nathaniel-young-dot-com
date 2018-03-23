@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getGrid = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -12,7 +12,7 @@ let demo = function () {
     let cyclingGrid = seedGrid();
     while (true) {
       cyclingGrid = nextGrid(cyclingGrid);
-      yield sleep(500);
+      yield sleep(100);
       _reactDom2.default.render(Application(cyclingGrid), document.getElementById('root'));
     }
   });
@@ -21,9 +21,6 @@ let demo = function () {
     return _ref2.apply(this, arguments);
   };
 }();
-
-// demo();
-
 
 var _react = require('react');
 
@@ -75,12 +72,10 @@ const getRandomNumber = exports.getRandomNumber = function (size) {
     max: size - 1
   });
 };
-const getGrid = exports.getGrid = function (size) {
-  return {
-    rows: R.range(0, size).map(function () {
-      return R.range(0, size);
-    })
-  };
+const getRows = exports.getRows = function (size) {
+  return R.range(0, size).map(function () {
+    return R.range(0, size);
+  });
 };
 const getArrow = exports.getArrow = function (size) {
   return function () {
@@ -94,7 +89,7 @@ const getArrow = exports.getArrow = function (size) {
 const newGrid = exports.newGrid = function (size, numberOfArrows) {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size));
 
-  return Object.assign(getGrid(size), { arrows });
+  return { size, arrows };
 };
 const seedGrid = exports.seedGrid = function () {
   return newGrid(getRandomNumber(20) + 1, getRandomNumber(100) + 1);
@@ -107,16 +102,16 @@ const arrowKey = exports.arrowKey = function (arrow) {
 };
 const arrowBoundaryKey = exports.arrowBoundaryKey = function (arrow, size) {
   if (arrow.y === 0 && arrow.vector === 0) {
-    return 'v0';
+    return 'boundary';
   }
-  if (arrow.x === size && arrow.vector === 1) {
-    return 'v1';
+  if (arrow.x === size - 1 && arrow.vector === 1) {
+    return 'boundary';
   }
-  if (arrow.y === size && arrow.vector === 2) {
-    return 'v2';
+  if (arrow.y === size - 1 && arrow.vector === 2) {
+    return 'boundary';
   }
   if (arrow.x === 0 && arrow.vector === 3) {
-    return 'v3';
+    return 'boundary';
   }
   return 'no-boundary';
 };
@@ -141,10 +136,10 @@ const flipArrow = function (_ref) {
 };
 exports.flipArrow = flipArrow;
 const nextGrid = exports.nextGrid = function (grid) {
-  const size = grid.rows.length;
+  const size = grid.size;
   const arrows = grid.arrows;
   const newGrid = {
-    rows: getGrid(size).rows,
+    size,
     arrows: []
   };
 
@@ -167,14 +162,9 @@ const nextGrid = exports.nextGrid = function (grid) {
   }, {});
 
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
+  const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
-  const movedBoundaryArrows = vectorOperations.map(function (operation, key) {
-    const index = 'v' + key;
-    return newArrayIfFalsey(arrowBoundaryDictionary[index]).map(flipArrow).map(operation);
-  }).reduce(function (arr1, arr2) {
-    return [...arr1, ...arr2];
-  }, []);
-  newGrid.arrows = [...movedArrowsInMiddle, ...movedBoundaryArrows];
+  newGrid.arrows = [...movedArrowsInMiddle, ...movedFlippedBoundaryArrows];
   return newGrid;
 };
 
@@ -219,7 +209,7 @@ const renderGrid = function (grid) {
     return row.map(populateArrow(index));
   };
 
-  const populatedGrid = grid.rows.map(populateRow);
+  const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
 
@@ -251,3 +241,5 @@ function sleep(ms) {
     return setTimeout(resolve, ms);
   });
 }
+
+demo();

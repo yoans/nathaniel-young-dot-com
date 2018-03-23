@@ -27,9 +27,7 @@ export const getRandomNumber = (size) => chance.natural({
   min: 0,
   max: size - 1
 });
-export const getGrid = (size) => ({
-  rows: R.range(0, size).map(() => R.range(0, size))
-});
+export const getRows = size => R.range(0, size).map(() => R.range(0, size));
 export const getArrow = size => () => ({
   x: getRandomNumber(size),
   y: getRandomNumber(size),
@@ -38,23 +36,23 @@ export const getArrow = size => () => ({
 export const newGrid = (size, numberOfArrows) => {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size))
 
-  return Object.assign(getGrid(size), {arrows});
+  return {size, arrows};
 };
 export const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
 export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
 export const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
 export const arrowBoundaryKey = (arrow, size)=> {
   if(arrow.y === 0 && arrow.vector === 0) {
-    return 'v0';
+    return 'boundary';
   }
-  if(arrow.x === size && arrow.vector === 1) {
-    return 'v1';
+  if(arrow.x === size - 1 && arrow.vector === 1) {
+    return 'boundary';
   }
-  if(arrow.y === size && arrow.vector === 2) {
-    return 'v2';
+  if(arrow.y === size - 1 && arrow.vector === 2) {
+    return 'boundary';
   }
   if(arrow.x === 0 && arrow.vector === 3) {
-    return 'v3';
+    return 'boundary';
   }
   return 'no-boundary';
 };
@@ -66,10 +64,10 @@ export const rotateArrow = number => arrow => ({
 export const rotateSet = set => set.map(rotateArrow(set.length));
 export const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
 export const nextGrid = (grid) => {
-  const size = grid.rows.length;
+  const size = grid.size;
   const arrows = grid.arrows;
   const newGrid = {
-    rows: getGrid(size).rows,
+    size,
     arrows:[]
   };
 
@@ -98,14 +96,11 @@ export const nextGrid = (grid) => {
       ,{});
 
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
+  const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
-  const movedBoundaryArrows = vectorOperations.map((operation, key) => {
-    const index = 'v'+key;
-    return newArrayIfFalsey(arrowBoundaryDictionary[index]).map(flipArrow).map(operation)
-  }).reduce((arr1,arr2)=>[...arr1, ...arr2],[]);
   newGrid.arrows = [
     ...movedArrowsInMiddle,
-    ...movedBoundaryArrows
+    ...movedFlippedBoundaryArrows
   ];
   return newGrid;
 };
@@ -139,7 +134,7 @@ const renderGrid = (grid) => {
   const populateArrow = y => x => grid.arrows.filter(arrow => arrow.x===x && arrow.y===y);
   const populateRow = (row, index) => row.map(populateArrow(index));
 
-  const populatedGrid = grid.rows.map(populateRow);
+  const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
 
@@ -164,10 +159,10 @@ async function demo() {
   let cyclingGrid = seedGrid();
   while(true){
     cyclingGrid = nextGrid(cyclingGrid);
-    await sleep(500);
+    await sleep(100);
     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
   }
 }
 
-// demo();
+demo();
 
