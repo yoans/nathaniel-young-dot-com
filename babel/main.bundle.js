@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getGrid = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 let demo = function () {
@@ -16,6 +21,9 @@ let demo = function () {
     return _ref2.apply(this, arguments);
   };
 }();
+
+// demo();
+
 
 var _react = require('react');
 
@@ -42,8 +50,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 const chance = new _chance2.default();
-const vectors = ['arrow-up', 'arrow-right', 'arrow-down', 'arrow-left'];
-const vectorOperations = [function ({ x, y, vector }) {
+const vectors = exports.vectors = ['arrow-up', 'arrow-right', 'arrow-down', 'arrow-left'];
+const vectorOperations = exports.vectorOperations = [function ({ x, y, vector }) {
   return { x, y: y - 1, vector };
 }, function ({ x, y, vector }) {
   return { x: x + 1, y, vector };
@@ -52,29 +60,29 @@ const vectorOperations = [function ({ x, y, vector }) {
 }, function ({ x, y, vector }) {
   return { x: x - 1, y, vector };
 }];
-const getVector = function () {
+const getVector = exports.getVector = function () {
   return chance.natural({
     min: 0,
     max: 3
   });
 };
-const cycleVector = function (vector, number) {
+const cycleVector = exports.cycleVector = function (vector, number) {
   return (vector + number - 1) % 4;
 };
-const getRandomNumber = function (size) {
+const getRandomNumber = exports.getRandomNumber = function (size) {
   return chance.natural({
     min: 0,
     max: size - 1
   });
 };
-const getGrid = function (size) {
+const getGrid = exports.getGrid = function (size) {
   return {
     rows: R.range(0, size).map(function () {
       return R.range(0, size);
     })
   };
 };
-const getArrow = function (size) {
+const getArrow = exports.getArrow = function (size) {
   return function () {
     return {
       x: getRandomNumber(size),
@@ -83,21 +91,21 @@ const getArrow = function (size) {
     };
   };
 };
-const newGrid = function (size, numberOfArrows) {
+const newGrid = exports.newGrid = function (size, numberOfArrows) {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size));
 
   return Object.assign(getGrid(size), { arrows });
 };
-const seedGrid = function () {
+const seedGrid = exports.seedGrid = function () {
   return newGrid(getRandomNumber(20) + 1, getRandomNumber(100) + 1);
 };
-const moveArrow = function (arrow) {
+const moveArrow = exports.moveArrow = function (arrow) {
   return vectorOperations[arrow.vector](arrow);
 };
-const arrowKey = function (arrow) {
+const arrowKey = exports.arrowKey = function (arrow) {
   return '{x:' + arrow.x + ',y:' + arrow.y + '}';
 };
-const arrowBoundaryKey = function (arrow, size) {
+const arrowBoundaryKey = exports.arrowBoundaryKey = function (arrow, size) {
   if (arrow.y === 0 && arrow.vector === 0) {
     return 'v0';
   }
@@ -112,17 +120,17 @@ const arrowBoundaryKey = function (arrow, size) {
   }
   return 'no-boundary';
 };
-const newArrayIfFalsey = function (thingToCheck) {
+const newArrayIfFalsey = exports.newArrayIfFalsey = function (thingToCheck) {
   return thingToCheck ? thingToCheck : [];
 };
-const rotateArrow = function (number) {
+const rotateArrow = exports.rotateArrow = function (number) {
   return function (arrow) {
     return _extends({}, arrow, {
       vector: cycleVector(arrow.vector, number)
     });
   };
 };
-const rotateSet = function (set) {
+const rotateSet = exports.rotateSet = function (set) {
   return set.map(rotateArrow(set.length));
 };
 const flipArrow = function (_ref) {
@@ -131,7 +139,8 @@ const flipArrow = function (_ref) {
 
   return _extends({ vector: (vector + 2) % 4 }, rest);
 };
-const nextGrid = function (grid) {
+exports.flipArrow = flipArrow;
+const nextGrid = exports.nextGrid = function (grid) {
   const size = grid.rows.length;
   const arrows = grid.arrows;
   const newGrid = {
@@ -214,7 +223,7 @@ const renderGrid = function (grid) {
   return populatedGrid.map(renderRow);
 };
 
-const Application = function (grid) {
+const Application = exports.Application = function (grid) {
   return _react2.default.createElement(
     'div',
     null,
@@ -242,5 +251,3 @@ function sleep(ms) {
     return setTimeout(resolve, ms);
   });
 }
-
-demo();

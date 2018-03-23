@@ -7,7 +7,8 @@
     "babel": "babel --presets es2017 index.js -o babel/main.bundle.js",
     "start": "http-server",
     "webpack": "webpack --config webpack.config.js",
-    "super-start": "npm run babel && npm run webpack && npm run start"
+    "super-start": "npm run babel && npm run webpack && npm run start",
+    "test": "npm run babel && mocha index.spec.js"
   },
   "dependencies": {
     "chance": "1.0.13",

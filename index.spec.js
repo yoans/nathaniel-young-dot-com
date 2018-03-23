@@ -1,6 +1,16 @@
-import {nextGrid} from 'index';
+const bundle = require('./babel/main.bundle');
+
 describe('feature: nextGrid', ()=>{
+
     it('', ()=>{
-        nextGrid({rows:[[[],[]],[[],[]]], })
+        console.log('3');
+
+        bundle.nextGrid({rows:[
+                [[],[]],
+                [[],[]]
+            ],
+            arrows:[]
+        });
+        console.log(bundle.seedGrid())
     });
 });

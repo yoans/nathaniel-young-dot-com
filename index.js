@@ -4,46 +4,46 @@ import Chance from 'chance';
 import * as R from 'ramda';
 
 const chance = new Chance();
-const vectors = [
+export const vectors = [
   'arrow-up',
   'arrow-right',
   'arrow-down',
   'arrow-left'
 ];
-const vectorOperations = [
+export const vectorOperations = [
   ({x, y, vector})=>({x, y: y-1, vector}),
   ({x, y, vector})=>({x: x+1, y, vector}),
   ({x, y, vector})=>({x, y: y+1, vector}),
   ({x, y, vector})=>({x: x-1, y, vector})
 ];
-const getVector = () => chance.natural({
+export const getVector = () => chance.natural({
   min: 0,
   max: 3
 });
-const cycleVector = (vector, number) => {
+export const cycleVector = (vector, number) => {
   return (vector + number - 1) % 4
 };
-const getRandomNumber = (size) => chance.natural({
+export const getRandomNumber = (size) => chance.natural({
   min: 0,
   max: size - 1
 });
-const getGrid = (size) => ({
+export const getGrid = (size) => ({
   rows: R.range(0, size).map(() => R.range(0, size))
 });
-const getArrow = size => () => ({
+export const getArrow = size => () => ({
   x: getRandomNumber(size),
   y: getRandomNumber(size),
   vector: getVector()
 });
-const newGrid = (size, numberOfArrows) => {
+export const newGrid = (size, numberOfArrows) => {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size))
 
   return Object.assign(getGrid(size), {arrows});
 };
-const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
-const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
-const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
-const arrowBoundaryKey = (arrow, size)=> {
+export const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
+export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
+export const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
+export const arrowBoundaryKey = (arrow, size)=> {
   if(arrow.y === 0 && arrow.vector === 0) {
     return 'v0';
   }
@@ -58,13 +58,13 @@ const arrowBoundaryKey = (arrow, size)=> {
   }
   return 'no-boundary';
 };
-const newArrayIfFalsey = thingToCheck => thingToCheck ? thingToCheck : [];
-const rotateArrow = number => arrow => ({
+export const newArrayIfFalsey = thingToCheck => thingToCheck ? thingToCheck : [];
+export const rotateArrow = number => arrow => ({
   ...arrow,
   vector: cycleVector(arrow.vector, number)
 });
-const rotateSet = set => set.map(rotateArrow(set.length));
-const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
+export const rotateSet = set => set.map(rotateArrow(set.length));
+export const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
 export const nextGrid = (grid) => {
   const size = grid.rows.length;
   const arrows = grid.arrows;
@@ -143,7 +143,7 @@ const renderGrid = (grid) => {
   return populatedGrid.map(renderRow);
 };
 
-const Application = (grid) => (
+export const Application = (grid) => (
   <div>
     <h1>Arrows</h1>
     <br/>
@@ -169,5 +169,5 @@ async function demo() {
   }
 }
 
-demo();
+// demo();
 
