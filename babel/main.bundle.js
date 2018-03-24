@@ -7,21 +7,6 @@ exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet =
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-let demo = function () {
-  var _ref2 = _asyncToGenerator(function* () {
-    let cyclingGrid = seedGrid();
-    while (true) {
-      cyclingGrid = nextGrid(cyclingGrid);
-      yield sleep(500);
-      _reactDom2.default.render(Application(cyclingGrid), document.getElementById('root'));
-    }
-  });
-
-  return function demo() {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -41,8 +26,6 @@ var R = _interopRequireWildcard(_ramda);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -92,7 +75,7 @@ const newGrid = exports.newGrid = function (size, numberOfArrows) {
   return { size, arrows };
 };
 const seedGrid = exports.seedGrid = function () {
-  return newGrid(getRandomNumber(20) + 1, getRandomNumber(100) + 1);
+  return newGrid(getRandomNumber(20) + 12, getRandomNumber(50) + 1);
 };
 const moveArrow = exports.moveArrow = function (arrow) {
   return vectorOperations[arrow.vector](arrow);
@@ -217,34 +200,135 @@ const renderGrid = function (grid) {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+// const onChangeSize = (event) => 
 
-const Application = exports.Application = function (grid) {
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h1',
-      null,
-      'Arrows'
-    ),
-    _react2.default.createElement('br', null),
-    _react2.default.createElement('br', null),
-    _react2.default.createElement(
-      'table',
+class Application extends _react2.default.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      gridSize: 10,
+      numberOfArows: 10,
+      grid: newGrid(10, 10),
+      playing: true
+    };
+    this.newSizeHandler = this.newSize.bind(this);
+    this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
+    this.nextGridHandler = this.nextGrid.bind(this);
+    this.newGridHandler = this.newGrid.bind(this);
+    this.playHandler = this.play.bind(this);
+    this.pauseHandler = this.pause.bind(this);
+  }
+
+  componentDidMount() {
+    this.playHandler();
+  }
+  play() {
+    var _this = this;
+
+    this.timerID = setInterval(function () {
+      return _this.nextGridHandler();
+    }, 500);
+    {
+      playing: true;
+    }
+  }
+  pause() {
+    clearInterval(this.timerID);
+    this.setState({ playing: false });
+  }
+  newSize(e) {
+    this.setState({
+      gridSize: parseInt(e.target.value)
+    });
+  }
+  newNumberOfArrows(e) {
+    this.setState({
+      numberOfArows: parseInt(e.target.value)
+    });
+  }
+  nextGrid() {
+    this.setState({
+      grid: nextGrid(this.state.grid)
+    });
+  }
+  newGrid() {
+    this.setState({
+      grid: newGrid(this.state.gridSize, this.state.numberOfArows)
+    });
+  }
+  render() {
+
+    return _react2.default.createElement(
+      'div',
       null,
       _react2.default.createElement(
-        'tbody',
+        'h1',
         null,
-        renderGrid(grid)
+        'Arrows'
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Size:'
+      ),
+      _react2.default.createElement('input', { type: 'number', onChange: this.newSizeHandler }),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Number:'
+      ),
+      _react2.default.createElement('input', { type: 'number', onChange: this.newNumberOfArrowsHandler }),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'button',
+        { onClick: this.newGridHandler },
+        'Reset'
+      ),
+      _react2.default.createElement(
+        'button',
+        { onClick: this.nextGridHandler },
+        'Next'
+      ),
+      _react2.default.createElement(
+        'button',
+        { disabled: this.state.playing, onClick: this.playHandler },
+        'Play'
+      ),
+      _react2.default.createElement(
+        'button',
+        { onClick: this.pauseHandler },
+        'Pause'
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'table',
+        null,
+        _react2.default.createElement(
+          'tbody',
+          null,
+          renderGrid(this.state.grid)
+        )
       )
-    )
-  );
-};
-
-function sleep(ms) {
-  return new Promise(function (resolve) {
-    return setTimeout(resolve, ms);
-  });
+    );
+  }
 }
+exports.Application = Application; // function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
-demo();
+// async function demo() {
+//   let cyclingGrid = seedGrid();
+//   while(true){
+//     cyclingGrid = nextGrid(cyclingGrid);
+//     await sleep(500);
+//     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
+//   }
+// }
+
+// demo();
+
+_reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));

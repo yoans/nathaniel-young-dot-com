@@ -38,7 +38,7 @@ export const newGrid = (size, numberOfArrows) => {
 
   return {size, arrows};
 };
-export const seedGrid = () => newGrid(getRandomNumber(20)+1, getRandomNumber(100)+1);
+export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
 export const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
 export const arrowBoundaryKey = (arrow, size)=> {
@@ -138,32 +138,108 @@ const renderGrid = (grid) => {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+// const onChangeSize = (event) => 
 
-export const Application = (grid) => (
+export class Application extends React.Component { 
+
+constructor(props) {
+  super(props);
+
+  this.state = {
+    gridSize: 10,
+    numberOfArows: 10,
+    grid: newGrid(10, 10),
+    playing: true
+  }
+  this.newSizeHandler = this.newSize.bind(this);
+  this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
+  this.nextGridHandler = this.nextGrid.bind(this);
+  this.newGridHandler = this.newGrid.bind(this);
+  this.playHandler = this.play.bind(this);
+  this.pauseHandler = this.pause.bind(this);
+}
+
+componentDidMount() {
+  this.playHandler();
+}
+play() {
+  this.timerID = setInterval(
+    () => this.nextGridHandler(),
+    500
+  );
+  {playing:true}
+}
+pause() {
+  clearInterval(this.timerID);
+  this.setState({playing:false});
+}
+newSize(e) {
+  this.setState({
+    gridSize: parseInt(e.target.value)
+  })
+}
+newNumberOfArrows(e) {
+  this.setState({
+    numberOfArows: parseInt(e.target.value)
+  })
+}
+nextGrid() {
+  this.setState({
+    grid: nextGrid(this.state.grid)
+  })
+}
+newGrid() {
+  this.setState({
+    grid: newGrid(this.state.gridSize, this.state.numberOfArows)
+  })
+}
+render() {
+  
+  return(
   <div>
     <h1>Arrows</h1>
     <br/>
+    <p>Size:</p>
+    <input type='number' onChange={this.newSizeHandler}/>
+    <br/>
+    <p>Number:</p>
+    <input type='number' onChange={this.newNumberOfArrowsHandler}/>
+    <br/>
+    <button onClick={this.newGridHandler}>
+      Reset
+    </button>
+    <button onClick={this.nextGridHandler}>
+      Next
+    </button>
+    <button disabled={this.state.playing} onClick={this.playHandler}>
+      Play
+    </button>
+    <button onClick={this.pauseHandler}>
+      Pause
+    </button>
     <br/>
     <table>
       <tbody>
-        {renderGrid(grid)}
+        {renderGrid(this.state.grid)}
       </tbody>
     </table>
   </div>
-);
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+)};
 }
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
-async function demo() {
-  let cyclingGrid = seedGrid();
-  while(true){
-    cyclingGrid = nextGrid(cyclingGrid);
-    await sleep(500);
-    ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
-  }
-}
+// async function demo() {
+//   let cyclingGrid = seedGrid();
+//   while(true){
+//     cyclingGrid = nextGrid(cyclingGrid);
+//     await sleep(500);
+//     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
+//   }
+// }
 
-demo();
+// demo();
+
+ReactDOM.render(<Application/>, document.getElementById('root'));
 
