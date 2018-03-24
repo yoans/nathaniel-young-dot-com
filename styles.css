@@ -1,0 +1,97 @@
+html, body {
+    margin: 30px;
+    height: 100%;
+}
+body {
+    background: #444;
+    font-family: Helvetica Neue;
+}
+table {
+    padding-top: 20px;
+}
+h1 {
+    font-size: 2em;
+    color: #eee;
+    display: inline-block;
+}
+a{
+    color: white;
+}
+p{
+    margin-top: 1em;
+    text-align: left;
+    color: #aaa;
+}
+td{
+    margin: 0;
+    width: 10px;
+    height: 10px;
+}
+
+@keyframes go-up {
+    0%   {left:0px; top:13px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-right {
+    0%   {left:-13px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-down {
+    0%   {left:0px; top:-13px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-left {
+    0%   {left:13px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+
+.space {
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+.arrow-up {
+    animation-name: go-up;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    position: absolute;
+    z-index: 0;
+    border-top: solid 5px transparent;
+    border-left: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-bottom: solid 5px #6f6;
+}
+.arrow-down {
+    animation-name: go-down;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    position: absolute;
+    z-index: 2;
+    border-left: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-top: solid 5px #0f0;
+}
+.arrow-right {
+    animation-name: go-right;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    position: absolute;
+    z-index: 2;
+    border-top: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px transparent;
+    border-left: solid 5px #6f0;
+}
+.arrow-left {
+    animation-name: go-left;
+    animation-duration: .5s;
+    animation-timing-function: linear;
+    position: absolute;
+    z-index: 3;
+    border-top: solid 5px transparent;
+    border-left: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 5px #0f6;
+}
