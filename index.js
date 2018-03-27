@@ -123,9 +123,9 @@ const renderItem = (item) => {
     )
 };
 
-const renderRow = (row, index) => {
+const renderRow = row => {
   return (
-    <tr key={index.toString()}>
+    <tr key={chance.guid()}>
       {row.map(renderItem)}
     </tr>
   )
