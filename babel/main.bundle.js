@@ -177,10 +177,10 @@ const renderItem = function (item) {
   );
 };
 
-const renderRow = function (row, index) {
+const renderRow = function (row) {
   return _react2.default.createElement(
     'tr',
-    { key: index.toString() },
+    { key: chance.guid() },
     row.map(renderItem)
   );
 };
