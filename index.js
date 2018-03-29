@@ -198,15 +198,15 @@ render() {
   return(
   <div>
     <br/>
-    <input type='number' max='50' min='2' onChange={this.newSizeHandler}/>
+    <input type='number' max='50' min='2' value={this.state.gridSize} onChange={this.newSizeHandler}/>
     <br/>
-    <input type='number' max='200' min='1' onChange={this.newNumberOfArrowsHandler}/>
+    <input type='number' max='200' min='1' value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
     <br/>
     <button onClick={this.newGridHandler}>
-      Reset
+      Experiment
     </button>
     <br/>
-    <table>
+    <table align="center">
       <tbody>
         {renderGrid(this.state.grid)}
       </tbody>

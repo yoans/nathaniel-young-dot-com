@@ -264,19 +264,19 @@ class Application extends _react2.default.Component {
       'div',
       null,
       _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: '50', min: '2', onChange: this.newSizeHandler }),
+      _react2.default.createElement('input', { type: 'number', max: '50', min: '2', value: this.state.gridSize, onChange: this.newSizeHandler }),
       _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: '200', min: '1', onChange: this.newNumberOfArrowsHandler }),
+      _react2.default.createElement('input', { type: 'number', max: '200', min: '1', value: this.state.numberOfArows, onChange: this.newNumberOfArrowsHandler }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'button',
         { onClick: this.newGridHandler },
-        'Reset'
+        'Experiment'
       ),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'table',
-        null,
+        { align: 'center' },
         _react2.default.createElement(
           'tbody',
           null,
