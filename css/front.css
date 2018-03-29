@@ -35,9 +35,9 @@ input {
     text-align: center;
 }
 button {
-    background-color: white;
+    background-color: transparent;
     border: none;
-    color: black;
+    color: white;
     padding: 5px 5px;
     margin: 5px 5px;
     text-align: center;
@@ -46,6 +46,9 @@ button {
     font-size: 16px;
     border-radius: 2px;
     width: 110px;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid
 }
 h1 {
     color: white;
