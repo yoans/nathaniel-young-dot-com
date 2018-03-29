@@ -263,45 +263,15 @@ class Application extends _react2.default.Component {
     return _react2.default.createElement(
       'div',
       null,
-      _react2.default.createElement(
-        'h1',
-        null,
-        'Arrows'
-      ),
       _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        'p',
-        null,
-        'Size:'
-      ),
-      _react2.default.createElement('input', { type: 'number', onChange: this.newSizeHandler }),
+      _react2.default.createElement('input', { type: 'number', max: '50', min: '2', onChange: this.newSizeHandler }),
       _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        'p',
-        null,
-        'Number:'
-      ),
-      _react2.default.createElement('input', { type: 'number', onChange: this.newNumberOfArrowsHandler }),
+      _react2.default.createElement('input', { type: 'number', max: '200', min: '1', onChange: this.newNumberOfArrowsHandler }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'button',
         { onClick: this.newGridHandler },
         'Reset'
-      ),
-      _react2.default.createElement(
-        'button',
-        { onClick: this.nextGridHandler },
-        'Next'
-      ),
-      _react2.default.createElement(
-        'button',
-        { disabled: this.state.playing, onClick: this.playHandler },
-        'Play'
-      ),
-      _react2.default.createElement(
-        'button',
-        { onClick: this.pauseHandler },
-        'Pause'
       ),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
@@ -316,19 +286,65 @@ class Application extends _react2.default.Component {
     );
   }
 }
-exports.Application = Application; // function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
 
-// async function demo() {
-//   let cyclingGrid = seedGrid();
-//   while(true){
-//     cyclingGrid = nextGrid(cyclingGrid);
-//     await sleep(500);
-//     ReactDOM.render(Application(cyclingGrid), document.getElementById('root'));
-//   }
-// }
+exports.Application = Application;
+function midiProc(event) {
+  data = event.data;
+  var cmd = data[0] >> 4;
+  var channel = data[0] & 0xf;
+  var noteNumber = data[1];
+  var velocity = data[2];
 
-// demo();
+  if (cmd == 8 || cmd == 9 && velocity == 0) {// with MIDI, note on with velocity zero is the same as note off
+    // note off
+    //noteOff(b);
+  } else if (cmd == 9) {
+    // Note on
+    if ((noteNumber & 0x0f) == 8) tick();else {
+      var x = noteNumber & 0x0f;
+      var y = (noteNumber & 0xf0) >> 4;
+      flipXY(x, y);
+    }
+  } else if (cmd == 11) {
+    // Continuous Controller message
+    switch (noteNumber) {}
+  }
+}
 
+function onMIDIFail(err) {
+  alert("MIDI initialization failed.");
+}
+
+function onMIDIInit(midi) {
+  midiAccess = midi;
+  selectMIDIOut = document.getElementById("midiOut");
+
+  for (var input of midiAccess.inputs.values()) {
+    if (input.name.toString().indexOf("Launchpad") != -1 || input.name.toString().indexOf("QUNEO") != -1) {
+      launchpadFound = true;
+      selectMIDIIn.add(new Option(input.name, input.id, true, true));
+      midiIn = input;
+      midiIn.onmidimessage = midiProc;
+    } else selectMIDIIn.add(new Option(input.name, input.id, false, false));
+  }
+  selectMIDIIn.onchange = changeMIDIIn;
+
+  // clear the MIDI output select
+  selectMIDIOut.options.length = 0;
+  for (var output of midiAccess.outputs.values()) {
+    if (output.name.toString().indexOf("Launchpad") != -1 || output.name.toString().indexOf("QUNEO") != -1) {
+      selectMIDIOut.add(new Option(output.name, output.id, true, true));
+      midiOut = output;
+    } else selectMIDIOut.add(new Option(output.name, output.id, false, false));
+  }
+  selectMIDIOut.onchange = changeMIDIOut;
+
+  if (midiOut && launchpadFound) {
+    midiOut.send([0xB0, 0x00, 0x00]); // Reset Launchpad
+    midiOut.send([0xB0, 0x00, 0x01]); // Select XY mode
+    drawFullBoardToMIDI();
+  }
+}
+
+navigator.requestMIDIAccess({}).then(onMIDIInit, onMIDIFail);
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));

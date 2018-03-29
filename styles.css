@@ -1,22 +1,7 @@
-html, body {
-    margin: 30px;
-    height: 100%;
-}
-body {
-    background: #444;
-    font-family: Helvetica Neue;
-}
 table {
     padding-top: 20px;
 }
-h1 {
-    font-size: 2em;
-    color: #eee;
-    display: inline-block;
-}
-a{
-    color: white;
-}
+
 p{
     margin-top: 1em;
     text-align: left;
