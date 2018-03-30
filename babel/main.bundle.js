@@ -200,8 +200,10 @@ const renderGrid = function (grid) {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
-// const onChangeSize = (event) => 
-
+const maxArrows = 200;
+const minArrows = 1;
+const maxSize = 50;
+const minSize = 2;
 class Application extends _react2.default.Component {
 
   constructor(props) {
@@ -218,7 +220,7 @@ class Application extends _react2.default.Component {
     this.nextGridHandler = this.nextGrid.bind(this);
     this.newGridHandler = this.newGrid.bind(this);
     this.playHandler = this.play.bind(this);
-    this.pauseHandler = this.pause.bind(this);
+    // this.pauseHandler = this.pause.bind(this);
   }
 
   componentDidMount() {
@@ -234,19 +236,37 @@ class Application extends _react2.default.Component {
       playing: true;
     }
   }
-  pause() {
-    clearInterval(this.timerID);
-    this.setState({ playing: false });
-  }
+  // pause() {
+  //   clearInterval(this.timerID);
+  //   this.setState({playing:false});
+  // }
   newSize(e) {
+    let input = parseInt(e.target.value);
+    if (isNaN(input)) {
+      input = 10;
+    } else if (input > maxSize) {
+      input = maxArrows;
+    } else if (input < minSize) {
+      input = minArrows;
+    }
     this.setState({
-      gridSize: parseInt(e.target.value)
+      gridSize: input
     });
+    this.newGridHandler();
   }
   newNumberOfArrows(e) {
+    let input = parseInt(e.target.value);
+    if (isNaN(input)) {
+      input = 10;
+    } else if (input > maxArrows) {
+      input = maxArrows;
+    } else if (input < minArrows) {
+      input = minArrows;
+    }
     this.setState({
-      numberOfArows: parseInt(e.target.value)
+      numberOfArows: input
     });
+    this.newGridHandler();
   }
   nextGrid() {
     this.setState({
@@ -264,15 +284,9 @@ class Application extends _react2.default.Component {
       'div',
       null,
       _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: '50', min: '2', value: this.state.gridSize, onChange: this.newSizeHandler }),
+      _react2.default.createElement('input', { type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
       _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: '200', min: '1', value: this.state.numberOfArows, onChange: this.newNumberOfArrowsHandler }),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        'button',
-        { onClick: this.newGridHandler },
-        'Experiment'
-      ),
+      _react2.default.createElement('input', { type: 'number', max: maxArrows, min: minArrows, value: this.state.numberOfArows, onChange: this.newNumberOfArrowsHandler }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'table',
@@ -286,65 +300,71 @@ class Application extends _react2.default.Component {
     );
   }
 }
+exports.Application = Application; //
+// function midiProc(event) {
+//   data = event.data;
+//   var cmd = data[0] >> 4;
+//   var channel = data[0] & 0xf;
+//   var noteNumber = data[1];
+//   var velocity = data[2];
+//
+//   if ( cmd==8 || ((cmd==9)&&(velocity==0)) ) { // with MIDI, note on with velocity zero is the same as note off
+//     // note off
+//     //noteOff(b);
+//   } else if (cmd == 9) {  // Note on
+//     if ((noteNumber&0x0f)==8)
+//       tick();
+//     else {
+//       var x = noteNumber & 0x0f;
+//       var y = (noteNumber & 0xf0) >> 4;
+//       flipXY( x, y );
+//     }
+//   } else if (cmd == 11) { // Continuous Controller message
+//     switch (noteNumber) {
+//     }
+//   }
+// }
+//
+// function onMIDIFail( err ) {
+// 	alert("MIDI initialization failed.");
+// }
+//
+// function onMIDIInit( midi ) {
+//   midiAccess = midi;
+//   selectMIDIOut=document.getElementById("midiOut");
+//
+//   for (var input of midiAccess.inputs.values()) {
+//     if ((input.name.toString().indexOf("Launchpad") != -1)||(input.name.toString().indexOf("QUNEO") != -1)) {
+//       launchpadFound = true;
+//       selectMIDIIn.add(new Option(input.name,input.id,true,true));
+//       midiIn=input;
+// 	  midiIn.onmidimessage = midiProc;
+//     }
+//     else
+//     	selectMIDIIn.add(new Option(input.name,input.id,false,false));
+//   }
+//   selectMIDIIn.onchange = changeMIDIIn;
+//
+//   // clear the MIDI output select
+//   selectMIDIOut.options.length = 0;
+//   for (var output of midiAccess.outputs.values()) {
+//     if ((output.name.toString().indexOf("Launchpad") != -1)||(output.name.toString().indexOf("QUNEO") != -1)) {
+//       selectMIDIOut.add(new Option(output.name,output.id,true,true));
+//       midiOut=output;
+//     }
+//     else
+//     	selectMIDIOut.add(new Option(output.name,output.id,false,false));
+//   }
+//   selectMIDIOut.onchange = changeMIDIOut;
+//
+//   if (midiOut && launchpadFound) {
+// 	midiOut.send( [0xB0,0x00,0x00] ); // Reset Launchpad
+// 	midiOut.send( [0xB0,0x00,0x01] ); // Select XY mode
+// 	drawFullBoardToMIDI();
+//   }
+// }
+//
+//
+// navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
 
-exports.Application = Application;
-function midiProc(event) {
-  data = event.data;
-  var cmd = data[0] >> 4;
-  var channel = data[0] & 0xf;
-  var noteNumber = data[1];
-  var velocity = data[2];
-
-  if (cmd == 8 || cmd == 9 && velocity == 0) {// with MIDI, note on with velocity zero is the same as note off
-    // note off
-    //noteOff(b);
-  } else if (cmd == 9) {
-    // Note on
-    if ((noteNumber & 0x0f) == 8) tick();else {
-      var x = noteNumber & 0x0f;
-      var y = (noteNumber & 0xf0) >> 4;
-      flipXY(x, y);
-    }
-  } else if (cmd == 11) {
-    // Continuous Controller message
-    switch (noteNumber) {}
-  }
-}
-
-function onMIDIFail(err) {
-  alert("MIDI initialization failed.");
-}
-
-function onMIDIInit(midi) {
-  midiAccess = midi;
-  selectMIDIOut = document.getElementById("midiOut");
-
-  for (var input of midiAccess.inputs.values()) {
-    if (input.name.toString().indexOf("Launchpad") != -1 || input.name.toString().indexOf("QUNEO") != -1) {
-      launchpadFound = true;
-      selectMIDIIn.add(new Option(input.name, input.id, true, true));
-      midiIn = input;
-      midiIn.onmidimessage = midiProc;
-    } else selectMIDIIn.add(new Option(input.name, input.id, false, false));
-  }
-  selectMIDIIn.onchange = changeMIDIIn;
-
-  // clear the MIDI output select
-  selectMIDIOut.options.length = 0;
-  for (var output of midiAccess.outputs.values()) {
-    if (output.name.toString().indexOf("Launchpad") != -1 || output.name.toString().indexOf("QUNEO") != -1) {
-      selectMIDIOut.add(new Option(output.name, output.id, true, true));
-      midiOut = output;
-    } else selectMIDIOut.add(new Option(output.name, output.id, false, false));
-  }
-  selectMIDIOut.onchange = changeMIDIOut;
-
-  if (midiOut && launchpadFound) {
-    midiOut.send([0xB0, 0x00, 0x00]); // Reset Launchpad
-    midiOut.send([0xB0, 0x00, 0x01]); // Select XY mode
-    drawFullBoardToMIDI();
-  }
-}
-
-navigator.requestMIDIAccess({}).then(onMIDIInit, onMIDIFail);
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));

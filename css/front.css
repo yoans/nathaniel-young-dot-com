@@ -26,13 +26,17 @@ body {
 }
 
 input {
-    background-color: white; /* Green */
+    background-color: transparent;
     border: none;
+    color: white;
     border-radius: 2px;
-    padding: 5px 5px;
+    padding: 5px 20px 5px 15px;
     margin: 5px 5px;
     width: 100px;
     text-align: center;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid
 }
 button {
     background-color: transparent;
@@ -106,6 +110,9 @@ a {
     width: 100%;
 }
 @media (max-width: 450px) {
+input {
+    padding: 5px 20px 5px 15px;
+}
 ul {
     text-align: center;
 }
