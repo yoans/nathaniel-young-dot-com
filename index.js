@@ -38,7 +38,7 @@ export const newGrid = (size, numberOfArrows) => {
 
   return {size, arrows};
 };
-export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
+// export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
 export const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
 export const arrowBoundaryKey = (arrow, size)=> {
@@ -187,7 +187,7 @@ newSize(e) {
   this.setState({
     gridSize: input
   });
-  this.newGridHandler();
+    this.newGridHandler(this.state.numberOfArows, input);
 }
 newNumberOfArrows(e) {
   let input = parseInt(e.target.value);
@@ -201,16 +201,16 @@ newNumberOfArrows(e) {
   this.setState({
     numberOfArows: input
   });
-  this.newGridHandler()
+  this.newGridHandler(input, this.state.gridSize)
 }
 nextGrid() {
   this.setState({
     grid: nextGrid(this.state.grid)
   })
 }
-newGrid() {
+newGrid(number, size) {
   this.setState({
-    grid: newGrid(this.state.gridSize, this.state.numberOfArows)
+    grid: newGrid(size, number)
   })
 }
 render() {

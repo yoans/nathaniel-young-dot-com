@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -74,9 +74,7 @@ const newGrid = exports.newGrid = function (size, numberOfArrows) {
 
   return { size, arrows };
 };
-const seedGrid = exports.seedGrid = function () {
-  return newGrid(getRandomNumber(20) + 12, getRandomNumber(50) + 1);
-};
+// export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 const moveArrow = exports.moveArrow = function (arrow) {
   return vectorOperations[arrow.vector](arrow);
 };
@@ -252,7 +250,7 @@ class Application extends _react2.default.Component {
     this.setState({
       gridSize: input
     });
-    this.newGridHandler();
+    this.newGridHandler(this.state.numberOfArows, input);
   }
   newNumberOfArrows(e) {
     let input = parseInt(e.target.value);
@@ -266,16 +264,16 @@ class Application extends _react2.default.Component {
     this.setState({
       numberOfArows: input
     });
-    this.newGridHandler();
+    this.newGridHandler(input, this.state.gridSize);
   }
   nextGrid() {
     this.setState({
       grid: nextGrid(this.state.grid)
     });
   }
-  newGrid() {
+  newGrid(number, size) {
     this.setState({
-      grid: newGrid(this.state.gridSize, this.state.numberOfArows)
+      grid: newGrid(size, number)
     });
   }
   render() {
