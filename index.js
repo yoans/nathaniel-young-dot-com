@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Chance from 'chance';
 import * as R from 'ramda';
+import Cannon from './cannon'
 
 const chance = new Chance();
 export const vectors = [
@@ -131,7 +132,6 @@ const renderRow = (row) => {
   )
 };
 const renderGrid = (grid) => {
-  
   const populateArrow = y => x => grid.arrows.filter(arrow => arrow.x===x && arrow.y===y);
   const populateRow = (row, index) => row.map(populateArrow(index));
 
@@ -227,6 +227,7 @@ render() {
         {renderGrid(this.state.grid)}
       </tbody>
     </table>
+          <Cannon/>
   </div>
 )};
 }
