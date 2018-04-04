@@ -110,9 +110,6 @@ a {
     width: 100%;
 }
 @media (max-width: 450px) {
-input {
-    padding: 5px 20px 5px 15px;
-}
 ul {
     text-align: center;
 }
