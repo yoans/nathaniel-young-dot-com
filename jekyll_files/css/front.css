@@ -166,25 +166,26 @@ p{
     color: #aaa;
 }
 td{
+    padding: 0;
     margin: 0;
     width: 10px;
     height: 10px;
 }
 
 @keyframes go-up {
-    0%   {left:0px; top:13px;}
+    0%   {left:0px; top:10px;}
     100% {left:0px; top:0px;}
 }
 @keyframes go-right {
-    0%   {left:-13px; top:0px;}
+    0%   {left:-10px; top:0px;}
     100% {left:0px; top:0px;}
 }
 @keyframes go-down {
-    0%   {left:0px; top:-13px;}
+    0%   {left:0px; top:-10px;}
     100% {left:0px; top:0px;}
 }
 @keyframes go-left {
-    0%   {left:13px; top:0px;}
+    0%   {left:10px; top:0px;}
     100% {left:0px; top:0px;}
 }
 .space {
