@@ -171,22 +171,7 @@ td{
     height: 10px;
 }
 
-@keyframes go-up {
-    0%   {left:0px; top:13px;}
-    100% {left:0px; top:0px;}
-}
-@keyframes go-right {
-    0%   {left:-13px; top:0px;}
-    100% {left:0px; top:0px;}
-}
-@keyframes go-down {
-    0%   {left:0px; top:-13px;}
-    100% {left:0px; top:0px;}
-}
-@keyframes go-left {
-    0%   {left:13px; top:0px;}
-    100% {left:0px; top:0px;}
-}
+
 .space {
     width: 10px;
     height: 10px;

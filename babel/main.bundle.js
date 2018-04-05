@@ -175,6 +175,14 @@ const renderItem = function (item) {
   );
 };
 
+const updateStyle = function () {
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  const keyFrames = '' + '@keyframes go-up {' + '    0%   {left:0px; top:DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-right {' + '    0%   {left:-DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-down {' + '    0%   {left:0px; top:-DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-left {' + '    0%   {left:DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '';
+  style.innerHTML = keyFrames.replace(/DYNAMIC/g, "10");
+  document.getElementsByTagName('head')[0].appendChild(style);
+};
+
 const renderRow = function (row) {
   return _react2.default.createElement(
     'tr',
@@ -294,11 +302,18 @@ class Application extends _react2.default.Component {
           null,
           renderGrid(this.state.grid)
         )
+      ),
+      _react2.default.createElement(
+        'a',
+        { href: 'http://earslap.com/page/otomata.html' },
+        'My Inspiration: Otomata by Earslap'
       )
     );
   }
 }
-exports.Application = Application; //
+exports.Application = Application;
+updateStyle();
+//
 // function midiProc(event) {
 //   data = event.data;
 //   var cmd = data[0] >> 4;
@@ -364,5 +379,4 @@ exports.Application = Application; //
 //
 //
 // navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
-
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));
