@@ -166,6 +166,7 @@ p{
     color: #aaa;
 }
 td{
+    padding: 0;
     margin: 0;
     width: 10px;
     height: 10px;

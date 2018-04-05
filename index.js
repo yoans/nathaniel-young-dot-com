@@ -123,9 +123,11 @@ const renderItem = (item) => {
     )
 };
 
-const updateStyle = ()=>{
+const updateStyle = (dynamicArrowLength)=>{
+  const styleId = 'dynamic-animation-styles';
     const style = document.createElement('style');
     style.type = 'text/css';
+    style.id = styleId;
     const keyFrames = ''+
     '@keyframes go-up {'+
     '    0%   {left:0px; top:DYNAMICpx;}'+
@@ -142,8 +144,60 @@ const updateStyle = ()=>{
     '@keyframes go-left {'+
     '    0%   {left:DYNAMICpx; top:0px;}'+
     '    100% {left:0px; top:0px;}'+
-    '';
-    style.innerHTML = keyFrames.replace(/DYNAMIC/g, "10");
+    ''+
+  ' div.space {'+
+  '    width: DYNAMICpx;'+
+  '    height: DYNAMICpx;'+
+  '    position: relative;'+
+  ' }'+
+  ' div.arrow-up {'+
+    '    animation-name: go-up;'+
+    '  animation-duration: .5s;'+
+    '  animation-timing-function: linear;'+
+    '  position: absolute;'+
+    '  z-index: 0;'+
+    '  border-top: solid HALFDYNpx transparent;'+
+    '  border-left: solid HALFDYNpx transparent;'+
+    '  border-right: solid HALFDYNpx transparent;'+
+    '  border-bottom: solid HALFDYNpx white;'+
+    ' }'+
+    ' div.arrow-down {'+
+      '   animation-name: go-down;'+
+      ' animation-duration: .5s;'+
+     ' animation-timing-function: linear;'+
+     ' position: absolute;'+
+      ' z-index: 2;'+
+      ' border-left: solid HALFDYNpx transparent;'+
+      ' border-bottom: solid HALFDYNpx transparent;'+
+      ' border-right: solid HALFDYNpx transparent;'+
+      ' border-top: solid HALFDYNpx white;'+
+  '}'+
+  ' div.arrow-right {'+
+  '   animation-name: go-right;'+
+  '    animation-duration: .5s;'+
+  '   animation-timing-function: linear;'+
+  '    position: absolute;'+
+  '   z-index: 2;'+
+  '    border-top: solid HALFDYNpx transparent;'+
+ '    border-bottom: solid HALFDYNpx transparent;'+
+ '     border-right: solid HALFDYNpx transparent;'+
+  '    border-left: solid HALFDYNpx white;'+
+ ' }'+
+ ' div.arrow-left {'+
+  '    animation-name: go-left;'+
+  '    animation-duration: .5s;'+
+  '    animation-timing-function: linear;'+
+  '    position: absolute;'+
+  '    z-index: 3;'+
+  '    border-top: solid HALFDYNpx transparent;'+
+  '    border-left: solid HALFDYNpx transparent;'+
+  '    border-bottom: solid HALFDYNpx transparent;'+
+  '    border-right: solid HALFDYNpx white;'+
+  '}';
+    style.innerHTML = keyFrames.replace(/DYNAMIC/g, parseInt(dynamicArrowLength)*2);
+    style.innerHTML = style.innerHTML.replace(/HALFDYN/g, parseInt(dynamicArrowLength));
+    const oldElement = document.getElementById(styleId);
+    oldElement?oldElement.remove():'nothing';
     document.getElementsByTagName('head')[0].appendChild(style);
 }
 
@@ -163,10 +217,14 @@ const renderGrid = (grid) => {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+
 const maxArrows=200;
 const minArrows=1;
 const maxSize=50;
 const minSize=2;
+const maxArrowLength=25;
+const minArrowLength=2;
+
 export class Application extends React.Component { 
 
 constructor(props) {
@@ -174,12 +232,14 @@ constructor(props) {
 
   this.state = {
     gridSize: 10,
-    numberOfArows: 10,
+    numberOfArrows: 10,
     grid: newGrid(10, 10),
-    playing: true
+    playing: true,
+    arrowLength: 5
   }
   this.newSizeHandler = this.newSize.bind(this);
   this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
+  this.newArrowLengthHandler = this.newArrowLength.bind(this);
   this.nextGridHandler = this.nextGrid.bind(this);
   this.newGridHandler = this.newGrid.bind(this);
   this.playHandler = this.play.bind(this);
@@ -212,7 +272,22 @@ newSize(e) {
   this.setState({
     gridSize: input
   });
-    this.newGridHandler(this.state.numberOfArows, input);
+    this.newGridHandler(this.state.numberOfArrows, input, this.state.arrowLength);
+}
+
+newArrowLength(e) {
+  let input = parseInt(e.target.value);
+  if (isNaN(input)) {
+    input = 10;
+  }else if(input > maxArrowLength){
+    input = maxArrowLength;
+  }else if(input < minArrowLength){
+    input = minArrowLength;
+  }
+  this.setState({
+    arrowLength: input
+  });
+  this.newGridHandler(this.state.numberOfArrows, this.state.gridSize, input)
 }
 newNumberOfArrows(e) {
   let input = parseInt(e.target.value);
@@ -224,16 +299,18 @@ newNumberOfArrows(e) {
     input = minArrows;
   }
   this.setState({
-    numberOfArows: input
+    numberOfArrows: input
   });
-  this.newGridHandler(input, this.state.gridSize)
+  this.newGridHandler(input, this.state.gridSize, this.state.arrowLength)
 }
 nextGrid() {
   this.setState({
     grid: nextGrid(this.state.grid)
   })
 }
-newGrid(number, size) {
+newGrid(number, size, arrowLength) {
+  
+  updateStyle(arrowLength);
   this.setState({
     grid: newGrid(size, number)
   })
@@ -243,7 +320,9 @@ render() {
   return(
   <div>
     <br/>
-    <input type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
+    <input type='number' max={maxArrowLength} min={minArrowLength} value={this.state.arrowLength} onChange={this.newArrowLengthHandler}/>
+    <br/>
+    <input type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArrows} onChange={this.newNumberOfArrowsHandler}/>
     <br/>
     <input type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
     <br/>
@@ -256,7 +335,7 @@ render() {
   </div>
 )};
 }
-updateStyle();
+
 //
 // function midiProc(event) {
 //   data = event.data;
