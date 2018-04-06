@@ -252,7 +252,7 @@ render() {
         {renderGrid(this.state.grid)}
       </tbody>
     </table>
-    <a href= 'http://earslap.com/page/otomata.html'>My Inspiration: Otomata by Earslap</a>
+    <a href= 'http://earslap.com/page/otomata.html'>Inspiration: Otomata by Earslap</a>
   </div>
 )};
 }
