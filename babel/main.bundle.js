@@ -306,7 +306,7 @@ class Application extends _react2.default.Component {
       _react2.default.createElement(
         'a',
         { href: 'http://earslap.com/page/otomata.html' },
-        'My Inspiration: Otomata by Earslap'
+        'Inspiration: Otomata by Earslap'
       )
     );
   }
