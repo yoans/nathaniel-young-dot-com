@@ -18,7 +18,8 @@
     "ramda": "0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-jss": "^8.4.0"
+    "react-jss": "^8.4.0",
+    "typescript": "^2.8.1"
   },
   "engines": {
     "node": "8.2.1"
