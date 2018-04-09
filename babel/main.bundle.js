@@ -3,7 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -26,6 +28,12 @@ var R = _interopRequireWildcard(_ramda);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -69,12 +77,13 @@ const getArrow = exports.getArrow = function (size) {
     };
   };
 };
-const newGrid = exports.newGrid = function (size, numberOfArrows) {
+const _newGrid = function (size, numberOfArrows) {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size));
 
   return { size, arrows };
 };
 // export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
+exports.newGrid = _newGrid;
 const moveArrow = exports.moveArrow = function (arrow) {
   return vectorOperations[arrow.vector](arrow);
 };
@@ -117,7 +126,7 @@ const flipArrow = function (_ref) {
 };
 
 exports.flipArrow = flipArrow;
-const nextGrid = exports.nextGrid = function (grid) {
+const _nextGrid = function (grid) {
   const size = grid.size;
   const arrows = grid.arrows;
 
@@ -148,6 +157,7 @@ const nextGrid = exports.nextGrid = function (grid) {
   };
 };
 
+exports.nextGrid = _nextGrid;
 const renderItem = function (item) {
   if (item.length) {
     const classes = R.uniqBy(function (x) {
@@ -173,19 +183,6 @@ const renderItem = function (item) {
     null,
     _react2.default.createElement('div', { className: 'space' })
   );
-};
-
-const updateStyle = function (dynamicArrowLength) {
-  const styleId = 'dynamic-animation-styles';
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.id = styleId;
-  const keyFrames = '' + '@keyframes go-up {' + '    0%   {left:0px; top:DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-right {' + '    0%   {left:-DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-down {' + '    0%   {left:0px; top:-DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-left {' + '    0%   {left:DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '' + ' div.space {' + '    width: DYNAMICpx;' + '    height: DYNAMICpx;' + '    position: relative;' + ' }' + ' div.arrow-up {' + '    animation-name: go-up;' + '  animation-duration: .5s;' + '  animation-timing-function: linear;' + '  position: absolute;' + '  z-index: 0;' + '  border-top: solid HALFDYNpx transparent;' + '  border-left: solid HALFDYNpx transparent;' + '  border-right: solid HALFDYNpx transparent;' + '  border-bottom: solid HALFDYNpx white;' + ' }' + ' div.arrow-down {' + '   animation-name: go-down;' + ' animation-duration: .5s;' + ' animation-timing-function: linear;' + ' position: absolute;' + ' z-index: 2;' + ' border-left: solid HALFDYNpx transparent;' + ' border-bottom: solid HALFDYNpx transparent;' + ' border-right: solid HALFDYNpx transparent;' + ' border-top: solid HALFDYNpx white;' + '}' + ' div.arrow-right {' + '   animation-name: go-right;' + '    animation-duration: .5s;' + '   animation-timing-function: linear;' + '    position: absolute;' + '   z-index: 2;' + '    border-top: solid HALFDYNpx transparent;' + '    border-bottom: solid HALFDYNpx transparent;' + '     border-right: solid HALFDYNpx transparent;' + '    border-left: solid HALFDYNpx white;' + ' }' + ' div.arrow-left {' + '    animation-name: go-left;' + '    animation-duration: .5s;' + '    animation-timing-function: linear;' + '    position: absolute;' + '    z-index: 3;' + '    border-top: solid HALFDYNpx transparent;' + '    border-left: solid HALFDYNpx transparent;' + '    border-bottom: solid HALFDYNpx transparent;' + '    border-right: solid HALFDYNpx white;' + '}';
-  style.innerHTML = keyFrames.replace(/DYNAMIC/g, parseInt(dynamicArrowLength) * 2);
-  style.innerHTML = style.innerHTML.replace(/HALFDYN/g, parseInt(dynamicArrowLength));
-  const oldElement = document.getElementById(styleId);
-  oldElement ? oldElement.remove() : 'nothing';
-  document.getElementsByTagName('head')[0].appendChild(style);
 };
 
 const renderRow = function (row) {
@@ -219,194 +216,143 @@ const minSize = 2;
 const maxArrowLength = 25;
 const minArrowLength = 2;
 
-class Application extends _react2.default.Component {
+let Application = function (_React$Component) {
+  _inherits(Application, _React$Component);
 
-  constructor(props) {
-    super(props);
+  function Application(props) {
+    _classCallCheck(this, Application);
 
-    this.state = {
+    var _this = _possibleConstructorReturn(this, (Application.__proto__ || Object.getPrototypeOf(Application)).call(this, props));
+
+    _this.state = {
       gridSize: 10,
       numberOfArrows: 10,
-      grid: newGrid(10, 10),
+      grid: _newGrid(10, 10),
       playing: true,
       arrowLength: 5
     };
-    this.newSizeHandler = this.newSize.bind(this);
-    this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
-    this.newArrowLengthHandler = this.newArrowLength.bind(this);
-    this.nextGridHandler = this.nextGrid.bind(this);
-    this.newGridHandler = this.newGrid.bind(this);
-    this.playHandler = this.play.bind(this);
-    // this.pauseHandler = this.pause.bind(this);
+    _this.newSizeHandler = _this.newSize.bind(_this);
+    _this.newNumberOfArrowsHandler = _this.newNumberOfArrows.bind(_this);
+    _this.newArrowLengthHandler = _this.newArrowLength.bind(_this);
+    _this.nextGridHandler = _this.nextGrid.bind(_this);
+    _this.newGridHandler = _this.newGrid.bind(_this);
+    _this.playHandler = _this.play.bind(_this);
+    _this.getStylesHandler = _this.getStyles.bind(_this);
+    return _this;
   }
 
-  componentDidMount() {
-    this.playHandler();
-  }
-  play() {
-    var _this = this;
-
-    this.timerID = setInterval(function () {
-      return _this.nextGridHandler();
-    }, 500);
-    {
-      playing: true;
+  _createClass(Application, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.playHandler();
     }
-  }
-  // pause() {
-  //   clearInterval(this.timerID);
-  //   this.setState({playing:false});
-  // }
-  newSize(e) {
-    let input = parseInt(e.target.value);
-    if (isNaN(input)) {
-      input = 10;
-    } else if (input > maxSize) {
-      input = maxArrows;
-    } else if (input < minSize) {
-      input = minArrows;
-    }
-    this.setState({
-      gridSize: input
-    });
-    this.newGridHandler(this.state.numberOfArrows, input, this.state.arrowLength);
-  }
+  }, {
+    key: 'play',
+    value: function play() {
+      var _this2 = this;
 
-  newArrowLength(e) {
-    let input = parseInt(e.target.value);
-    if (isNaN(input)) {
-      input = 10;
-    } else if (input > maxArrowLength) {
-      input = maxArrowLength;
-    } else if (input < minArrowLength) {
-      input = minArrowLength;
+      this.timerID = setInterval(function () {
+        return _this2.nextGridHandler();
+      }, 500);
+      {
+        playing: true;
+      }
     }
-    this.setState({
-      arrowLength: input
-    });
-    this.newGridHandler(this.state.numberOfArrows, this.state.gridSize, input);
-  }
-  newNumberOfArrows(e) {
-    let input = parseInt(e.target.value);
-    if (isNaN(input)) {
-      input = 10;
-    } else if (input > maxArrows) {
-      input = maxArrows;
-    } else if (input < minArrows) {
-      input = minArrows;
+  }, {
+    key: 'newSize',
+    value: function newSize(e) {
+      let input = parseInt(e.target.value);
+      if (isNaN(input)) {
+        input = 10;
+      } else if (input > maxSize) {
+        input = maxArrows;
+      } else if (input < minSize) {
+        input = minArrows;
+      }
+      this.setState({
+        gridSize: input
+      });
+      this.newGridHandler(this.state.numberOfArrows, input, this.state.arrowLength);
     }
-    this.setState({
-      numberOfArrows: input
-    });
-    this.newGridHandler(input, this.state.gridSize, this.state.arrowLength);
-  }
-  nextGrid() {
-    this.setState({
-      grid: nextGrid(this.state.grid)
-    });
-  }
-  newGrid(number, size, arrowLength) {
-
-    updateStyle(arrowLength);
-    this.setState({
-      grid: newGrid(size, number)
-    });
-  }
-  render() {
-
-    return _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: maxArrowLength, min: minArrowLength, value: this.state.arrowLength, onChange: this.newArrowLengthHandler }),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: maxArrows, min: minArrows, value: this.state.numberOfArrows, onChange: this.newNumberOfArrowsHandler }),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement('input', { type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        'table',
-        { align: 'center' },
+  }, {
+    key: 'newArrowLength',
+    value: function newArrowLength(e) {
+      let input = parseInt(e.target.value);
+      if (isNaN(input)) {
+        input = 10;
+      } else if (input > maxArrowLength) {
+        input = maxArrowLength;
+      } else if (input < minArrowLength) {
+        input = minArrowLength;
+      }
+      this.setState({
+        arrowLength: input
+      });
+      this.newGridHandler(this.state.numberOfArrows, this.state.gridSize, input);
+    }
+  }, {
+    key: 'newNumberOfArrows',
+    value: function newNumberOfArrows(e) {
+      let input = parseInt(e.target.value);
+      if (isNaN(input)) {
+        input = 10;
+      } else if (input > maxArrows) {
+        input = maxArrows;
+      } else if (input < minArrows) {
+        input = minArrows;
+      }
+      this.setState({
+        numberOfArrows: input
+      });
+      this.newGridHandler(input, this.state.gridSize, this.state.arrowLength);
+    }
+  }, {
+    key: 'nextGrid',
+    value: function nextGrid() {
+      this.setState({
+        grid: _nextGrid(this.state.grid)
+      });
+    }
+  }, {
+    key: 'newGrid',
+    value: function newGrid(number, size, arrowLength) {
+      this.setState({
+        grid: _newGrid(size, number)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      const styles = this.getStylesHandler();
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('input', { type: 'number', max: maxArrowLength, min: minArrowLength, value: this.state.arrowLength, onChange: this.newArrowLengthHandler }),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('input', { type: 'number', max: maxArrows, min: minArrows, value: this.state.numberOfArrows, onChange: this.newNumberOfArrowsHandler }),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('input', { type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'tbody',
-          null,
-          renderGrid(this.state.grid)
+          'table',
+          { align: 'center' },
+          _react2.default.createElement(
+            'tbody',
+            null,
+            renderGrid(this.state.grid)
+          )
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: 'http://earslap.com/page/otomata.html' },
+          'Inspiration: Otomata by Earslap'
         )
-      ),
-      _react2.default.createElement(
-        'a',
-        { href: 'http://earslap.com/page/otomata.html' },
-        'Inspiration: Otomata by Earslap'
-      )
-    );
-  }
-}
+      );
+    }
+  }]);
 
-exports.Application = Application; //
-// function midiProc(event) {
-//   data = event.data;
-//   var cmd = data[0] >> 4;
-//   var channel = data[0] & 0xf;
-//   var noteNumber = data[1];
-//   var velocity = data[2];
-//
-//   if ( cmd==8 || ((cmd==9)&&(velocity==0)) ) { // with MIDI, note on with velocity zero is the same as note off
-//     // note off
-//     //noteOff(b);
-//   } else if (cmd == 9) {  // Note on
-//     if ((noteNumber&0x0f)==8)
-//       tick();
-//     else {
-//       var x = noteNumber & 0x0f;
-//       var y = (noteNumber & 0xf0) >> 4;
-//       flipXY( x, y );
-//     }
-//   } else if (cmd == 11) { // Continuous Controller message
-//     switch (noteNumber) {
-//     }
-//   }
-// }
-//
-// function onMIDIFail( err ) {
-// 	alert("MIDI initialization failed.");
-// }
-//
-// function onMIDIInit( midi ) {
-//   midiAccess = midi;
-//   selectMIDIOut=document.getElementById("midiOut");
-//
-//   for (var input of midiAccess.inputs.values()) {
-//     if ((input.name.toString().indexOf("Launchpad") != -1)||(input.name.toString().indexOf("QUNEO") != -1)) {
-//       launchpadFound = true;
-//       selectMIDIIn.add(new Option(input.name,input.id,true,true));
-//       midiIn=input;
-// 	  midiIn.onmidimessage = midiProc;
-//     }
-//     else
-//     	selectMIDIIn.add(new Option(input.name,input.id,false,false));
-//   }
-//   selectMIDIIn.onchange = changeMIDIIn;
-//
-//   // clear the MIDI output select
-//   selectMIDIOut.options.length = 0;
-//   for (var output of midiAccess.outputs.values()) {
-//     if ((output.name.toString().indexOf("Launchpad") != -1)||(output.name.toString().indexOf("QUNEO") != -1)) {
-//       selectMIDIOut.add(new Option(output.name,output.id,true,true));
-//       midiOut=output;
-//     }
-//     else
-//     	selectMIDIOut.add(new Option(output.name,output.id,false,false));
-//   }
-//   selectMIDIOut.onchange = changeMIDIOut;
-//
-//   if (midiOut && launchpadFound) {
-// 	midiOut.send( [0xB0,0x00,0x00] ); // Reset Launchpad
-// 	midiOut.send( [0xB0,0x00,0x01] ); // Select XY mode
-// 	drawFullBoardToMIDI();
-//   }
-// }
-//
-//
-// navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
+  return Application;
+}(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));

@@ -123,85 +123,6 @@ const renderItem = (item) => {
     )
 };
 
-const updateStyle = (dynamicArrowLength)=>{
-  const styleId = 'dynamic-animation-styles';
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.id = styleId;
-    const keyFrames = ''+
-    '@keyframes go-up {'+
-    '    0%   {left:0px; top:DYNAMICpx;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-right {'+
-    '    0%   {left:-DYNAMICpx; top:0px;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-down {'+
-    '    0%   {left:0px; top:-DYNAMICpx;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-left {'+
-    '    0%   {left:DYNAMICpx; top:0px;}'+
-    '    100% {left:0px; top:0px;}'+
-    ''+
-  ' div.space {'+
-  '    width: DYNAMICpx;'+
-  '    height: DYNAMICpx;'+
-  '    position: relative;'+
-  ' }'+
-  ' div.arrow-up {'+
-    '    animation-name: go-up;'+
-    '  animation-duration: .5s;'+
-    '  animation-timing-function: linear;'+
-    '  position: absolute;'+
-    '  z-index: 0;'+
-    '  border-top: solid HALFDYNpx transparent;'+
-    '  border-left: solid HALFDYNpx transparent;'+
-    '  border-right: solid HALFDYNpx transparent;'+
-    '  border-bottom: solid HALFDYNpx white;'+
-    ' }'+
-    ' div.arrow-down {'+
-      '   animation-name: go-down;'+
-      ' animation-duration: .5s;'+
-     ' animation-timing-function: linear;'+
-     ' position: absolute;'+
-      ' z-index: 2;'+
-      ' border-left: solid HALFDYNpx transparent;'+
-      ' border-bottom: solid HALFDYNpx transparent;'+
-      ' border-right: solid HALFDYNpx transparent;'+
-      ' border-top: solid HALFDYNpx white;'+
-  '}'+
-  ' div.arrow-right {'+
-  '   animation-name: go-right;'+
-  '    animation-duration: .5s;'+
-  '   animation-timing-function: linear;'+
-  '    position: absolute;'+
-  '   z-index: 2;'+
-  '    border-top: solid HALFDYNpx transparent;'+
- '    border-bottom: solid HALFDYNpx transparent;'+
- '     border-right: solid HALFDYNpx transparent;'+
-  '    border-left: solid HALFDYNpx white;'+
- ' }'+
- ' div.arrow-left {'+
-  '    animation-name: go-left;'+
-  '    animation-duration: .5s;'+
-  '    animation-timing-function: linear;'+
-  '    position: absolute;'+
-  '    z-index: 3;'+
-  '    border-top: solid HALFDYNpx transparent;'+
-  '    border-left: solid HALFDYNpx transparent;'+
-  '    border-bottom: solid HALFDYNpx transparent;'+
-  '    border-right: solid HALFDYNpx white;'+
-  '}';
-    style.innerHTML = keyFrames.replace(/DYNAMIC/g, parseInt(dynamicArrowLength)*2);
-    style.innerHTML = style.innerHTML.replace(/HALFDYN/g, parseInt(dynamicArrowLength));
-    const oldElement = document.getElementById(styleId);
-    oldElement?oldElement.remove():'nothing';
-    document.getElementsByTagName('head')[0].appendChild(style);
-}
-
-
 const renderRow = (row) => {
   return (
     <tr key={chance.guid()}>
@@ -225,8 +146,7 @@ const minSize=2;
 const maxArrowLength=25;
 const minArrowLength=2;
 
-export class Application extends React.Component { 
-
+class Application extends React.Component { 
 constructor(props) {
   super(props);
 
@@ -243,7 +163,7 @@ constructor(props) {
   this.nextGridHandler = this.nextGrid.bind(this);
   this.newGridHandler = this.newGrid.bind(this);
   this.playHandler = this.play.bind(this);
-  // this.pauseHandler = this.pause.bind(this);
+  this.getStylesHandler = this.getStyles.bind(this);
 }
 
 componentDidMount() {
@@ -256,10 +176,6 @@ play() {
   );
   {playing:true}
 }
-// pause() {
-//   clearInterval(this.timerID);
-//   this.setState({playing:false});
-// }
 newSize(e) {
   let input = parseInt(e.target.value);
   if (isNaN(input)) {
@@ -309,14 +225,12 @@ nextGrid() {
   })
 }
 newGrid(number, size, arrowLength) {
-  
-  updateStyle(arrowLength);
   this.setState({
     grid: newGrid(size, number)
   })
 }
 render() {
-  
+  const styles = this.getStylesHandler();
   return(
   <div>
     <br/>
@@ -336,71 +250,5 @@ render() {
 )};
 }
 
-//
-// function midiProc(event) {
-//   data = event.data;
-//   var cmd = data[0] >> 4;
-//   var channel = data[0] & 0xf;
-//   var noteNumber = data[1];
-//   var velocity = data[2];
-//
-//   if ( cmd==8 || ((cmd==9)&&(velocity==0)) ) { // with MIDI, note on with velocity zero is the same as note off
-//     // note off
-//     //noteOff(b);
-//   } else if (cmd == 9) {  // Note on
-//     if ((noteNumber&0x0f)==8)
-//       tick();
-//     else {
-//       var x = noteNumber & 0x0f;
-//       var y = (noteNumber & 0xf0) >> 4;
-//       flipXY( x, y );
-//     }
-//   } else if (cmd == 11) { // Continuous Controller message
-//     switch (noteNumber) {
-//     }
-//   }
-// }
-//
-// function onMIDIFail( err ) {
-// 	alert("MIDI initialization failed.");
-// }
-//
-// function onMIDIInit( midi ) {
-//   midiAccess = midi;
-//   selectMIDIOut=document.getElementById("midiOut");
-//
-//   for (var input of midiAccess.inputs.values()) {
-//     if ((input.name.toString().indexOf("Launchpad") != -1)||(input.name.toString().indexOf("QUNEO") != -1)) {
-//       launchpadFound = true;
-//       selectMIDIIn.add(new Option(input.name,input.id,true,true));
-//       midiIn=input;
-// 	  midiIn.onmidimessage = midiProc;
-//     }
-//     else
-//     	selectMIDIIn.add(new Option(input.name,input.id,false,false));
-//   }
-//   selectMIDIIn.onchange = changeMIDIIn;
-//
-//   // clear the MIDI output select
-//   selectMIDIOut.options.length = 0;
-//   for (var output of midiAccess.outputs.values()) {
-//     if ((output.name.toString().indexOf("Launchpad") != -1)||(output.name.toString().indexOf("QUNEO") != -1)) {
-//       selectMIDIOut.add(new Option(output.name,output.id,true,true));
-//       midiOut=output;
-//     }
-//     else
-//     	selectMIDIOut.add(new Option(output.name,output.id,false,false));
-//   }
-//   selectMIDIOut.onchange = changeMIDIOut;
-//
-//   if (midiOut && launchpadFound) {
-// 	midiOut.send( [0xB0,0x00,0x00] ); // Reset Launchpad
-// 	midiOut.send( [0xB0,0x00,0x01] ); // Select XY mode
-// 	drawFullBoardToMIDI();
-//   }
-// }
-//
-//
-// navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
 ReactDOM.render(<Application/>, document.getElementById('root'));
 
