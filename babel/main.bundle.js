@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.Application = exports.nextGrid = exports.playSounds = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -72,7 +72,7 @@ const getArrow = exports.getArrow = function (size) {
 const newGrid = exports.newGrid = function (size, numberOfArrows) {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size));
 
-  return { size, arrows };
+  return { size, arrows, muted: true };
 };
 // export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 const moveArrow = exports.moveArrow = function (arrow) {
@@ -117,6 +117,45 @@ const flipArrow = function (_ref) {
 };
 
 exports.flipArrow = flipArrow;
+function sound(src, speed) {
+  const aSound = document.createElement("audio");
+  aSound.src = src;
+  aSound.setAttribute("preload", "auto");
+  aSound.setAttribute("controls", "none");
+  aSound.style.display = "none";
+  aSound.setAttribute("playbackRate", speed);
+  document.body.appendChild(aSound);
+  return {
+    play: function () {
+      aSound.play();
+      setTimeout(function () {
+        return document.body.removeChild(aSound);
+      }, 500);
+    }
+    // ,
+    // Ele: aSound
+
+    // this.stop = function(){
+    // aSound.pause();
+    // }
+  };
+}
+const getSpeed = function (x, y, size) {
+  if (x === size - 1 || x === 0) {
+    return parseFloat(y) * 2.0 / parseFloat(size) + 0.5;
+  } else if (y === size - 1 || x === 0) {
+    return parseFloat(x) * 2.0 / parseFloat(size) + 0.5;
+  }
+  return 1.0;
+};
+const playSounds = exports.playSounds = function (boundaryArrows, size) {
+  boundaryArrows.map(function (arrow) {
+    const speed = getSpeed(arrow.x, arrow.y, size);
+    console.log(speed);
+    const snd = sound("testSound.wav", speed);
+    snd.play();
+  });
+};
 const nextGrid = exports.nextGrid = function (grid) {
   const size = grid.size;
   const arrows = grid.arrows;
@@ -138,14 +177,16 @@ const nextGrid = exports.nextGrid = function (grid) {
     arrowDictionary[arrowBoundaryKey(arrow, size)] = [...newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)]), arrow];
     return arrowDictionary;
   }, {});
-
+  if (!grid.muted) {
+    playSounds(newArrayIfFalsey(arrowBoundaryDictionary['boundary']), size);
+  }
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
   const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
-  return {
+  return _extends({}, grid, {
     size,
     arrows: [...movedArrowsInMiddle, ...movedFlippedBoundaryArrows]
-  };
+  });
 };
 
 const renderItem = function (item) {
@@ -179,7 +220,7 @@ const updateStyle = function () {
   const style = document.createElement('style');
   style.type = 'text/css';
   const keyFrames = '' + '@keyframes go-up {' + '    0%   {left:0px; top:DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-right {' + '    0%   {left:-DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-down {' + '    0%   {left:0px; top:-DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-left {' + '    0%   {left:DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '';
-  style.innerHTML = keyFrames.replace(/DYNAMIC/g, "10");
+  style.innerHTML = keyFrames.replace(/DYNAMIC/g, "19");
   document.getElementsByTagName('head')[0].appendChild(style);
 };
 
@@ -219,7 +260,8 @@ class Application extends _react2.default.Component {
       gridSize: 10,
       numberOfArows: 10,
       grid: newGrid(10, 10),
-      playing: true
+      playing: true,
+      muted: true
     };
     this.newSizeHandler = this.newSize.bind(this);
     this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
@@ -227,6 +269,7 @@ class Application extends _react2.default.Component {
     this.newGridHandler = this.newGrid.bind(this);
     this.playHandler = this.play.bind(this);
     // this.pauseHandler = this.pause.bind(this);
+    this.muteToggleHandler = this.muteToggle.bind(this);
   }
 
   componentDidMount() {
@@ -238,14 +281,15 @@ class Application extends _react2.default.Component {
     this.timerID = setInterval(function () {
       return _this.nextGridHandler();
     }, 500);
-    {
-      playing: true;
-    }
+    //   {playing:true}
   }
   // pause() {
   //   clearInterval(this.timerID);
   //   this.setState({playing:false});
   // }
+  muteToggle() {
+    this.setState({ muted: !this.state.muted });
+  }
   newSize(e) {
     let input = parseInt(e.target.value);
     if (isNaN(input)) {
@@ -276,7 +320,7 @@ class Application extends _react2.default.Component {
   }
   nextGrid() {
     this.setState({
-      grid: nextGrid(this.state.grid)
+      grid: nextGrid(_extends({}, this.state.grid, { muted: this.state.muted }))
     });
   }
   newGrid(number, size) {
@@ -295,6 +339,12 @@ class Application extends _react2.default.Component {
       _react2.default.createElement('input', { type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
+        'button',
+        { onClick: this.muteToggleHandler },
+        this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
         'table',
         { align: 'center' },
         _react2.default.createElement(
@@ -305,7 +355,7 @@ class Application extends _react2.default.Component {
       ),
       _react2.default.createElement(
         'a',
-        { href: 'http://earslap.com/page/otomata.html' },
+        { href: 'http://earslap.com/page/otomata.html', id: 'image-credit' },
         'Inspiration: Otomata by Earslap'
       )
     );

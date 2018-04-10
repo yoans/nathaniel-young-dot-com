@@ -36,7 +36,7 @@ export const getArrow = size => () => ({
 export const newGrid = (size, numberOfArrows) => {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size))
 
-  return {size, arrows};
+  return {size, arrows, muted: true};
 };
 // export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
@@ -64,6 +64,42 @@ export const rotateArrow = number => arrow => ({
 export const rotateSet = set => set.map(rotateArrow(set.length));
 export const flipArrow = ({vector, ...rest}) => ({vector: (vector+2)%4, ...rest});
 
+function sound(src, speed) {
+    const aSound = document.createElement("audio");
+    aSound.src = src;
+    aSound.setAttribute("preload", "auto");
+    aSound.setAttribute("controls", "none");
+    aSound.style.display = "none";
+    aSound.setAttribute("playbackRate", speed);
+    document.body.appendChild(aSound);
+    return {
+        play: function(){
+            aSound.play();
+            setTimeout(()=>document.body.removeChild(aSound), 500);
+        }
+        // ,
+        // Ele: aSound
+    }
+    // this.stop = function(){
+        // aSound.pause();
+    // }
+}
+const getSpeed = (x, y, size) => {
+    if(x === size - 1 || x === 0){
+        return (parseFloat(y)*2.0/parseFloat(size))+0.5;
+    }else if(y === size - 1 || x === 0){
+        return (parseFloat(x)*2.0/parseFloat(size))+0.5;
+    }
+    return 1.0;
+}
+export const playSounds = (boundaryArrows, size) => {
+    boundaryArrows.map((arrow)=>{
+        const speed = getSpeed(arrow.x, arrow.y, size);
+        console.log(speed);
+        const snd = sound("testSound.wav", speed);
+        snd.play();
+    })
+}
 export const nextGrid = (grid) => {
   const size = grid.size;
   const arrows = grid.arrows;
@@ -91,11 +127,15 @@ export const nextGrid = (grid) => {
         return arrowDictionary;
       }
       ,{});
-
-  const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
-  const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
+    if(!grid.muted){
+        playSounds(newArrayIfFalsey(arrowBoundaryDictionary['boundary']), size);
+    }
+    const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
+    const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
+    
 
     return {
+        ...grid,
         size,
         arrows: [
             ...movedArrowsInMiddle,
@@ -143,7 +183,7 @@ const updateStyle = ()=>{
     '    0%   {left:DYNAMICpx; top:0px;}'+
     '    100% {left:0px; top:0px;}'+
     '';
-    style.innerHTML = keyFrames.replace(/DYNAMIC/g, "10");
+    style.innerHTML = keyFrames.replace(/DYNAMIC/g, "19");
     document.getElementsByTagName('head')[0].appendChild(style);
 }
 
@@ -176,7 +216,8 @@ constructor(props) {
     gridSize: 10,
     numberOfArows: 10,
     grid: newGrid(10, 10),
-    playing: true
+    playing: true,
+    muted: true
   }
   this.newSizeHandler = this.newSize.bind(this);
   this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
@@ -184,6 +225,7 @@ constructor(props) {
   this.newGridHandler = this.newGrid.bind(this);
   this.playHandler = this.play.bind(this);
   // this.pauseHandler = this.pause.bind(this);
+  this.muteToggleHandler = this.muteToggle.bind(this);
 }
 
 componentDidMount() {
@@ -194,12 +236,15 @@ play() {
     () => this.nextGridHandler(),
     500
   );
-  {playing:true}
+//   {playing:true}
 }
 // pause() {
 //   clearInterval(this.timerID);
 //   this.setState({playing:false});
 // }
+muteToggle() {
+  this.setState({muted: !this.state.muted});
+}
 newSize(e) {
   let input = parseInt(e.target.value);
   if (isNaN(input)) {
@@ -230,7 +275,7 @@ newNumberOfArrows(e) {
 }
 nextGrid() {
   this.setState({
-    grid: nextGrid(this.state.grid)
+    grid: nextGrid({...this.state.grid, muted: this.state.muted})
   })
 }
 newGrid(number, size) {
@@ -247,12 +292,14 @@ render() {
     <br/>
     <input type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
     <br/>
+    <button onClick={this.muteToggleHandler}>{this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'}</button>
+    <br/>
     <table align="center">
       <tbody>
         {renderGrid(this.state.grid)}
       </tbody>
     </table>
-    <a href= 'http://earslap.com/page/otomata.html'>Inspiration: Otomata by Earslap</a>
+    <a href= 'http://earslap.com/page/otomata.html' id='image-credit'>Inspiration: Otomata by Earslap</a>
   </div>
 )};
 }
