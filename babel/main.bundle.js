@@ -23,6 +23,10 @@ var _ramda = require('ramda');
 
 var R = _interopRequireWildcard(_ramda);
 
+var _pizzicato = require('pizzicato');
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -148,11 +152,28 @@ const getSpeed = function (x, y, size) {
   }
   return 1.0;
 };
+const makePizzaSound = function (speed) {
+  const aSound = new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      frequency: 440.0 * speed
+    }
+  });
+  return {
+    play: function () {
+      aSound.play();
+      setTimeout(function () {
+        return aSound.stop();
+      }, 500);
+    }
+  };
+};
 const playSounds = exports.playSounds = function (boundaryArrows, size) {
   boundaryArrows.map(function (arrow) {
     const speed = getSpeed(arrow.x, arrow.y, size);
-    console.log(speed);
-    const snd = sound("testSound.wav", speed);
+    // console.log(speed);
+    // const snd = sound("testSound.wav", speed);
+    const snd = makePizzaSound(speed);
     snd.play();
   });
 };

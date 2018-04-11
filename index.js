@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Chance from 'chance';
 import * as R from 'ramda';
+import Pizzicato from 'pizzicato';
 
 const chance = new Chance();
 export const vectors = [
@@ -92,11 +93,26 @@ const getSpeed = (x, y, size) => {
     }
     return 1.0;
 }
+const makePizzaSound = (speed) => {
+    const aSound = new Pizzicato.Sound({ 
+        source: 'wave', 
+        options: {
+            frequency: 440.0*speed
+        }
+    });
+    return {        
+        play: function(){
+            aSound.play();
+            setTimeout(()=>aSound.stop(), 500);
+        }
+    }
+}
 export const playSounds = (boundaryArrows, size) => {
     boundaryArrows.map((arrow)=>{
         const speed = getSpeed(arrow.x, arrow.y, size);
-        console.log(speed);
-        const snd = sound("testSound.wav", speed);
+        // console.log(speed);
+        // const snd = sound("testSound.wav", speed);
+        const snd = makePizzaSound(speed);
         snd.play();
     })
 }
