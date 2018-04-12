@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Chance from 'chance';
 import * as R from 'ramda';
 import Pizzicato from 'pizzicato';
+import notesFrequencies from 'notes-frequencies';
+import { release } from 'os';
 
 const chance = new Chance();
 export const vectors = [
@@ -93,23 +95,60 @@ const getSpeed = (x, y, size) => {
     }
     return 1.0;
 }
-const makePizzaSound = (speed) => {
+const getIndex = (x, y, size) => {
+    if(x === size - 1 || x === 0){
+        return y;
+    }else if(y === size - 1 || y === 0){
+        return x
+    }
+    return 0;
+}
+
+const makePizzaSound = (index) => {
+
+    // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
+    const frequencies = notesFrequencies('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
     const aSound = new Pizzicato.Sound({ 
         source: 'wave', 
         options: {
-            frequency: 440.0*speed
+            frequency: frequencies[index%frequencies.length][0],
+            attack: 0.9,
+            release: 0.9,
+            type:'sawtooth'
         }
     });
+    var distortion = new Pizzicato.Effects.Distortion({
+        gain: 0.8
+    });
+     
+    aSound.addEffect(distortion);
+    
+    // var flanger = new Pizzicato.Effects.Flanger({
+    //     time: chance.natural({min:20, max: 60})*1.0/100,
+    //     speed: chance.natural({min:50, max: 60})*1.0/100,
+    //     depth: chance.natural({min:20, max: 40})*1.0/100,
+    //     feedback: 0.3,
+    //     mix: 0.4
+    // });
+    // aSound.addEffect(flanger);
+    var reverb = new Pizzicato.Effects.Reverb({
+        time: 0.2,
+        decay: 0.3,
+        reverse: true,
+        mix: 0.5
+    });
+     
+    aSound.addEffect(reverb);
     return {        
         play: function(){
             aSound.play();
-            setTimeout(()=>aSound.stop(), 500);
+            setTimeout(()=>aSound.stop(), 550);
         }
     }
 }
 export const playSounds = (boundaryArrows, size) => {
     boundaryArrows.map((arrow)=>{
-        const speed = getSpeed(arrow.x, arrow.y, size);
+        const speed = getIndex(arrow.x, arrow.y, size);
         // console.log(speed);
         // const snd = sound("testSound.wav", speed);
         const snd = makePizzaSound(speed);
@@ -219,9 +258,9 @@ const renderGrid = (grid) => {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
-const maxArrows=200;
+const maxArrows=30;
 const minArrows=1;
-const maxSize=50;
+const maxSize=18;
 const minSize=2;
 export class Application extends React.Component { 
 
