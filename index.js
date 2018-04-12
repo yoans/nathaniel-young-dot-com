@@ -80,25 +80,23 @@ function sound(src, speed) {
             aSound.play();
             setTimeout(()=>document.body.removeChild(aSound), 500);
         }
-        // ,
-        // Ele: aSound
     }
     // this.stop = function(){
         // aSound.pause();
     // }
 }
-const getSpeed = (x, y, size) => {
-    if(x === size - 1 || x === 0){
-        return (parseFloat(y)*2.0/parseFloat(size))+0.5;
-    }else if(y === size - 1 || x === 0){
-        return (parseFloat(x)*2.0/parseFloat(size))+0.5;
-    }
-    return 1.0;
-}
-const getIndex = (x, y, size) => {
-    if(x === size - 1 || x === 0){
+// const getSpeed = (x, y, size) => {
+//     if(x === size - 1 || x === 0){
+//         return (parseFloat(y)*2.0/parseFloat(size))+0.5;
+//     }else if(y === size - 1 || x === 0){
+//         return (parseFloat(x)*2.0/parseFloat(size))+0.5;
+//     }
+//     return 1.0;
+// }
+const getIndex = (x, y, size, vector) => {
+    if(vector===1 ||vector===3){
         return y;
-    }else if(y === size - 1 || y === 0){
+    }else if(vector===0 ||vector===2){
         return x
     }
     return 0;
@@ -148,7 +146,7 @@ const makePizzaSound = (index) => {
 }
 export const playSounds = (boundaryArrows, size) => {
     boundaryArrows.map((arrow)=>{
-        const speed = getIndex(arrow.x, arrow.y, size);
+        const speed = getIndex(arrow.x, arrow.y, size, arrow.vector);
         // console.log(speed);
         // const snd = sound("testSound.wav", speed);
         const snd = makePizzaSound(speed);
@@ -169,24 +167,37 @@ export const nextGrid = (grid) => {
       }
   ,{});
 
-  const arrowSets = Object.keys(arrowSetDictionary).map(key => arrowSetDictionary[key]);
-  const rotatedArrows = arrowSets.map(rotateSet);
-  const flatRotatedArrows = rotatedArrows.reduce((accum, current)=>[...accum, ...current],[]);
+    if(!grid.muted){
+        const noisyArrowBoundaryDictionary = arrows.reduce(
+            (arrowDictionary, arrow) => {
+            arrowDictionary[arrowBoundaryKey(arrow, size)] = [
+                ...(newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)])),
+                arrow
+            ];
+            return arrowDictionary;
+            }
+            ,{}
+        );
+        playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size);
+    }
 
-  const arrowBoundaryDictionary = flatRotatedArrows.reduce(
-      (arrowDictionary, arrow) => {
+    const arrowSets = Object.keys(arrowSetDictionary).map(key => arrowSetDictionary[key]);
+    const rotatedArrows = arrowSets.map(rotateSet);
+    const flatRotatedArrows = rotatedArrows.reduce((accum, current)=>[...accum, ...current],[]);
+
+    const arrowBoundaryDictionary = flatRotatedArrows.reduce(
+        (arrowDictionary, arrow) => {
         arrowDictionary[arrowBoundaryKey(arrow, size)] = [
-          ...(newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)])),
-          arrow
+            ...(newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)])),
+            arrow
         ];
         return arrowDictionary;
-      }
-      ,{});
-    if(!grid.muted){
-        playSounds(newArrayIfFalsey(arrowBoundaryDictionary['boundary']), size);
-    }
+        }
+        ,{}
+    );
     const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
     const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
+
     
 
     return {
@@ -268,8 +279,8 @@ constructor(props) {
   super(props);
 
   this.state = {
-    gridSize: 10,
-    numberOfArows: 10,
+    gridSize: 8,
+    numberOfArows: 8,
     grid: newGrid(10, 10),
     playing: true,
     muted: true

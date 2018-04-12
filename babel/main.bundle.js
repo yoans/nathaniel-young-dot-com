@@ -142,26 +142,23 @@ function sound(src, speed) {
         return document.body.removeChild(aSound);
       }, 500);
     }
-    // ,
-    // Ele: aSound
-
     // this.stop = function(){
     // aSound.pause();
     // }
   };
 }
-const getSpeed = function (x, y, size) {
-  if (x === size - 1 || x === 0) {
-    return parseFloat(y) * 2.0 / parseFloat(size) + 0.5;
-  } else if (y === size - 1 || x === 0) {
-    return parseFloat(x) * 2.0 / parseFloat(size) + 0.5;
-  }
-  return 1.0;
-};
-const getIndex = function (x, y, size) {
-  if (x === size - 1 || x === 0) {
+// const getSpeed = (x, y, size) => {
+//     if(x === size - 1 || x === 0){
+//         return (parseFloat(y)*2.0/parseFloat(size))+0.5;
+//     }else if(y === size - 1 || x === 0){
+//         return (parseFloat(x)*2.0/parseFloat(size))+0.5;
+//     }
+//     return 1.0;
+// }
+const getIndex = function (x, y, size, vector) {
+  if (vector === 1 || vector === 3) {
     return y;
-  } else if (y === size - 1 || y === 0) {
+  } else if (vector === 0 || vector === 2) {
     return x;
   }
   return 0;
@@ -213,7 +210,7 @@ const makePizzaSound = function (index) {
 };
 const playSounds = exports.playSounds = function (boundaryArrows, size) {
   boundaryArrows.map(function (arrow) {
-    const speed = getIndex(arrow.x, arrow.y, size);
+    const speed = getIndex(arrow.x, arrow.y, size, arrow.vector);
     // console.log(speed);
     // const snd = sound("testSound.wav", speed);
     const snd = makePizzaSound(speed);
@@ -229,6 +226,14 @@ const nextGrid = exports.nextGrid = function (grid) {
     return arrowDictionary;
   }, {});
 
+  if (!grid.muted) {
+    const noisyArrowBoundaryDictionary = arrows.reduce(function (arrowDictionary, arrow) {
+      arrowDictionary[arrowBoundaryKey(arrow, size)] = [...newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)]), arrow];
+      return arrowDictionary;
+    }, {});
+    playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size);
+  }
+
   const arrowSets = Object.keys(arrowSetDictionary).map(function (key) {
     return arrowSetDictionary[key];
   });
@@ -241,9 +246,6 @@ const nextGrid = exports.nextGrid = function (grid) {
     arrowDictionary[arrowBoundaryKey(arrow, size)] = [...newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)]), arrow];
     return arrowDictionary;
   }, {});
-  if (!grid.muted) {
-    playSounds(newArrayIfFalsey(arrowBoundaryDictionary['boundary']), size);
-  }
   const movedArrowsInMiddle = newArrayIfFalsey(arrowBoundaryDictionary['no-boundary']).map(moveArrow);
   const movedFlippedBoundaryArrows = newArrayIfFalsey(arrowBoundaryDictionary['boundary']).map(flipArrow).map(moveArrow);
 
@@ -321,8 +323,8 @@ class Application extends _react2.default.Component {
     super(props);
 
     this.state = {
-      gridSize: 10,
-      numberOfArows: 10,
+      gridSize: 8,
+      numberOfArows: 8,
       grid: newGrid(10, 10),
       playing: true,
       muted: true
