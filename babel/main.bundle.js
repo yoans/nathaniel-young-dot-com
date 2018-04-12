@@ -174,7 +174,7 @@ const makePizzaSound = function (index) {
       frequency: frequencies[index % frequencies.length][0],
       attack: 0.9,
       release: 0.9,
-      type: 'sawtooth'
+      type: 'triangle'
     }
   });
   var distortion = new _pizzicato2.default.Effects.Distortion({
@@ -217,6 +217,9 @@ const playSounds = exports.playSounds = function (boundaryArrows, size) {
     snd.play();
   });
 };
+const reduceArrowNumber = function (arrowSet) {
+  return R.take(arrowSet.length % 4, arrowSet);
+}; //This has the side effect of destroying arrows that don't have the same vector
 const nextGrid = exports.nextGrid = function (grid) {
   const size = grid.size;
   const arrows = grid.arrows;
@@ -237,7 +240,7 @@ const nextGrid = exports.nextGrid = function (grid) {
   const arrowSets = Object.keys(arrowSetDictionary).map(function (key) {
     return arrowSetDictionary[key];
   });
-  const rotatedArrows = arrowSets.map(rotateSet);
+  const rotatedArrows = arrowSets.map(reduceArrowNumber).map(rotateSet);
   const flatRotatedArrows = rotatedArrows.reduce(function (accum, current) {
     return [...accum, ...current];
   }, []);
@@ -325,7 +328,7 @@ class Application extends _react2.default.Component {
     this.state = {
       gridSize: 8,
       numberOfArows: 8,
-      grid: newGrid(10, 10),
+      grid: newGrid(8, 8),
       playing: true,
       muted: true
     };
@@ -359,7 +362,7 @@ class Application extends _react2.default.Component {
   newSize(e) {
     let input = parseInt(e.target.value);
     if (isNaN(input)) {
-      input = 10;
+      input = 8;
     } else if (input > maxSize) {
       input = maxArrows;
     } else if (input < minSize) {
@@ -373,7 +376,7 @@ class Application extends _react2.default.Component {
   newNumberOfArrows(e) {
     let input = parseInt(e.target.value);
     if (isNaN(input)) {
-      input = 10;
+      input = 8;
     } else if (input > maxArrows) {
       input = maxArrows;
     } else if (input < minArrows) {
