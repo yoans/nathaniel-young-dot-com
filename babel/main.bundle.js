@@ -428,7 +428,7 @@ class Application extends _react2.default.Component {
       _react2.default.createElement(
         'label',
         { className: 'arrow-input-label' },
-        'Start/Stop'
+        'Start/Stop:'
       ),
       this.state.playing ? _react2.default.createElement(
         'button',

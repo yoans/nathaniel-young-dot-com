@@ -338,7 +338,7 @@ render() {
     <input className='arrow-input' type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
     <label className='arrow-input-label'>{'Size of Grid:'}</label>
     <input className='arrow-input' type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
-    <label className='arrow-input-label'>{'Start/Stop'}</label>
+    <label className='arrow-input-label'>{'Start/Stop:'}</label>
     {
       this.state.playing ? 
         <button className='arrow-input' onClick={this.pauseHandler}>{'Stop'}</button> :
