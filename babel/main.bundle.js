@@ -450,8 +450,13 @@ class Application extends _react2.default.Component {
       ),
       _react2.default.createElement(
         'a',
-        { href: 'http://earslap.com/page/otomata.html', id: 'image-credit' },
+        { href: 'http://earslap.com/page/otomata.html', className: 'image-credit' },
         'Inspiration: Otomata by Earslap'
+      ),
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.flickr.com/photos/aigle_dore', target: '_blank', className: 'image-credit' },
+        'Image Credit: Moyan Brenn'
       )
     );
   }

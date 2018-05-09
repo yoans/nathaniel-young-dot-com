@@ -104,7 +104,8 @@ a {
     display: none;
 }
 
-#image-credit {
+.image-credit {
+    display: block;
     border-style:none;
     text-align: center;
     width: 100%;
