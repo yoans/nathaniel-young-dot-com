@@ -110,7 +110,6 @@ a {
     display: block;
     border-style:none;
     text-align: center;
-    width: 100%;
 }
 @media (max-width: 450px) {
 ul {
