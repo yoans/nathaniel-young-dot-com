@@ -81,18 +81,7 @@ function sound(src, speed) {
             setTimeout(()=>document.body.removeChild(aSound), 500);
         }
     }
-    // this.stop = function(){
-        // aSound.pause();
-    // }
 }
-// const getSpeed = (x, y, size) => {
-//     if(x === size - 1 || x === 0){
-//         return (parseFloat(y)*2.0/parseFloat(size))+0.5;
-//     }else if(y === size - 1 || x === 0){
-//         return (parseFloat(x)*2.0/parseFloat(size))+0.5;
-//     }
-//     return 1.0;
-// }
 const getIndex = (x, y, size, vector) => {
     if(vector===1 ||vector===3){
         return y;
@@ -102,7 +91,7 @@ const getIndex = (x, y, size, vector) => {
     return 0;
 }
 
-const makePizzaSound = (index) => {
+const makePizzaSound = (index, length) => {
 
     // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
     const frequencies = notesFrequencies('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
@@ -110,8 +99,8 @@ const makePizzaSound = (index) => {
         source: 'wave', 
         options: {
             frequency: frequencies[index%frequencies.length][0],
-            attack: 0.9,
-            release: 0.9,
+            attack: 0.1,
+            release: 0.1,
             type:'triangle'
         }
     });
@@ -129,32 +118,30 @@ const makePizzaSound = (index) => {
     //     mix: 0.4
     // });
     // aSound.addEffect(flanger);
-    var reverb = new Pizzicato.Effects.Reverb({
-        time: 0.2,
-        decay: 0.3,
-        reverse: true,
-        mix: 0.5
-    });
+    // var reverb = new Pizzicato.Effects.Reverb({
+    //     time: 0.2,
+    //     decay: 0.3,
+    //     reverse: true,
+    //     mix: 0.5
+    // });
      
-    aSound.addEffect(reverb);
+    // aSound.addEffect(reverb);
     return {        
         play: function(){
             aSound.play();
-            setTimeout(()=>aSound.stop(), 550);
+            setTimeout(()=>aSound.stop(), length);
         }
     }
 }
-export const playSounds = (boundaryArrows, size) => {
+export const playSounds = (boundaryArrows, size, length) => {
     boundaryArrows.map((arrow)=>{
         const speed = getIndex(arrow.x, arrow.y, size, arrow.vector);
-        // console.log(speed);
-        // const snd = sound("testSound.wav", speed);
-        const snd = makePizzaSound(speed);
+        const snd = makePizzaSound(speed, length);
         snd.play();
     })
 }
 const reduceArrowNumber = (arrowSet)=>R.take(arrowSet.length%4, arrowSet);//This has the side effect of destroying arrows that don't have the same vector
-export const nextGrid = (grid) => {
+export const nextGrid = (grid, length) => {
   const size = grid.size;
   const arrows = grid.arrows;
 
@@ -179,7 +166,7 @@ export const nextGrid = (grid) => {
             }
             ,{}
         );
-        playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size);
+        playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size, length);
     }
 
     const arrowSets = Object.keys(arrowSetDictionary).map(key => arrowSetDictionary[key]);
@@ -274,6 +261,8 @@ const maxArrows=30;
 const minArrows=1;
 const maxSize=18;
 const minSize=2;
+const minNoteLength=50;
+const maxNoteLength=500;
 export class Application extends React.Component { 
 
 constructor(props) {
@@ -281,17 +270,19 @@ constructor(props) {
 
   this.state = {
     gridSize: 8,
+    noteLength: 250,
     numberOfArows: 8,
     grid: newGrid(8, 8),
     playing: true,
     muted: true
   }
   this.newSizeHandler = this.newSize.bind(this);
+  this.newNoteLengthHandler = this.newNoteLength.bind(this);
   this.newNumberOfArrowsHandler = this.newNumberOfArrows.bind(this);
   this.nextGridHandler = this.nextGrid.bind(this);
   this.newGridHandler = this.newGrid.bind(this);
   this.playHandler = this.play.bind(this);
-  // this.pauseHandler = this.pause.bind(this);
+  this.pauseHandler = this.pause.bind(this);
   this.muteToggleHandler = this.muteToggle.bind(this);
 }
 
@@ -300,15 +291,17 @@ componentDidMount() {
 }
 play() {
   this.timerID = setInterval(
-    () => this.nextGridHandler(),
-    500
+    () => this.nextGridHandler(this.state.noteLength),
+    this.state.noteLength
   );
-//   {playing:true}
+  this.setState({playing: true});
+  this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
 }
-// pause() {
-//   clearInterval(this.timerID);
-//   this.setState({playing:false});
-// }
+pause() {
+  clearInterval(this.timerID);
+  this.setState({playing:false});
+  this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+}
 muteToggle() {
   this.setState({muted: !this.state.muted});
 }
@@ -326,6 +319,22 @@ newSize(e) {
   });
     this.newGridHandler(this.state.numberOfArows, input);
 }
+newNoteLength(e) {
+  clearInterval(this.timerID);
+  let input = parseInt(e.target.value);
+  if (isNaN(input)) {
+    input = 250;
+  }else if(input > maxNoteLength){
+    input = maxNoteLength;
+  }else if(input < minNoteLength){
+    input = minNoteLength;
+  }
+  this.setState({
+    noteLength: input
+  });
+    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+    this.play();
+}
 newNumberOfArrows(e) {
   let input = parseInt(e.target.value);
   if (isNaN(input)) {
@@ -340,9 +349,9 @@ newNumberOfArrows(e) {
   });
   this.newGridHandler(input, this.state.gridSize)
 }
-nextGrid() {
+nextGrid(length) {
   this.setState({
-    grid: nextGrid({...this.state.grid, muted: this.state.muted})
+    grid: nextGrid({...this.state.grid, muted: this.state.muted}, length)
   })
 }
 newGrid(number, size) {
@@ -354,13 +363,17 @@ render() {
   
   return(
   <div>
-    <br/>
     <input type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
-    <br/>
     <input type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
-    <br/>
+    <input type='number' max={maxNoteLength} min={minNoteLength} value={this.state.noteLength} onChange={this.newNoteLengthHandler}/>
     <button onClick={this.muteToggleHandler}>{this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'}</button>
-    <br/>
+    {
+      this.state.playing ? 
+        <button onClick={this.pauseHandler}>{'Stop'}</button> :
+        <button onClick={this.playHandler}>{'Play'}</button>
+    }
+    
+
     <table align="center">
       <tbody>
         {renderGrid(this.state.grid)}

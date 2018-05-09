@@ -180,8 +180,8 @@ td{
 }
 .arrow-up {
     animation-name: go-up;
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    animation-duration: .3s;
+    animation-timing-function: ease;
     position: absolute;
     z-index: 0;
     border-top: solid 8px transparent;
@@ -191,8 +191,8 @@ td{
 }
 .arrow-down {
     animation-name: go-down;
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    animation-duration: .3s;
+    animation-timing-function: ease;
     position: absolute;
     z-index: 2;
     border-left: solid 9px transparent;
@@ -202,8 +202,8 @@ td{
 }
 .arrow-right {
     animation-name: go-right;
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    animation-duration: .3s;
+    animation-timing-function: ease;
     position: absolute;
     z-index: 2;
     border-top: solid 9px transparent;
@@ -213,8 +213,8 @@ td{
 }
 .arrow-left {
     animation-name: go-left;
-    animation-duration: .5s;
-    animation-timing-function: linear;
+    animation-duration: .3s;
+    animation-timing-function: ease;
     position: absolute;
     z-index: 3;
     border-top: solid 9px transparent;
