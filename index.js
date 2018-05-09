@@ -41,7 +41,7 @@ export const newGrid = (size, numberOfArrows) => {
 
   return {size, arrows, muted: true};
 };
-// export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
+export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
 export const moveArrow = arrow => vectorOperations[arrow.vector](arrow);
 export const arrowKey = arrow => '{x:'+arrow.x+',y:'+arrow.y+'}';
 export const arrowBoundaryKey = (arrow, size)=> {
@@ -110,22 +110,14 @@ const makePizzaSound = (index, length) => {
      
     aSound.addEffect(distortion);
     
-    // var flanger = new Pizzicato.Effects.Flanger({
-    //     time: chance.natural({min:20, max: 60})*1.0/100,
-    //     speed: chance.natural({min:50, max: 60})*1.0/100,
-    //     depth: chance.natural({min:20, max: 40})*1.0/100,
-    //     feedback: 0.3,
-    //     mix: 0.4
-    // });
-    // aSound.addEffect(flanger);
-    // var reverb = new Pizzicato.Effects.Reverb({
-    //     time: 0.2,
-    //     decay: 0.3,
-    //     reverse: true,
-    //     mix: 0.5
-    // });
+    var reverb = new Pizzicato.Effects.Reverb({
+        time: length/2.0,
+        decay: length/2.0,
+        reverse: true,
+        mix: 0.7
+    });
      
-    // aSound.addEffect(reverb);
+    aSound.addEffect(reverb);
     return {        
         play: function(){
             aSound.play();
@@ -216,31 +208,6 @@ const renderItem = (item) => {
     </td>
     )
 };
-
-const updateStyle = ()=>{
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    const keyFrames = ''+
-    '@keyframes go-up {'+
-    '    0%   {left:0px; top:DYNAMICpx;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-right {'+
-    '    0%   {left:-DYNAMICpx; top:0px;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-down {'+
-    '    0%   {left:0px; top:-DYNAMICpx;}'+
-    '    100% {left:0px; top:0px;}'+
-    '}'+
-    '@keyframes go-left {'+
-    '    0%   {left:DYNAMICpx; top:0px;}'+
-    '    100% {left:0px; top:0px;}'+
-    '';
-    style.innerHTML = keyFrames.replace(/DYNAMIC/g, "19");
-    document.getElementsByTagName('head')[0].appendChild(style);
-}
-
 
 const renderRow = (row) => {
   return (
@@ -363,14 +330,19 @@ render() {
   
   return(
   <div>
-    <input type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
-    <input type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
-    <input type='number' max={maxNoteLength} min={minNoteLength} value={this.state.noteLength} onChange={this.newNoteLengthHandler}/>
-    <button onClick={this.muteToggleHandler}>{this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'}</button>
+    <label className='arrow-input-label'>{'Sound:'}</label>
+    <button className='arrow-input'  onClick={this.muteToggleHandler}>{this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'}</button>
+    <label className='arrow-input-label'>{'Time per Step:'}</label>
+    <input className='arrow-input' type='number' max={maxNoteLength} min={minNoteLength} value={this.state.noteLength} onChange={this.newNoteLengthHandler}/>
+    <label className='arrow-input-label'>{'Number of Arrows:'}</label>
+    <input className='arrow-input' type='number' max={maxArrows} min={minArrows} value={this.state.numberOfArows} onChange={this.newNumberOfArrowsHandler}/>
+    <label className='arrow-input-label'>{'Size of Grid:'}</label>
+    <input className='arrow-input' type='number' max={maxSize} min={minSize} value={this.state.gridSize} onChange={this.newSizeHandler}/>
+    <label className='arrow-input-label'>{'Start/Stop'}</label>
     {
       this.state.playing ? 
-        <button onClick={this.pauseHandler}>{'Stop'}</button> :
-        <button onClick={this.playHandler}>{'Play'}</button>
+        <button className='arrow-input' onClick={this.pauseHandler}>{'Stop'}</button> :
+        <button className='arrow-input' onClick={this.playHandler}>{'Start'}</button>
     }
     
 
@@ -383,7 +355,6 @@ render() {
   </div>
 )};
 }
-updateStyle();
 //
 // function midiProc(event) {
 //   data = event.data;

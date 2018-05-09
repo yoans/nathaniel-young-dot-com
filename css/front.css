@@ -222,3 +222,25 @@ td{
     border-bottom: solid 9px transparent;
     border-right: solid 9px white;
 }
+.arrow-input-label,
+.arrow-input {
+    display: block;
+    color: white;
+    margin: auto;
+}
+@keyframes go-up {
+    0%   {left:0px; top:19px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-right {
+    0%   {left:-19px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-down {
+    0%   {left:0px; top:-19px;}
+    100% {left:0px; top:0px;}
+}
+@keyframes go-left {
+    0%   {left:19px; top:0px;}
+    100% {left:0px; top:0px;}
+}

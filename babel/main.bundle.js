@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.playSounds = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.Application = exports.nextGrid = exports.playSounds = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -84,7 +84,9 @@ const newGrid = exports.newGrid = function (size, numberOfArrows) {
 
   return { size, arrows, muted: true };
 };
-// export const seedGrid = () => newGrid(getRandomNumber(20)+12, getRandomNumber(50)+1);
+const seedGrid = exports.seedGrid = function () {
+  return newGrid(getRandomNumber(20) + 12, getRandomNumber(50) + 1);
+};
 const moveArrow = exports.moveArrow = function (arrow) {
   return vectorOperations[arrow.vector](arrow);
 };
@@ -172,22 +174,14 @@ const makePizzaSound = function (index, length) {
 
   aSound.addEffect(distortion);
 
-  // var flanger = new Pizzicato.Effects.Flanger({
-  //     time: chance.natural({min:20, max: 60})*1.0/100,
-  //     speed: chance.natural({min:50, max: 60})*1.0/100,
-  //     depth: chance.natural({min:20, max: 40})*1.0/100,
-  //     feedback: 0.3,
-  //     mix: 0.4
-  // });
-  // aSound.addEffect(flanger);
-  // var reverb = new Pizzicato.Effects.Reverb({
-  //     time: 0.2,
-  //     decay: 0.3,
-  //     reverse: true,
-  //     mix: 0.5
-  // });
+  var reverb = new _pizzicato2.default.Effects.Reverb({
+    time: length / 2.0,
+    decay: length / 2.0,
+    reverse: true,
+    mix: 0.7
+  });
 
-  // aSound.addEffect(reverb);
+  aSound.addEffect(reverb);
   return {
     play: function () {
       aSound.play();
@@ -270,14 +264,6 @@ const renderItem = function (item) {
     null,
     _react2.default.createElement('div', { className: 'space' })
   );
-};
-
-const updateStyle = function () {
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  const keyFrames = '' + '@keyframes go-up {' + '    0%   {left:0px; top:DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-right {' + '    0%   {left:-DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-down {' + '    0%   {left:0px; top:-DYNAMICpx;}' + '    100% {left:0px; top:0px;}' + '}' + '@keyframes go-left {' + '    0%   {left:DYNAMICpx; top:0px;}' + '    100% {left:0px; top:0px;}' + '';
-  style.innerHTML = keyFrames.replace(/DYNAMIC/g, "19");
-  document.getElementsByTagName('head')[0].appendChild(style);
 };
 
 const renderRow = function (row) {
@@ -411,22 +397,47 @@ class Application extends _react2.default.Component {
     return _react2.default.createElement(
       'div',
       null,
-      _react2.default.createElement('input', { type: 'number', max: maxArrows, min: minArrows, value: this.state.numberOfArows, onChange: this.newNumberOfArrowsHandler }),
-      _react2.default.createElement('input', { type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
-      _react2.default.createElement('input', { type: 'number', max: maxNoteLength, min: minNoteLength, value: this.state.noteLength, onChange: this.newNoteLengthHandler }),
+      _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'Sound:'
+      ),
       _react2.default.createElement(
         'button',
-        { onClick: this.muteToggleHandler },
+        { className: 'arrow-input', onClick: this.muteToggleHandler },
         this.state.muted ? 'Turn Sound On' : 'Turn Sound Off'
+      ),
+      _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'Time per Step:'
+      ),
+      _react2.default.createElement('input', { className: 'arrow-input', type: 'number', max: maxNoteLength, min: minNoteLength, value: this.state.noteLength, onChange: this.newNoteLengthHandler }),
+      _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'Number of Arrows:'
+      ),
+      _react2.default.createElement('input', { className: 'arrow-input', type: 'number', max: maxArrows, min: minArrows, value: this.state.numberOfArows, onChange: this.newNumberOfArrowsHandler }),
+      _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'Size of Grid:'
+      ),
+      _react2.default.createElement('input', { className: 'arrow-input', type: 'number', max: maxSize, min: minSize, value: this.state.gridSize, onChange: this.newSizeHandler }),
+      _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'Start/Stop'
       ),
       this.state.playing ? _react2.default.createElement(
         'button',
-        { onClick: this.pauseHandler },
+        { className: 'arrow-input', onClick: this.pauseHandler },
         'Stop'
       ) : _react2.default.createElement(
         'button',
-        { onClick: this.playHandler },
-        'Play'
+        { className: 'arrow-input', onClick: this.playHandler },
+        'Start'
       ),
       _react2.default.createElement(
         'table',
@@ -445,9 +456,7 @@ class Application extends _react2.default.Component {
     );
   }
 }
-exports.Application = Application;
-updateStyle();
-//
+exports.Application = Application; //
 // function midiProc(event) {
 //   data = event.data;
 //   var cmd = data[0] >> 4;
@@ -513,4 +522,5 @@ updateStyle();
 //
 //
 // navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
+
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));
