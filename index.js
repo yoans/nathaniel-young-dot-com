@@ -94,7 +94,7 @@ const getIndex = (x, y, size, vector) => {
 const makePizzaSound = (index, length) => {
 
     // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
-    const frequencies = notesFrequencies('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
+    const frequencies = notesFrequencies('A3 B3 C3 D3 E3 F3 G3 A4 B4 C4 D4 E4 F4 G4 A5 B5 C5 D5 E5 F5 G5');
     const aSound = new Pizzicato.Sound({ 
         source: 'wave', 
         options: {
@@ -224,6 +224,7 @@ const renderGrid = (grid) => {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+
 const maxArrows=30;
 const minArrows=1;
 const maxSize=18;
@@ -237,7 +238,7 @@ constructor(props) {
 
   this.state = {
     gridSize: 8,
-    noteLength: 250,
+    noteLength: 150,
     numberOfArows: 8,
     grid: newGrid(8, 8),
     playing: true,
@@ -262,12 +263,12 @@ play() {
     this.state.noteLength
   );
   this.setState({playing: true});
-  this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+  // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
 }
 pause() {
   clearInterval(this.timerID);
   this.setState({playing:false});
-  this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+  // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
 }
 muteToggle() {
   this.setState({muted: !this.state.muted});
@@ -290,7 +291,7 @@ newNoteLength(e) {
   clearInterval(this.timerID);
   let input = parseInt(e.target.value);
   if (isNaN(input)) {
-    input = 250;
+    input = 150;
   }else if(input > maxNoteLength){
     input = maxNoteLength;
   }else if(input < minNoteLength){
@@ -299,7 +300,7 @@ newNoteLength(e) {
   this.setState({
     noteLength: input
   });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+    // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
     this.play();
 }
 newNumberOfArrows(e) {

@@ -158,7 +158,7 @@ const getIndex = function (x, y, size, vector) {
 const makePizzaSound = function (index, length) {
 
   // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
-  const frequencies = (0, _notesFrequencies2.default)('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
+  const frequencies = (0, _notesFrequencies2.default)('A3 B3 C3 D3 E3 F3 G3 A4 B4 C4 D4 E4 F4 G4 A5 B5 C5 D5 E5 F5 G5');
   const aSound = new _pizzicato2.default.Sound({
     source: 'wave',
     options: {
@@ -289,6 +289,7 @@ const renderGrid = function (grid) {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+
 const maxArrows = 30;
 const minArrows = 1;
 const maxSize = 18;
@@ -302,7 +303,7 @@ class Application extends _react2.default.Component {
 
     this.state = {
       gridSize: 8,
-      noteLength: 250,
+      noteLength: 150,
       numberOfArows: 8,
       grid: newGrid(8, 8),
       playing: true,
@@ -328,12 +329,12 @@ class Application extends _react2.default.Component {
       return _this.nextGridHandler(_this.state.noteLength);
     }, this.state.noteLength);
     this.setState({ playing: true });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+    // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
   }
   pause() {
     clearInterval(this.timerID);
     this.setState({ playing: false });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+    // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
   }
   muteToggle() {
     this.setState({ muted: !this.state.muted });
@@ -356,7 +357,7 @@ class Application extends _react2.default.Component {
     clearInterval(this.timerID);
     let input = parseInt(e.target.value);
     if (isNaN(input)) {
-      input = 250;
+      input = 150;
     } else if (input > maxNoteLength) {
       input = maxNoteLength;
     } else if (input < minNoteLength) {
@@ -365,7 +366,7 @@ class Application extends _react2.default.Component {
     this.setState({
       noteLength: input
     });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
+    // this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
     this.play();
   }
   newNumberOfArrows(e) {
