@@ -121,9 +121,7 @@ const makeMIDImessage = (index, length) => {
 const makePizzaSound = (index, length) => {
 
     // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
-    const frequencies = notesFrequencies('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
-    const midiKeyNumbers = [45, 47, 48, 50, 52, 54, 55, 57, 59, 61, 62, 64, 66, 67, 69, 71, 73, 74];
-    const noteIndex = index%frequencies.length;
+    const frequencies = notesFrequencies('A3 B3 C3 D3 E3 F3 G3 A4 B4 C4 D4 E4 F4 G4 A5 B5 C5 D5 E5 F5 G5');
     const aSound = new Pizzicato.Sound({ 
         source: 'wave', 
         options: {
@@ -259,6 +257,7 @@ const renderGrid = (grid) => {
   const populatedGrid = getRows(grid.size).map(populateRow);
   return populatedGrid.map(renderRow);
 };
+
 const maxArrows=30;
 const minArrows=1;
 const maxSize=18;
@@ -272,7 +271,7 @@ constructor(props) {
 
   this.state = {
     gridSize: 8,
-    noteLength: 250,
+    noteLength: 150,
     numberOfArows: 8,
     grid: newGrid(8, 8),
     playing: true,
@@ -323,7 +322,7 @@ newNoteLength(e) {
   clearInterval(this.timerID);
   let input = parseInt(e.target.value);
   if (isNaN(input)) {
-    input = 250;
+    input = 150;
   }else if(input > maxNoteLength){
     input = maxNoteLength;
   }else if(input < minNoteLength){
