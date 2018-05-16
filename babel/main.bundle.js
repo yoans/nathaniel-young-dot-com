@@ -348,12 +348,10 @@ class Application extends _react2.default.Component {
       return _this.nextGridHandler(_this.state.noteLength);
     }, this.state.noteLength);
     this.setState({ playing: true });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
   }
   pause() {
     clearInterval(this.timerID);
     this.setState({ playing: false });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
   }
   muteToggle() {
     this.setState({ muted: !this.state.muted });
@@ -385,7 +383,6 @@ class Application extends _react2.default.Component {
     this.setState({
       noteLength: input
     });
-    this.newGridHandler(this.state.numberOfArows, this.state.gridSize);
     this.play();
   }
   newNumberOfArrows(e) {
