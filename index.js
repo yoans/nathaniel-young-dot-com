@@ -393,7 +393,6 @@ render() {
 			<option value="">Not connected</option>
 		</select>
 
-    
     {/* <label className='arrow-input-label'>{'MIDI Output:'}</label>
     <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -406,11 +405,19 @@ render() {
   </div>
 </div> */}
 
-
-    <a href= 'http://earslap.com/page/otomata.html' className='image-credit aStyle'>Inspiration: Otomata by Earslap</a>
+    <a href="http://www.tobias-erichsen.de/software/loopmidi.html" target="_blank" className="image-credit aStyle">
+        Click here to learn how to create a Virtual MIDI Device
+    </a>
+    <a href= 'http://earslap.com/page/otomata.html' className='image-credit aStyle'>
+    Inspiration: Otomata by Earslap
+    </a>
     <a href="https://www.flickr.com/photos/aigle_dore" target="_blank" className="image-credit aStyle">
         Image Credit: Moyan Brenn
     </a>
+    <a href="http://www.tobias-erichsen.de" target="_blank" className="image-credit aStyle">
+        MIDI Wizard: Tobias Erichsen
+    </a>
+    
   </div>
 )};
 }

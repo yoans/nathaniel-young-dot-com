@@ -484,6 +484,11 @@ class Application extends _react2.default.Component {
       ),
       _react2.default.createElement(
         'a',
+        { href: 'http://www.tobias-erichsen.de/software/loopmidi.html', target: '_blank', className: 'image-credit aStyle' },
+        'Click here to learn how to create a Virtual MIDI Device'
+      ),
+      _react2.default.createElement(
+        'a',
         { href: 'http://earslap.com/page/otomata.html', className: 'image-credit aStyle' },
         'Inspiration: Otomata by Earslap'
       ),
@@ -491,6 +496,11 @@ class Application extends _react2.default.Component {
         'a',
         { href: 'https://www.flickr.com/photos/aigle_dore', target: '_blank', className: 'image-credit aStyle' },
         'Image Credit: Moyan Brenn'
+      ),
+      _react2.default.createElement(
+        'a',
+        { href: 'http://www.tobias-erichsen.de', target: '_blank', className: 'image-credit aStyle' },
+        'MIDI Wizard: Tobias Erichsen'
       )
     );
   }
