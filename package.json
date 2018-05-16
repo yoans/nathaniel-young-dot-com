@@ -11,6 +11,7 @@
     "test": "npm run babel && mocha index.spec.js"
   },
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "chance": "1.0.13",
     "express": "^4.13.3",
     "jekyll": "^3.0.0-beta1",

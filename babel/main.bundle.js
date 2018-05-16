@@ -155,14 +155,30 @@ const getIndex = function (x, y, size, vector) {
   return 0;
 };
 
+const makeMIDImessage = function (index, length) {
+
+  const midiKeyNumbers = [45, 47, 48, 50, 52, 54, 55, 57, 59, 61, 62, 64, 66, 67, 69, 71, 73, 74];
+  const noteIndex = index % midiKeyNumbers.length;
+
+  return {
+    play: function () {
+      (midiOut || { send: function () {} }).send([0x90, midiKeyNumbers[noteIndex], 0x40]);
+      setTimeout(function () {
+        const midcon = (midiOut || { send: function () {} }).send([0x80, midiKeyNumbers[noteIndex], 0x00]);
+      }, length - 1);
+    }
+  };
+};
 const makePizzaSound = function (index, length) {
 
   // const frequencies = notesFrequencies('D3 F3 G#3 C4 D#4 G4 A#5');
   const frequencies = (0, _notesFrequencies2.default)('A3 C3 D3 E3 F3 G3 A4 C4 D4 E4 F4 G4 A5 C5 D5 E5 F5 G5');
+  const midiKeyNumbers = [45, 47, 48, 50, 52, 54, 55, 57, 59, 61, 62, 64, 66, 67, 69, 71, 73, 74];
+  const noteIndex = index % frequencies.length;
   const aSound = new _pizzicato2.default.Sound({
     source: 'wave',
     options: {
-      frequency: frequencies[index % frequencies.length][0],
+      frequency: frequencies[noteIndex][0],
       attack: 0.1,
       release: 0.1,
       type: 'triangle'
@@ -186,16 +202,22 @@ const makePizzaSound = function (index, length) {
     play: function () {
       aSound.play();
       setTimeout(function () {
-        return aSound.stop();
-      }, length);
+        aSound.stop();
+      }, length - 1);
     }
   };
 };
-const playSounds = exports.playSounds = function (boundaryArrows, size, length) {
+const playSounds = exports.playSounds = function (boundaryArrows, size, length, muted) {
   boundaryArrows.map(function (arrow) {
     const speed = getIndex(arrow.x, arrow.y, size, arrow.vector);
-    const snd = makePizzaSound(speed, length);
-    snd.play();
+
+    if (!muted) {
+      const snd = makePizzaSound(speed, length);
+      snd.play();
+    }
+
+    const midiMessage = makeMIDImessage(speed, length);
+    midiMessage.play();
   });
 };
 const reduceArrowNumber = function (arrowSet) {
@@ -210,13 +232,11 @@ const nextGrid = exports.nextGrid = function (grid, length) {
     return arrowDictionary;
   }, {});
 
-  if (!grid.muted) {
-    const noisyArrowBoundaryDictionary = arrows.reduce(function (arrowDictionary, arrow) {
-      arrowDictionary[arrowBoundaryKey(arrow, size)] = [...newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)]), arrow];
-      return arrowDictionary;
-    }, {});
-    playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size, length);
-  }
+  const noisyArrowBoundaryDictionary = arrows.reduce(function (arrowDictionary, arrow) {
+    arrowDictionary[arrowBoundaryKey(arrow, size)] = [...newArrayIfFalsey(arrowDictionary[arrowBoundaryKey(arrow, size)]), arrow];
+    return arrowDictionary;
+  }, {});
+  playSounds(newArrayIfFalsey(noisyArrowBoundaryDictionary['boundary']), size, length, grid.muted);
 
   const arrowSets = Object.keys(arrowSetDictionary).map(function (key) {
     return arrowSetDictionary[key];
@@ -449,83 +469,67 @@ class Application extends _react2.default.Component {
         )
       ),
       _react2.default.createElement(
+        'label',
+        { className: 'arrow-input-label' },
+        'MIDI Output:'
+      ),
+      _react2.default.createElement(
+        'select',
+        { id: 'midiOut', className: 'arrow-input', onchange: 'changeMidiOut();' },
+        _react2.default.createElement(
+          'option',
+          { value: '' },
+          'Not connected'
+        )
+      ),
+      _react2.default.createElement(
         'a',
-        { href: 'http://earslap.com/page/otomata.html', className: 'image-credit' },
+        { href: 'http://earslap.com/page/otomata.html', className: 'image-credit aStyle' },
         'Inspiration: Otomata by Earslap'
       ),
       _react2.default.createElement(
         'a',
-        { href: 'https://www.flickr.com/photos/aigle_dore', target: '_blank', className: 'image-credit' },
+        { href: 'https://www.flickr.com/photos/aigle_dore', target: '_blank', className: 'image-credit aStyle' },
         'Image Credit: Moyan Brenn'
       )
     );
   }
 }
-exports.Application = Application; //
-// function midiProc(event) {
-//   data = event.data;
-//   var cmd = data[0] >> 4;
-//   var channel = data[0] & 0xf;
-//   var noteNumber = data[1];
-//   var velocity = data[2];
-//
-//   if ( cmd==8 || ((cmd==9)&&(velocity==0)) ) { // with MIDI, note on with velocity zero is the same as note off
-//     // note off
-//     //noteOff(b);
-//   } else if (cmd == 9) {  // Note on
-//     if ((noteNumber&0x0f)==8)
-//       tick();
-//     else {
-//       var x = noteNumber & 0x0f;
-//       var y = (noteNumber & 0xf0) >> 4;
-//       flipXY( x, y );
-//     }
-//   } else if (cmd == 11) { // Continuous Controller message
-//     switch (noteNumber) {
-//     }
-//   }
-// }
-//
-// function onMIDIFail( err ) {
-// 	alert("MIDI initialization failed.");
-// }
-//
-// function onMIDIInit( midi ) {
-//   midiAccess = midi;
-//   selectMIDIOut=document.getElementById("midiOut");
-//
-//   for (var input of midiAccess.inputs.values()) {
-//     if ((input.name.toString().indexOf("Launchpad") != -1)||(input.name.toString().indexOf("QUNEO") != -1)) {
-//       launchpadFound = true;
-//       selectMIDIIn.add(new Option(input.name,input.id,true,true));
-//       midiIn=input;
-// 	  midiIn.onmidimessage = midiProc;
-//     }
-//     else
-//     	selectMIDIIn.add(new Option(input.name,input.id,false,false));
-//   }
-//   selectMIDIIn.onchange = changeMIDIIn;
-//
-//   // clear the MIDI output select
-//   selectMIDIOut.options.length = 0;
-//   for (var output of midiAccess.outputs.values()) {
-//     if ((output.name.toString().indexOf("Launchpad") != -1)||(output.name.toString().indexOf("QUNEO") != -1)) {
-//       selectMIDIOut.add(new Option(output.name,output.id,true,true));
-//       midiOut=output;
-//     }
-//     else
-//     	selectMIDIOut.add(new Option(output.name,output.id,false,false));
-//   }
-//   selectMIDIOut.onchange = changeMIDIOut;
-//
-//   if (midiOut && launchpadFound) {
-// 	midiOut.send( [0xB0,0x00,0x00] ); // Reset Launchpad
-// 	midiOut.send( [0xB0,0x00,0x01] ); // Select XY mode
-// 	drawFullBoardToMIDI();
-//   }
-// }
-//
-//
-// navigator.requestMIDIAccess({}).then( onMIDIInit, onMIDIFail );
 
+exports.Application = Application;
+function onMIDIFail(err) {
+  alert("MIDI initialization failed.");
+}
+
+let selectMIDIOut = null;
+let midiAccess = null;
+let midiIn = null;
+let midiOut = null;
+let launchpadFound = false;
+
+function changeMIDIOut(ev) {
+  var selectedID = selectMIDIOut[selectMIDIOut.selectedIndex].value;
+
+  for (var output of midiAccess.outputs.values()) {
+    if (selectedID == output.id) {
+      midiOut = output;
+      return;
+    }
+  }
+  midiOut = null;
+}
+function onMIDIInit(midi) {
+  midiAccess = midi;
+  selectMIDIOut = document.getElementById("midiOut");
+
+  // clear the MIDI output select
+  selectMIDIOut.options.length = 0;
+  selectMIDIOut.add(new Option('Select Device', undefined, false, false));
+  for (var output of midiAccess.outputs.values()) {
+    selectMIDIOut.add(new Option(output.name, output.id, false, false));
+  }
+  selectMIDIOut.onchange = changeMIDIOut;
+}
+
+navigator.requestMIDIAccess({}).then(onMIDIInit, onMIDIFail);
 _reactDom2.default.render(_react2.default.createElement(Application, null), document.getElementById('root'));

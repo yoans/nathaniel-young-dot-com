@@ -24,7 +24,7 @@ body {
     border: 5px solid white;
     margin-bottom: 40px;
 }
-
+select,
 input {
     background-color: transparent;
     border: none;
@@ -37,6 +37,10 @@ input {
     border-color: white;
     border-width: 2px;
     border-style: solid
+}
+
+option {
+    color: black;
 }
 button {
     cursor: pointer;
@@ -96,7 +100,7 @@ li:hover {
     text-decoration: none;
     background-color: rgba(0, 0, 0, 0.5);
 }
-a {
+.aStyle {
     color: white;
     padding: 15px;
     text-decoration: none;
@@ -105,12 +109,10 @@ a {
     display: none;
 }
 
-
 .image-credit {
     display: block;
     border-style:none;
     text-align: center;
-    width: 100%;
 }
 @media (max-width: 450px) {
 ul {
@@ -132,7 +134,7 @@ li:hover {
     background-color: none;
     transition: none;
 }
-a {
+.aStyle {
     text-align: justify;
     border: 2px solid white;
     border-radius: 5px;
@@ -229,6 +231,21 @@ td{
     display: block;
     color: white;
     margin: auto;
+}
+
+option {
+
+background-color: transparent;
+border: none;
+color: white;
+border-radius: 2px;
+padding: 5px 0px 5px 0px;
+margin: 5px 5px;
+width: 136px;
+text-align: center;
+border-color: white;
+border-width: 2px;
+border-style: solid
 }
 @keyframes go-up {
     0%   {left:0px; top:19px;}
