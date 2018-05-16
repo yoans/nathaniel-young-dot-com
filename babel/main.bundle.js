@@ -497,6 +497,11 @@ class Application extends _react2.default.Component {
         'a',
         { href: 'http://www.tobias-erichsen.de', target: '_blank', className: 'image-credit aStyle' },
         'MIDI Wizard: Tobias Erichsen'
+      ),
+      _react2.default.createElement(
+        'a',
+        { href: 'https://github.com/cwilso', target: '_blank', className: 'image-credit aStyle' },
+        'Web-MIDI Wizard: Chris Wilson'
       )
     );
   }
