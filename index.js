@@ -405,7 +405,7 @@ render() {
     <a href="http://www.tobias-erichsen.de/software/loopmidi.html" target="_blank" className="image-credit aStyle">
         Click here to learn how to create a Virtual MIDI Device
     </a>
-    <a href= 'http://earslap.com/page/otomata.html' className='image-credit aStyle'>
+    <a href= 'http://earslap.com/page/otomata.html' target="_blank" className='image-credit aStyle'>
     Inspiration: Otomata by Earslap
     </a>
     <a href="https://www.flickr.com/photos/aigle_dore" target="_blank" className="image-credit aStyle">
