@@ -486,7 +486,7 @@ class Application extends _react2.default.Component {
       ),
       _react2.default.createElement(
         'a',
-        { href: 'http://earslap.com/page/otomata.html', className: 'image-credit aStyle' },
+        { href: 'http://earslap.com/page/otomata.html', target: '_blank', className: 'image-credit aStyle' },
         'Inspiration: Otomata by Earslap'
       ),
       _react2.default.createElement(
