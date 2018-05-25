@@ -265,6 +265,7 @@ const maxSize=18;
 const minSize=2;
 const minNoteLength=50;
 const maxNoteLength=500;
+const interactSound = (note, state) => state.muted ? undefined : makePizzaSound(note, 50).play();
 export class Application extends React.Component { 
 
 constructor(props) {
@@ -297,13 +298,16 @@ play() {
     this.state.noteLength
   );
   this.setState({playing: true});
+  interactSound(6,this.state);
 }
 pause() {
   clearInterval(this.timerID);
   this.setState({playing:false});
+  interactSound(5,this.state);
 }
 muteToggle() {
   this.setState({muted: !this.state.muted});
+  interactSound(1,this.state);
 }
 newSize(e) {
   let input = parseInt(e.target.value);
@@ -318,6 +322,7 @@ newSize(e) {
     gridSize: input
   });
     this.newGridHandler(this.state.numberOfArows, input);
+    interactSound(2,this.state);
 }
 newNoteLength(e) {
   clearInterval(this.timerID);
@@ -333,6 +338,7 @@ newNoteLength(e) {
     noteLength: input
   });
     this.play();
+    interactSound(3,this.state);
 }
 newNumberOfArrows(e) {
   let input = parseInt(e.target.value);
@@ -347,6 +353,7 @@ newNumberOfArrows(e) {
     numberOfArows: input
   });
   this.newGridHandler(input, this.state.gridSize)
+  interactSound(4,this.state);
 }
 nextGrid(length) {
   this.setState({
