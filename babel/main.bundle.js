@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Application = exports.nextGrid = exports.playSounds = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
+exports.Application = exports.nextGrid = exports.playSounds = exports.flipArrow = exports.rotateSet = exports.rotateArrow = exports.newArrayIfFalsey = exports.arrowBoundaryKey = exports.arrowKey = exports.moveArrow = exports.seedGrid = exports.newGrid = exports.addToGrid = exports.getArrow = exports.getRows = exports.getRandomNumber = exports.cycleVector = exports.getVector = exports.vectorOperations = exports.vectors = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -78,6 +78,16 @@ const getArrow = exports.getArrow = function (size) {
       vector: getVector()
     };
   };
+};
+const addToGrid = exports.addToGrid = function (grid, x, y) {
+  const nextGrid = _extends({}, grid, {
+    arrows: [...grid.arrows, {
+      x,
+      y,
+      vector: 0
+    }]
+  });
+  return nextGrid;
 };
 const newGrid = exports.newGrid = function (size, numberOfArrows) {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size));
@@ -219,9 +229,9 @@ const playSounds = exports.playSounds = function (boundaryArrows, size, length, 
     midiMessage.play();
   });
 };
-const reduceArrowNumber = function (arrowSet) {
-  return R.take(arrowSet.length % 4, arrowSet);
-}; //This has the side effect of destroying arrows that don't have the same vector
+const reduceArrowNumber = function (x) {
+  return x;
+}; //(arrowSet)=>R.take(arrowSet.length%4, arrowSet);//This has the side effect of destroying arrows that don't have the same vector
 const nextGrid = exports.nextGrid = function (grid, length) {
   const size = grid.size;
   const arrows = grid.arrows;
@@ -259,19 +269,18 @@ const nextGrid = exports.nextGrid = function (grid, length) {
 };
 
 const renderItem = function (item) {
+  const classes = R.uniqBy(function (x) {
+    return x.vector;
+  }, item).map(function ({ vector }) {
+    return vectors[vector];
+  });
   if (item.length) {
-    const classes = R.uniqBy(function (x) {
-      return x.vector;
-    }, item).map(function ({ vector }) {
-      return vectors[vector];
-    });
-
     return _react2.default.createElement(
       'td',
       null,
       _react2.default.createElement(
         'div',
-        { className: 'space' },
+        { className: 'space', onClick: item.spawn },
         classes.map(function (divClass) {
           return _react2.default.createElement('div', { className: divClass });
         })
@@ -281,7 +290,7 @@ const renderItem = function (item) {
   return _react2.default.createElement(
     'td',
     null,
-    _react2.default.createElement('div', { className: 'space' })
+    _react2.default.createElement('div', { className: 'space', onClick: item.spawn })
   );
 };
 
@@ -292,7 +301,7 @@ const renderRow = function (row) {
     row.map(renderItem)
   );
 };
-const renderGrid = function (grid) {
+const renderGrid = function (grid, spawnArrowFunction) {
 
   const populateArrow = function (y) {
     return function (x) {
@@ -306,7 +315,18 @@ const renderGrid = function (grid) {
   };
 
   const populatedGrid = getRows(grid.size).map(populateRow);
-  return populatedGrid.map(renderRow);
+  const addSpawnArrowToItem = function (y) {
+    return function (item, x) {
+      return Object.assign([...item], { spawn: function () {
+          return spawnArrowFunction(x, y);
+        } });
+    };
+  };
+  const addSpawnArrowsToRow = function (row, index) {
+    return row.map(addSpawnArrowToItem(index));
+  };
+  const populatedLivingGrid = populatedGrid.map(addSpawnArrowsToRow);
+  return populatedLivingGrid.map(renderRow);
 };
 
 const maxArrows = 30;
@@ -339,6 +359,7 @@ class Application extends _react2.default.Component {
     this.playHandler = this.play.bind(this);
     this.pauseHandler = this.pause.bind(this);
     this.muteToggleHandler = this.muteToggle.bind(this);
+    this.addToGridHandler = this.addToGrid.bind(this);
   }
 
   componentDidMount() {
@@ -418,6 +439,11 @@ class Application extends _react2.default.Component {
       grid: newGrid(size, number)
     });
   }
+  addToGrid(x, y) {
+    this.setState({
+      grid: addToGrid(this.state.grid, x, y)
+    });
+  }
   render() {
 
     return _react2.default.createElement(
@@ -471,7 +497,7 @@ class Application extends _react2.default.Component {
         _react2.default.createElement(
           'tbody',
           null,
-          renderGrid(this.state.grid)
+          renderGrid(this.state.grid, this.addToGridHandler)
         )
       ),
       _react2.default.createElement(

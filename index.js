@@ -36,6 +36,20 @@ export const getArrow = size => () => ({
   y: getRandomNumber(size),
   vector: getVector()
 });
+export const addToGrid = (grid, x, y) => {
+  const nextGrid = {
+    ...grid,
+    arrows: [
+      ...grid.arrows,
+      {
+        x,
+        y,
+        vector: 0
+      }
+    ]
+  };
+  return nextGrid;
+}
 export const newGrid = (size, numberOfArrows) => {
   const arrows = R.range(0, numberOfArrows).map(getArrow(size))
 
@@ -168,7 +182,7 @@ export const playSounds = (boundaryArrows, size, length, muted) => {
         midiMessage.play();
     })
 }
-const reduceArrowNumber = (arrowSet)=>R.take(arrowSet.length%4, arrowSet);//This has the side effect of destroying arrows that don't have the same vector
+const reduceArrowNumber = x=>x;//(arrowSet)=>R.take(arrowSet.length%4, arrowSet);//This has the side effect of destroying arrows that don't have the same vector
 export const nextGrid = (grid, length) => {
   const size = grid.size;
   const arrows = grid.arrows;
@@ -225,22 +239,24 @@ export const nextGrid = (grid, length) => {
 };
 
 const renderItem = (item) => {
-  if(item.length){
-    const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]);
-
-    return (
-      <td>
-          <div className={'space'}>
-              {classes.map(divClass=>(<div className={divClass}/>))}
-          </div>
-      </td>
-    )
-  }
+  const classes = R.uniqBy(x=>x.vector, item).map(({vector})=>vectors[vector]);
+if(item.length){
   return (
     <td>
-      <div className={'space'}/>
+      <div className={'space'} onClick={item.spawn}>
+        {
+          classes.map(divClass=>(<div className={divClass}/>))
+        }
+      </div>
     </td>
-    )
+  )
+}
+return (
+  <td>
+    <div className={'space'} onClick={item.spawn}>
+    </div>
+  </td>
+  )
 };
 
 const renderRow = (row) => {
@@ -250,13 +266,16 @@ const renderRow = (row) => {
     </tr>
   )
 };
-const renderGrid = (grid) => {
+const renderGrid = (grid, spawnArrowFunction) => {
   
   const populateArrow = y => x => grid.arrows.filter(arrow => arrow.x===x && arrow.y===y);
   const populateRow = (row, index) => row.map(populateArrow(index));
 
   const populatedGrid = getRows(grid.size).map(populateRow);
-  return populatedGrid.map(renderRow);
+  const addSpawnArrowToItem = y => (item, x) => Object.assign([...item], {spawn: ()=>spawnArrowFunction(x, y)});
+  const addSpawnArrowsToRow = (row, index) => row.map(addSpawnArrowToItem(index))
+  const populatedLivingGrid = populatedGrid.map(addSpawnArrowsToRow)
+  return populatedLivingGrid.map(renderRow);
 };
 
 const maxArrows=30;
@@ -287,6 +306,7 @@ constructor(props) {
   this.playHandler = this.play.bind(this);
   this.pauseHandler = this.pause.bind(this);
   this.muteToggleHandler = this.muteToggle.bind(this);
+  this.addToGridHandler = this.addToGrid.bind(this);
 }
 
 componentDidMount() {
@@ -365,6 +385,11 @@ newGrid(number, size) {
     grid: newGrid(size, number)
   })
 }
+addToGrid(x, y) {
+  this.setState({
+    grid: addToGrid(this.state.grid, x, y)
+  })
+}
 render() {
   
   return(
@@ -383,14 +408,12 @@ render() {
         <button className='arrow-input' onClick={this.pauseHandler}>{'Stop'}</button> :
         <button className='arrow-input' onClick={this.playHandler}>{'Start'}</button>
     }
-    
-
-    <table align="center">
-      <tbody>
-        {renderGrid(this.state.grid)}
-      </tbody>
-      
-    </table>
+      <table align="center">
+        <tbody>
+          {renderGrid(this.state.grid, this.addToGridHandler)}
+        </tbody>
+        
+      </table>
     
     <label className='arrow-input-label'>{'MIDI Output:'}</label>
 		<select id='midiOut' className='arrow-input' onchange='changeMidiOut();'>
