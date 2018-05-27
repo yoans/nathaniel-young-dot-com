@@ -42,7 +42,7 @@ body {
     height: 180px;
     border-radius: 100%;
     border: 5px solid white;
-    margin-bottom: 40px;
+    margin: auto;
 }
 
 h1 {
@@ -66,6 +66,8 @@ h3 {
     text-align: center;
 }
 ul {
+    margin: auto;
+    padding: 2%;
     list-style: none;
     padding: 0;
 }
