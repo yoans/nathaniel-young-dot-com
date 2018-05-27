@@ -52,11 +52,13 @@ h1 {
     font-size: 4em;
     font-family: 'Open Sans';
     margin: -10px 0;
+    cursor: default;
 }
 h3 {
     color: white;
     padding-bottom: 20px;
     font-weight: thin;
+    cursor: default;
 }
 .content {
     padding-top: 40px;
@@ -80,9 +82,10 @@ li {
 li:hover {
     color: white;
     text-decoration: none;
-    -webkit-transition: 500ms;
-    -moz-transition: 500ms;
-    transition: 500ms;
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    transition: 300ms;
+    background-color: #5f799fee;
     text-decoration: none;
 }
 .aStyle {
@@ -90,6 +93,33 @@ li:hover {
     padding: 15px;
     text-decoration: none;
 }
+.aButton {
+    margin:auto;
+    background-color: #5f799f;
+    box-shadow: 1px 8px 8px #425d8d;
+    color: white;
+    padding: 1em 1.5em;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 200px;
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+}
+a.aButton:hover {
+  background-color: #79aaff;
+  cursor: pointer;
+  -webkit-transition: 300ms;
+  -moz-transition: 300ms;
+  transition: 300ms;
+}
+
+a.aButton:active {
+  box-shadow: none;
+  top: 5px;
+}
+
 .description {
     display: none;
 }
