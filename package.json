@@ -42,6 +42,6 @@
     "mocha": "^5.0.5",
     "path": "^0.12.7",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
+    "webpack-cli": "^5.0.1"
   }
 }
