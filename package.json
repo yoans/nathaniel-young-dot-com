@@ -13,7 +13,7 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "chance": "1.0.13",
-    "express": "^4.13.3",
+    "express": "^4.18.2",
     "jekyll": "^3.0.0-beta1",
     "notes-frequencies": "^1.0.0",
     "pizzicato": "^0.6.3",
@@ -38,7 +38,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2017": "^6.24.1",
     "chai": "^4.1.2",
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "mocha": "^5.0.5",
     "path": "^0.12.7",
     "webpack": "^4.1.1",
