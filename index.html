@@ -10,7 +10,10 @@
         
         <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
         
-        <link rel="stylesheet" href="css/front.css">
+    <link rel="stylesheet" href="css/front.css">
+    <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
+    <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
+    <link rel="preload" as="image" href="svgs/pascal-triangle.svg">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -23,7 +26,8 @@
     </head>
     <body>
             
-        <div class="absolutePosition">
+    <div id="particles-js"></div>
+    <div class="absolutePosition">
         
             <!-- stats - count particles -->
             <!-- <div class="count-particles">
@@ -43,20 +47,40 @@
                 <li><a class="fa fa-2x fa-soundcloud aStyle" href="https://soundcloud.com/nathaniel-pierce-young"><span class="description">Soundcloud</span></a></li>
                 <li><a class="fa fa-2x fa-envelope aStyle" href="mailto:contact@nathaniel-young.com"><span class="description">Email</span></a></li>
             </ul>
-            <a class="center aButton aStyle" href="http://theprospectsource.com/">Prospect Source</a>
-            <a class="center aButton aStyle" href="https://sagaciasoft.com">Sagaciasoft</a>
-            <a class="center aButton aStyle" href="https://arrowgrid.sagaciasoft.com">Arrowgrid</a>
-            <a class="center aButton aStyle" href="https://pascalsmusicbox.sagaciasoft.com">Pascals Music Box</a>
+            <div class="projects-container">
+                <div class="project-card">
+                    <a href="https://sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="svgs/sagaciasoft-logo.svg" alt="Sagaciasoft" class="sagaciasoft-logo">
+                        <div class="project-info">
+                            <h3>Sagaciasoft</h3>
+                            <p>A software consultancy.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid" class="arrowgrid-logo">
+                        <div class="project-info">
+                            <h3>Arrowgrid</h3>
+                            <p>A melody sandbox.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://pascalsmusicbox.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="svgs/pascal-triangle.svg" alt="Pascal's Music Box" class="pascal-logo">
+                        <div class="project-info">
+                            <h3>Pascal's Music Box</h3>
+                            <p>A music box for the web.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- particles.js container -->
-        <div id="particles-js"/>
+        <!-- scripts -->
+        <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+        <script defer src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <!-- <script defer src="http://threejs.org/examples/js/libs/stats.min.js"></script> -->
+        <script defer src="./index.js" type="text/javascript"></script>
     </body>
 </html>
-
-<!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
-<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js">
-</script>
-<!-- stats.js lib -->
-<!-- <script src="http://threejs.org/examples/js/libs/stats.min.js">
-</script> -->
-<script src="./index.js" type="text/javascript"></script>
