@@ -13,24 +13,22 @@ permalink: /
         {% if site.favicon_img %}
         <link rel="shortcut icon" href="{{ site.favicon_img_path }}" />
         {% endif %}
-        <link rel="stylesheet" href="{{ "css/front.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "css/front.css" | prepend: site.baseurl }}">
+    <link rel="preload" as="image" href="{{ "svgs/sagaciasoft-logo.svg" | prepend: site.baseurl }}">
+    <link rel="preload" as="image" href="{{ "svgs/arrowgrid-logo.svg" | prepend: site.baseurl }}">
+    <link rel="preload" as="image" href="{{ "svgs/pascal-triangle.svg" | prepend: site.baseurl }}">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
     <body>
-        <div class="content">
-            {% if site.front_img %}
-                <img src="{{ site.front_img_path }}" id="fullscreen">
-            {% endif %}
-
+        <div id="particles-js"></div>
+        <div class="absolutePosition">
             {% if site.avatar %}
                 <img src="{{ site.avatar_img_path }}" id="avatar">
             {% endif %}
-
             <h1>{{ site.name }}</h1>
             <h3>{{ site.description }}</h3>
-
-                <ul>
+                <ul class="center">
                     {% if site.github_username %}
                     <li><a class="fa fa-2x fa-github" href="https://github.com/{{ site.github_username }}"><span class="description">GitHub</span></a></li>
                     {% endif %}
@@ -115,12 +113,37 @@ permalink: /
                     <li><a class="fa fa-2x fa-key" href="{{ site.public_key_url }}"><span class="description">PGP Key</span></a></li>
                     {% endif %}
                 </ul>
-            <a href="{{ site.front_img_source }}" target="_blank" id="image-credit">
-                Image Credit: {{ site.front_img_name }}
-            </a>
-            <div id="root"/>
+            <div class="projects-container">
+                <div class="project-card">
+                    <a href="https://sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ "svgs/sagaciasoft-logo.svg" | prepend: site.baseurl }}" alt="Sagaciasoft" class="sagaciasoft-logo">
+                        <div class="project-info">
+                            <h3>Sagaciasoft</h3>
+                            <p>A software consultancy.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ "svgs/arrowgrid-logo.svg" | prepend: site.baseurl }}" alt="Arrowgrid" class="arrowgrid-logo">
+                        <div class="project-info">
+                            <h3>Arrowgrid</h3>
+                            <p>A powerful data grid component.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://pascalsmusicbox.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ "svgs/pascal-triangle.svg" | prepend: site.baseurl }}" alt="Pascal's Music Box" class="pascal-logo">
+                        <div class="project-info">
+                            <h3>Pascal's Music Box</h3>
+                            <p>A music box for the web.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </body>
 </html>
-
-<script src="./build/main.bundle.js" type="text/javascript"></script>
+<script defer src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script defer src="{{ "index.js" | prepend: site.baseurl }}" type="text/javascript"></script>
