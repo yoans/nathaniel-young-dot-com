@@ -226,7 +226,7 @@ canvas { display:block; }
 }
 
 /* Sagaciasoft logo image: ensure consistent scaling and white color like Arrowgrid SVG */
-.sagaciasoft-logo, .arrowgrid-logo, .pascal-logo {
+.sagaciasoft-logo, .arrowgrid-logo, .pascal-logo, .brg-logo {
     width: 100%;
     height: 180px; /* unified height */
     object-fit: contain;
