@@ -87,3 +87,31 @@ particlesJS("particles-js", {
   },
   "retina_detect": true
 });
+
+// Mobile menu toggle
+function toggleMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+}
+
+// Close menu when clicking a link
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const menu = document.querySelector('.nav-links');
+            if (hamburger && menu) {
+                hamburger.classList.remove('active');
+                menu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+});
