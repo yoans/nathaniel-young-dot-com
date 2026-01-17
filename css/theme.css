@@ -485,20 +485,24 @@ body {
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
     padding: 12px;
     z-index: 101;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
 }
 
 .hamburger span {
     display: block;
     width: 24px;
-    height: 2px;
-    background: var(--text-primary);
+    height: 3px;
+    background-color: #f5f0e8;
+    border-radius: 2px;
     transition: all 0.3s ease;
     pointer-events: none;
 }
