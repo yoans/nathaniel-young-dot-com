@@ -481,6 +481,14 @@ body {
 /* ===== Responsive ===== */
 
 /* Hamburger Menu */
+.nav-toggle {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -507,15 +515,15 @@ body {
     pointer-events: none;
 }
 
-.hamburger.active span:nth-child(1) {
+.nav-toggle:checked + .hamburger span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
 
-.hamburger.active span:nth-child(2) {
+.nav-toggle:checked + .hamburger span:nth-child(2) {
     opacity: 0;
 }
 
-.hamburger.active span:nth-child(3) {
+.nav-toggle:checked + .hamburger span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
@@ -548,7 +556,7 @@ body {
         margin: 0;
     }
     
-    .nav-links.active {
+    .nav-toggle:checked ~ .nav-links {
         display: flex;
     }
     

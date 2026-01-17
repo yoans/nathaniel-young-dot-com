@@ -26,11 +26,12 @@
                 <img src="https://avatars0.githubusercontent.com/u/5156592" alt="Nathaniel Young">
                 <span>Nathaniel Young</span>
             </a>
-            <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+            <label for="nav-toggle" class="hamburger" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </button>
+            </label>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="experience.html" class="active">Experience</a></li>
@@ -365,28 +366,6 @@
         </footer>
 
         <!-- Scripts -->
-        <script>
-            function toggleMenu() {
-                var hamburger = document.querySelector('.hamburger');
-                var navLinks = document.querySelector('.nav-links');
-                if (!hamburger || !navLinks) return;
-                hamburger.classList.toggle('active');
-                navLinks.classList.toggle('active');
-                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-            }
-            document.addEventListener('DOMContentLoaded', function() {
-                var links = document.querySelectorAll('.nav-links a');
-                for (var i = 0; i < links.length; i++) {
-                    links[i].addEventListener('click', function() {
-                        var hamburger = document.querySelector('.hamburger');
-                        var navLinks = document.querySelector('.nav-links');
-                        if (hamburger) hamburger.classList.remove('active');
-                        if (navLinks) navLinks.classList.remove('active');
-                        document.body.style.overflow = '';
-                    });
-                }
-            });
-        </script>
         <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script defer src="./index.js" type="text/javascript"></script>
     </body>
