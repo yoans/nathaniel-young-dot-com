@@ -93,12 +93,17 @@ function toggleMenu() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     
+    if (!hamburger || !navLinks) return;
+    
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
     
     // Prevent body scroll when menu is open
     document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
 }
+
+// Make toggleMenu globally available
+window.toggleMenu = toggleMenu;
 
 // Close menu when clicking a link
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,4 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    
+    // Also attach click listener directly to hamburger for iOS
+    const hamburger = document.querySelector('.hamburger');
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
+    }
 });
