@@ -1,116 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Nathaniel Young | Wielder of Agency</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="I am the master of my domain.">
-        <link rel="canonical" href="www.nathaniel-young.com/">
+        <meta name="description" content="Software developer and AI specialist. 10+ years building products that matter. Explore my work and experience.">
+        <link rel="canonical" href="https://www.nathaniel-young.com/">
         
         <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
         
-    <link rel="stylesheet" href="css/front.css">
-    <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
-    <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
-    <link rel="preload" as="image" href="svgs/pascal-triangle.svg">
-    <link rel="preload" as="image" href="svgs/brg-logo.svg">
-    <link rel="preload" as="image" href="svgs/darkforest.svg">
-    <link rel="preload" as="image" href="svgs/petprotagonists.svg">
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-5716302421806352",
-    enable_page_level_ads: true
-  });
-</script>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/theme.css">
+        
+        <!-- Preload project images -->
+        <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
+        <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
+        <link rel="preload" as="image" href="svgs/pascal-triangle.svg">
+        <link rel="preload" as="image" href="svgs/brg-logo.svg">
+        <link rel="preload" as="image" href="svgs/darkforest.svg">
+        <link rel="preload" as="image" href="svgs/petprotagonists.svg">
     </head>
     <body>
-            
-    <div id="particles-js"></div>
-    <div class="absolutePosition">
-        
-            <!-- stats - count particles -->
-            <!-- <div class="count-particles">
-                <span class="js-count-particles">--</span>
-                particles
-            </div> -->
-                <!-- <a href="https://sagaciasoft.com" class="image-credit"> -->
-                    <img class="center" src="https://avatars0.githubusercontent.com/u/5156592" id="avatar">
-                <!-- </a> -->
-            <h1 class="center">Nathaniel Young</h1>
-            <ul class="center">
-                <li><a class="fa fa-2x fa-github aStyle" href="https://github.com/yoans"><span class="description">GitHub</span></a></li>
-                <li><a class="fa fa-2x fa-facebook aStyle" href="https://facebook.com/youngmanathan"><span class="description">Facebook</span></a></li>
-                <li><a class="fa fa-2x fa-linkedin aStyle" href="https://linkedin.com/in/nathaniel-young-pro"><span class="description">LinkedIn</span></a></li>
-                <li><a class="fa fa-2x fa-instagram aStyle" href="https://instagram.com/nathanyoans"><span class="description">Instagram</span></a></li>
-                <li><a class="fa fa-2x fa-steam aStyle" href="http://steamcommunity.com/id/yoans"><span class="description">Steam</span></a></li>
-                <li><a class="fa fa-2x fa-soundcloud aStyle" href="https://soundcloud.com/nathaniel-pierce-young"><span class="description">Soundcloud</span></a></li>
-                <li><a class="fa fa-2x fa-envelope aStyle" href="mailto:contact@nathaniel-young.com"><span class="description">Email</span></a></li>
+        <!-- Navigation -->
+        <nav class="site-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="https://avatars0.githubusercontent.com/u/5156592" alt="Nathaniel Young">
+                <span>Nathaniel Young</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="projects-container">
+        </nav>
+
+        <!-- Particles Background -->
+        <div id="particles-js"></div>
+
+        <!-- Hero Section with Terminal -->
+        <section class="hero">
+            <div class="hero-intro">
+                <p class="greeting">// welcome to the home page of...</p>
+                <h1>Nathaniel Young</h1>
+                <p class="tagline">Software Developer · <span class="accent">Wielder of Agency</span></p>
+            </div>
+
+            <!-- Terminal Interface -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <button class="terminal-btn clear" onclick="terminalAction('close')" title="Clear terminal">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                    <button class="terminal-btn help" onclick="terminalAction('minimize')" title="Show help">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </button>
+                    <button class="terminal-btn info" onclick="terminalAction('expand')" title="Quick overview">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <span class="terminal-title">nathaniel@portfolio ~ </span>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">→</span>
+                        <span class="terminal-command" id="intro-command"></span>
+                        <span class="terminal-cursor" id="intro-cursor"></span>
+                    </div>
+                    <div id="terminal-output"></div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">→</span>
+                    <input type="text" class="terminal-input" id="terminal-input" placeholder="Type here to learn about me... try 'help' or ask anything!" autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <a href="experience.html" class="quick-action">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>View Experience</span>
+                </a>
+                <a href="projects.html" class="quick-action">
+                    <i class="fa-solid fa-rocket"></i>
+                    <span>See Projects</span>
+                </a>
+                <a href="https://github.com/yoans" class="quick-action" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/nathaniel-young-pro" class="quick-action" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section class="section" id="projects">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p>Products I've built that blend creativity with technology</p>
+            </div>
+
+            <div class="projects-grid">
                 <div class="project-card">
                     <a href="https://sagaciasoft.com" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/sagaciasoft-logo.svg" alt="Sagaciasoft" class="sagaciasoft-logo">
-                        <div class="project-info">
+                        <div class="project-card-image">
+                            <img src="svgs/sagaciasoft-logo.svg" alt="Sagaciasoft">
+                        </div>
+                        <div class="project-card-content">
                             <h3>Sagaciasoft</h3>
-                            <p>A software consultancy.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="project-card">
-                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid" class="arrowgrid-logo">
-                        <div class="project-info">
-                            <h3>Arrowgrid</h3>
-                            <p>A melody sandbox.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="project-card">
-                    <a href="https://pascalsmusicbox.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/pascal-triangle.svg" alt="Pascal's Music Box" class="pascal-logo">
-                        <div class="project-info">
-                            <h3>Pascal's Music Box</h3>
-                            <p>A music box for the web.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="project-card">
-                    <a href="https://biblerepairgame.com" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/brg-logo.svg" alt="Bible Repair Game" class="brg-logo">
-                        <div class="project-info">
-                            <h3>Bible Repair Game</h3>
-                            <p>A game for Bible study.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="project-card">
-                    <a href="https://darkforest.sagaciasoft.com/" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/darkforest.svg" alt="Dark Forest AI" class="darkforest-logo">
-                        <div class="project-info">
-                            <h3>Dark Forest AI</h3>
-                            <p>A project for generating content.</p>
+                            <p>AI consultancy. Custom chatbots, voice agents, and business automation.</p>
                         </div>
                     </a>
                 </div>
                 <div class="project-card">
                     <a href="https://petprotagonists.com" target="_blank" rel="noopener noreferrer">
-                        <img src="svgs/petprotagonists.svg" alt="Pet Protagonists" class="petprotagonists-logo">
-                        <div class="project-info">
+                        <div class="project-card-image">
+                            <img src="svgs/petprotagonists.svg" alt="Pet Protagonists">
+                        </div>
+                        <div class="project-card-content">
                             <h3>Pet Protagonists</h3>
-                            <p>A place where pets take stage.</p>
+                            <p>Turn your pet into a storybook hero. AI-generated illustrated tales.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://biblerepairgame.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/brg-logo.svg" alt="Bible Repair Game">
+                        </div>
+                        <div class="project-card-content">
+                            <h3>Bible Repair Game</h3>
+                            <p>Unscramble verses, learn scripture. iOS, Android, and web.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid">
+                        </div>
+                        <div class="project-card-content">
+                            <h3>Arrowgrid</h3>
+                            <p>Draw arrows, generate melodies. An interactive music toy.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://pascalsmusicbox.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/pascal-triangle.svg" alt="Pascal's Music Box">
+                        </div>
+                        <div class="project-card-content">
+                            <h3>Pascal's Music Box</h3>
+                            <p>Pascal's triangle meets music theory. Mathematical melodies.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="https://darkforest.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/darkforest.svg" alt="Dark Forest AI">
+                        </div>
+                        <div class="project-card-content">
+                            <h3>Dark Forest AI</h3>
+                            <p>Autonomous multi-agent blog network. AI-generated content at scale.</p>
                         </div>
                     </a>
                 </div>
             </div>
-        </div>
-        <!-- scripts -->
-        <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
-        <script defer src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <!-- <script defer src="http://threejs.org/examples/js/libs/stats.min.js"></script> -->
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="social-links">
+                <a href="https://github.com/yoans" class="social-link" target="_blank" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/nathaniel-young-pro" class="social-link" target="_blank" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="https://soundcloud.com/nathaniel-pierce-young" class="social-link" target="_blank" aria-label="SoundCloud">
+                    <i class="fa-brands fa-soundcloud"></i>
+                </a>
+                <a href="https://facebook.com/youngmanathan" class="social-link" target="_blank" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com/nathanyoans" class="social-link" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="contact.html" class="social-link" aria-label="Contact">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+            <p style="margin-top: 24px;">© 2026 Nathaniel Young. Built with purpose.</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script defer src="./index.js" type="text/javascript"></script>
+        <script defer src="./terminal.js" type="text/javascript"></script>
     </body>
 </html>
