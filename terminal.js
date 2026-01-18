@@ -192,7 +192,14 @@ function showOutput(lines, container = null) {
         setTimeout(() => {
             const lineEl = document.createElement('div');
             lineEl.className = 'terminal-line output';
-            lineEl.textContent = line || '\u00A0'; // Non-breaking space for empty lines
+            
+            // Check if line contains HTML (like a link)
+            if (line && line.includes('<a ')) {
+                lineEl.innerHTML = line;
+            } else {
+                lineEl.textContent = line || '\u00A0'; // Non-breaking space for empty lines
+            }
+            
             outputEl.appendChild(lineEl);
             
             // Scroll to bottom
@@ -410,15 +417,14 @@ function processNaturalLanguage(input) {
         ];
     }
     
-    // Default response
+    // Default response - suggest AI page
     return [
-        `I don't have specific info for "${input}"`,
+        `Hmm, I don't have a preset answer for that.`,
         "",
-        "Try these commands:",
-        "  help, skills, experience, projects, contact",
+        "Try: help, skills, experience, projects, contact",
         "",
-        "Or ask about: Microsoft, Principal, John Deere,",
-        "Sagaciasoft, AI, or any of my projects!"
+        "Or for deeper questions...",
+        '<a href="ai.html" class="terminal-link">→ Talk to Nathaniel\'s AI</a>'
     ];
 }
 
