@@ -654,12 +654,17 @@
     
     /* Terminal header - hide title on mobile to avoid overlap */
     .ai-terminal .terminal-title {
-        display: none;
+        display: none !important;
+        visibility: hidden !important;
     }
     
     .ai-terminal .terminal-header {
         justify-content: flex-start;
         padding: 12px 14px;
+    }
+    
+    .terminal-controls {
+        flex: 1;
     }
     
     .ai-terminal .terminal-body {
