@@ -379,23 +379,22 @@ async function callOpenAI(userMessage, apiKey) {
 
 // Server-side proxy call (recommended for public sites)
 // Expected proxy contract:
-// POST PROXY_URL with { messages, model, max_tokens, temperature }
-// returns { content: "..." } or OpenAI-like { choices: [{ message: { content } }] }
+// POST PROXY_URL with { messages, context }
+// returns { response: "..." }
 async function callOpenAIProxy(userMessage) {
+    const fullMessages = [
+        ...conversationHistory.slice(-10),
+        { role: 'user', content: userMessage }
+    ];
+    
     const response = await fetch(PROXY_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [
-                { role: 'system', content: NATHANIEL_CONTEXT },
-                ...conversationHistory.slice(-10),
-                { role: 'user', content: userMessage }
-            ],
-            max_tokens: 800,
-            temperature: 0.7
+            messages: fullMessages,
+            context: NATHANIEL_CONTEXT
         })
     });
 
@@ -404,6 +403,9 @@ async function callOpenAIProxy(userMessage) {
     }
 
     const data = await response.json();
+    // Our proxy returns { response: "..." }
+    if (typeof data?.response === 'string') return data.response;
+    // Fallback for other formats
     if (typeof data?.content === 'string') return data.content;
     if (typeof data?.choices?.[0]?.message?.content === 'string') return data.choices[0].message.content;
     throw new Error('Proxy response missing content');
