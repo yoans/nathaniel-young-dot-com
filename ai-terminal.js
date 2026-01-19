@@ -275,14 +275,9 @@ function activateAI() {
     setTimeout(() => {
         addMessage('assistant', `Hey there! 👋
 
-This is Nathaniel's AI — it can answer questions about Nathaniel Young. It can share his experience, skills, projects, interests, and future goals.
+Ask me about Nathaniel's experience, skills, projects, or paste a job description to see if he'd be a good match.
 
-**Try asking me:**
-• "What makes Nathaniel unique as a developer?"
-• "Tell me about his AI expertise"
-• Paste a job description to see if he'd be a good match
-
-What would you like to know?`);
+**Try:** "What makes him unique?" or "Tell me about his AI expertise"`);
     }, 500);
     
     // Focus input

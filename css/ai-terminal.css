@@ -652,12 +652,57 @@
         font-size: 1em;
     }
     
+    /* Terminal header - hide title on mobile to avoid overlap */
+    .ai-terminal .terminal-title {
+        display: none;
+    }
+    
+    .ai-terminal .terminal-header {
+        justify-content: flex-start;
+        padding: 12px 14px;
+    }
+    
     .ai-terminal .terminal-body {
         height: 350px;
+        padding: 16px 12px;
+    }
+    
+    /* Make message text smaller and tighter on mobile */
+    .ai-message.assistant .message-content {
+        font-size: 0.9em;
+        padding: 10px 12px;
+        max-width: 85%;
+    }
+    
+    .ai-message.user .message-content {
+        font-size: 0.9em;
+        padding: 10px 12px;
+        max-width: 85%;
+    }
+    
+    /* Input area adjustments */
+    .terminal-input-area {
+        padding: 12px;
+        gap: 8px;
+    }
+    
+    .ai-terminal-input {
+        font-size: 0.9em;
+        padding: 10px 12px;
+    }
+    
+    .ai-terminal-input::placeholder {
+        font-size: 0.85em;
+    }
+    
+    .send-btn {
+        width: 44px;
+        height: 44px;
     }
     
     .suggestions-bar {
         gap: 8px;
+        flex-wrap: wrap;
     }
     
     .suggestion-chip {
