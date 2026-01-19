@@ -117,9 +117,35 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Simple local response generation (no API key required)
-// For a production site, you'd integrate with OpenAI or your own backend
+// AI-powered response generation via proxy
 async function generateResponse(userMessage) {
+    try {
+        const response = await fetch('https://chat-ai.nathaniel-young.com/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                context: NATHANIEL_CONTEXT
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data.response;
+    } catch (error) {
+        console.error('Chat error:', error);
+        // Fallback response
+        return "I'm having trouble connecting right now. Feel free to email me at contact@nathaniel-young.com or check out my projects on this page!";
+    }
+}
+
+// Legacy pattern-based fallback (keeping for reference)
+async function generateResponseFallback(userMessage) {
     const msg = userMessage.toLowerCase();
     
     // Simulate typing delay
