@@ -224,6 +224,10 @@ let API_KEY = '';
 const PROXY_URL = window.NATE_AI_PROXY_URL || ''; // e.g. "/api/nate-ai" on your host
 const LOCAL_STORAGE_KEY = 'NATE_AI_OPENAI_KEY';
 
+// Conversation tracking for email
+let conversationSent = false;
+let sessionStartTime = null;
+
 function getClientApiKey() {
     if (API_KEY && typeof API_KEY === 'string') return API_KEY;
     try {
@@ -231,6 +235,54 @@ function getClientApiKey() {
         return fromStorage || '';
     } catch {
         return '';
+    }
+}
+
+// Send conversation email when user leaves or after inactivity
+async function sendConversationEmail() {
+    // Only send if there's a real conversation (at least 1 user message) and not already sent
+    const userMessages = conversationHistory.filter(m => m.role === 'user');
+    if (conversationSent || userMessages.length === 0 || !PROXY_URL) return;
+    
+    conversationSent = true; // Prevent duplicate sends
+    
+    const sessionDuration = sessionStartTime 
+        ? Math.round((Date.now() - sessionStartTime) / 1000 / 60) + ' minutes'
+        : 'Unknown';
+    
+    const metadata = {
+        userAgent: navigator.userAgent,
+        referrer: document.referrer || 'Direct',
+        sessionDuration: sessionDuration,
+        url: window.location.href
+    };
+    
+    try {
+        // Use sendBeacon for reliability when page is unloading
+        const proxyBase = PROXY_URL.replace(/\/chat\/?$/, '');
+        const sendConversationUrl = proxyBase + '/send-conversation';
+        
+        const payload = JSON.stringify({
+            messages: conversationHistory,
+            metadata: metadata
+        });
+        
+        // Try sendBeacon first (works during page unload)
+        if (navigator.sendBeacon) {
+            const blob = new Blob([payload], { type: 'application/json' });
+            navigator.sendBeacon(sendConversationUrl, blob);
+        } else {
+            // Fallback to fetch
+            await fetch(sendConversationUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                keepalive: true
+            });
+        }
+        console.log('Conversation sent to email');
+    } catch (error) {
+        console.error('Failed to send conversation email:', error);
     }
 }
 
@@ -254,6 +306,17 @@ function initAITerminal() {
         }
     });
     
+    // Send conversation when user leaves the page
+    window.addEventListener('beforeunload', sendConversationEmail);
+    window.addEventListener('pagehide', sendConversationEmail);
+    
+    // Also send when tab becomes hidden (mobile switching apps, etc.)
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            sendConversationEmail();
+        }
+    });
+    
     // Auto-resize textarea
     input.addEventListener('input', () => {
         input.style.height = 'auto';
@@ -268,6 +331,8 @@ function activateAI() {
     gate.classList.add('hidden');
     terminal.classList.add('active');
     aiEnabled = true;
+    sessionStartTime = Date.now(); // Track when conversation started
+    conversationSent = false; // Reset for new session
     
     // Show welcome message
     addMessage('system', '// Nathaniel\'s AI initialized. Ask me anything about Nathaniel.');
@@ -766,9 +831,14 @@ function updateSendButton(enabled) {
 }
 
 function clearAITerminal() {
+    // Send current conversation before clearing (if any)
+    sendConversationEmail();
+    
     const output = document.getElementById('ai-terminal-output');
     output.innerHTML = '';
     conversationHistory = [];
+    conversationSent = false; // Allow new conversation to be sent
+    sessionStartTime = Date.now(); // Reset session timer
     addMessage('system', '// Conversation cleared. Ask me anything!');
 }
 
