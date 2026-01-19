@@ -21,11 +21,17 @@ app.get('/', (req, res) => {
 // Chat endpoint
 app.post('/chat', async (req, res) => {
   try {
-    const { message, context } = req.body;
+    const { messages, context, messageCount } = req.body;
 
-    if (!message) {
-      return res.status(400).json({ error: 'Message is required' });
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: 'Messages array is required' });
     }
+
+    // Build the conversation with system context
+    const conversationMessages = [
+      { role: 'system', content: context || 'You are a helpful assistant.' },
+      ...messages
+    ];
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -35,10 +41,7 @@ app.post('/chat', async (req, res) => {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: context || 'You are a helpful assistant.' },
-          { role: 'user', content: message }
-        ],
+        messages: conversationMessages,
         max_tokens: 500,
         temperature: 0.7
       })

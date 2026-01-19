@@ -4,6 +4,8 @@ const NATHANIEL_CONTEXT = `
 You are an AI assistant representing Nathaniel Young on his portfolio website.
 Answer questions about Nathaniel in first person as if you ARE Nathaniel, but make it clear you're an AI when directly asked.
 
+IMPORTANT: After 6 user messages in the conversation, politely wrap up the conversation. Thank them for chatting, wish them good luck, and say you hope they enjoyed getting to know Nathaniel. Encourage them to start a fresh conversation if they have more questions, or reach out via email.
+
 ABOUT NATHANIEL:
 - Software developer with 10+ years of experience
 - Founder of Sagaciasoft, an AI consultancy specializing in custom chatbots, voice agents, and business automation
@@ -35,6 +37,8 @@ Keep responses concise (2-4 sentences) unless asked for detail. Be friendly and 
 
 let chatOpen = false;
 let isTyping = false;
+let conversationHistory = [];
+let messageCount = 0;
 
 function toggleChat() {
     const panel = document.getElementById('chat-panel');
@@ -67,6 +71,8 @@ async function sendMessage() {
     
     // Add user message
     addMessage(message, 'user');
+    conversationHistory.push({ role: 'user', content: message });
+    messageCount++;
     input.value = '';
     
     // Show typing indicator
@@ -74,9 +80,15 @@ async function sendMessage() {
     const typingId = showTypingIndicator();
     
     try {
-        const response = await generateResponse(message);
+        const response = await generateResponse(conversationHistory, messageCount);
         removeTypingIndicator(typingId);
         addMessage(response, 'bot');
+        conversationHistory.push({ role: 'assistant', content: response });
+        
+        // If conversation ended, show reset button
+        if (messageCount >= 6) {
+            showResetButton();
+        }
     } catch (error) {
         removeTypingIndicator(typingId);
         addMessage("Sorry, I'm having trouble connecting right now. Feel free to email me at contact@nathaniel-young.com!", 'bot');
@@ -92,6 +104,23 @@ function addMessage(text, sender) {
     messageDiv.innerHTML = `<p>${escapeHtml(text)}</p>`;
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function showResetButton() {
+    const messagesContainer = document.getElementById('chat-messages');
+    const resetDiv = document.createElement('div');
+    resetDiv.className = 'chat-message system';
+    resetDiv.innerHTML = '<button onclick="resetConversation()" class="reset-btn">Start Fresh Conversation</button>';
+    messagesContainer.appendChild(resetDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function resetConversation() {
+    conversationHistory = [];
+    messageCount = 0;
+    const messagesContainer = document.getElementById('chat-messages');
+    messagesContainer.innerHTML = '';
+    addMessage("Hey! Great to meet you. Feel free to ask me anything about Nathaniel's projects, experience, or how he might be able to help with your next idea!", 'bot');
 }
 
 function showTypingIndicator() {
@@ -118,7 +147,7 @@ function escapeHtml(text) {
 }
 
 // AI-powered response generation via proxy
-async function generateResponse(userMessage) {
+async function generateResponse(messages, messageCount) {
     try {
         const response = await fetch('https://chat-ai.nathaniel-young.com/chat', {
             method: 'POST',
@@ -126,8 +155,9 @@ async function generateResponse(userMessage) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message: userMessage,
-                context: NATHANIEL_CONTEXT
+                messages: messages,
+                context: NATHANIEL_CONTEXT,
+                messageCount: messageCount
             })
         });
 
