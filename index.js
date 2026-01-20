@@ -58,27 +58,46 @@ document.addEventListener('DOMContentLoaded', function() {
       heroAvatar.style.height = currentSize + 'px';
       heroAvatar.style.borderWidth = borderWidth + 'px';
       
-      heroAvatarContainer.style.top = currentTop + 'px';
-      heroAvatarContainer.style.left = currentLeft + 'px';
+      // Use transform for better iOS performance
+      heroAvatarContainer.style.webkitTransform = 'translate3d(' + currentLeft + 'px, ' + currentTop + 'px, 0)';
+      heroAvatarContainer.style.transform = 'translate3d(' + currentLeft + 'px, ' + currentTop + 'px, 0)';
     }
     
     // Listen for scroll and resize
     window.addEventListener('scroll', updateAvatarPosition, { passive: true });
     window.addEventListener('resize', updateAvatarPosition, { passive: true });
     
+    // Also use touchmove for iOS
+    document.addEventListener('touchmove', updateAvatarPosition, { passive: true });
+    
     // Initial position
     updateAvatarPosition();
   }
   
   // Hide hero avatar when mobile nav is open
+  function updateMobileNavState() {
+    if (navToggle && navToggle.checked) {
+      document.body.classList.add('mobile-nav-open');
+    } else {
+      document.body.classList.remove('mobile-nav-open');
+    }
+  }
+  
   if (navToggle) {
-    navToggle.addEventListener('change', function() {
-      if (this.checked) {
-        document.body.classList.add('mobile-nav-open');
-      } else {
-        document.body.classList.remove('mobile-nav-open');
-      }
+    // Listen for both change and click events for better iOS compatibility
+    navToggle.addEventListener('change', updateMobileNavState);
+    navToggle.addEventListener('click', function() {
+      // Small delay to let checked state update
+      setTimeout(updateMobileNavState, 10);
     });
+    
+    // Also watch for label clicks (hamburger)
+    const hamburger = document.querySelector('.hamburger');
+    if (hamburger) {
+      hamburger.addEventListener('click', function() {
+        setTimeout(updateMobileNavState, 10);
+      });
+    }
   }
   
   navLinks.forEach(function(link) {
@@ -90,6 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Uncheck to trigger slide-out animation
         navToggle.checked = false;
+        
+        // Manually update the nav state since programmatic change doesn't fire event
+        updateMobileNavState();
         
         // Wait for animation to complete before navigating
         setTimeout(function() {
