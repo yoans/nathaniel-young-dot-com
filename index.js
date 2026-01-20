@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function updateAvatarPosition() {
       const scrollY = window.scrollY || window.pageYOffset;
-      const progress = Math.min(scrollY / scrollDistance, 1);
+      
+      // Clamp scroll to 0 minimum to prevent overshoot during iOS bounce/pull-to-refresh
+      const clampedScrollY = Math.max(0, scrollY);
+      const progress = Math.min(clampedScrollY / scrollDistance, 1);
       const easedProgress = easeOutCubic(progress);
       
       const isMobile = window.innerWidth <= 768;
@@ -45,13 +48,22 @@ document.addEventListener('DOMContentLoaded', function() {
       const mEndTop = isMobile ? 16 : endTop; // centered in mobile nav
       const mEndLeft = isMobile ? 20 : endLeft;
       
-      // Calculate current values
-      const currentSize = lerp(startSize, mEndSize, easedProgress);
+      // Calculate position values (clamped - don't move past center)
       const currentTop = lerp(startTop, mEndTop, easedProgress);
       const currentLeft = lerp(startLeft, mEndLeft, easedProgress);
       
+      // Size can continue to grow during overscroll for a nice effect
+      // Allow negative scroll to make it slightly bigger
+      const sizeProgress = Math.min(Math.max(scrollY, -100) / scrollDistance, 1);
+      const easedSizeProgress = scrollY < 0 
+        ? scrollY / 500 // Gentle size increase during overscroll
+        : easeOutCubic(sizeProgress);
+      const currentSize = scrollY < 0
+        ? startSize * (1 - easedSizeProgress * 0.15) // Grow up to 15% larger during bounce
+        : lerp(startSize, mEndSize, easeOutCubic(progress));
+      
       // Border width interpolation (4px -> 2px)
-      const borderWidth = lerp(4, 2, easedProgress);
+      const borderWidth = scrollY < 0 ? 4 : lerp(4, 2, easedProgress);
       
       // Apply styles
       heroAvatar.style.width = currentSize + 'px';
@@ -59,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
       heroAvatar.style.borderWidth = borderWidth + 'px';
       
       // Use transform for better iOS performance
+      // Position stays fixed at center during overscroll
       heroAvatarContainer.style.webkitTransform = 'translate3d(' + currentLeft + 'px, ' + currentTop + 'px, 0)';
       heroAvatarContainer.style.transform = 'translate3d(' + currentLeft + 'px, ' + currentTop + 'px, 0)';
     }
