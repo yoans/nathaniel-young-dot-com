@@ -322,6 +322,46 @@ function initAITerminal() {
         input.style.height = 'auto';
         input.style.height = Math.min(input.scrollHeight, 150) + 'px';
     });
+    
+    // Check for URL parameter and auto-activate with question
+    checkUrlParams();
+}
+
+// Check for ?q= parameter and auto-send the question
+function checkUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const question = urlParams.get('q');
+    
+    if (question) {
+        // Auto-activate AI and send the question
+        activateAIWithQuestion(question);
+        
+        // Clean up URL without reloading
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
+}
+
+// Activate AI and immediately send a pre-loaded question
+function activateAIWithQuestion(question) {
+    const gate = document.getElementById('activation-gate');
+    const terminal = document.getElementById('ai-terminal-container');
+    
+    gate.classList.add('hidden');
+    terminal.classList.add('active');
+    aiEnabled = true;
+    sessionStartTime = Date.now();
+    conversationSent = false;
+    
+    // Show brief system message
+    addMessage('system', '// Nathaniel\'s AI initialized');
+    
+    // Short delay then send the pre-loaded question
+    setTimeout(() => {
+        const input = document.getElementById('ai-terminal-input');
+        input.value = question;
+        sendMessage();
+    }, 300);
 }
 
 function activateAI() {

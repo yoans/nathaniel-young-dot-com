@@ -71,16 +71,12 @@
             <!-- Terminal Interface -->
             <div class="terminal">
                 <div class="terminal-header">
-                    <button class="terminal-btn clear" onclick="terminalAction('close')" title="Clear terminal">
-                        <i class="fa-solid fa-rotate-left"></i>
-                    </button>
-                    <button class="terminal-btn help" onclick="terminalAction('minimize')" title="Show help">
-                        <i class="fa-solid fa-circle-question"></i>
-                    </button>
-                    <button class="terminal-btn info" onclick="terminalAction('expand')" title="Quick overview">
-                        <i class="fa-solid fa-user"></i>
-                    </button>
-                    <span class="terminal-title">nathaniel@portfolio ~ </span>
+                    <div class="terminal-dots">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <span class="terminal-title">ask nathaniel's ai ~ click to chat</span>
                 </div>
                 <div class="terminal-body" id="terminal-body">
                     <div class="terminal-line">
@@ -90,18 +86,15 @@
                     </div>
                     <div id="terminal-output"></div>
                 </div>
-                <div class="terminal-input-line">
-                    <span class="terminal-prompt">→</span>
-                    <input type="text" class="terminal-input" id="terminal-input" placeholder="Type 'help', or ask anything!" autocomplete="off">
+                <div class="terminal-cta-bar">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Chat with Nathaniel's AI</span>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </div>
             </div>
 
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <a href="ai.html" class="quick-action ai-action">
-                    <i class="fa-solid fa-brain"></i>
-                    <span>Talk to Nathaniel's AI</span>
-                </a>
                 <a href="experience.html" class="quick-action">
                     <i class="fa-solid fa-briefcase"></i>
                     <span>View Experience</span>

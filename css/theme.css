@@ -293,8 +293,8 @@ body.has-hero-avatar .nav-brand img {
     padding: 24px;
     font-family: var(--font-mono);
     font-size: 0.95em;
-    min-height: 280px;
-    max-height: 350px;
+    min-height: 180px;
+    max-height: 250px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--accent) var(--bg-surface);
@@ -393,6 +393,126 @@ body.has-hero-avatar .nav-brand img {
 .terminal-input::placeholder {
     color: var(--text-secondary);
     opacity: 0.7;
+}
+
+/* ===== Terminal Teaser Mode ===== */
+.terminal-teaser {
+    transition: all 0.3s ease;
+}
+
+.terminal-teaser:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 165, 116, 0.15);
+    border-color: var(--accent);
+}
+
+.terminal-teaser:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--border);
+}
+
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; }
+
+/* Persistent CTA bar at bottom of terminal */
+.terminal-cta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(212, 165, 116, 0.08) 100%);
+    border-top: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    font-weight: 500;
+    animation: pulse 2.5s ease-in-out infinite;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-cta-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.03) 20%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.03) 80%,
+        transparent 100%
+    );
+    animation: glint 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glint {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 150%;
+    }
+}
+
+.terminal-cta-bar:hover {
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.25) 0%, rgba(212, 165, 116, 0.15) 100%);
+}
+
+.terminal-cta-bar i {
+    font-size: 1.1em;
+}
+
+.terminal-cta-bar .fa-arrow-right {
+    transition: transform 0.3s ease;
+}
+
+.terminal-teaser:hover .terminal-cta-bar .fa-arrow-right {
+    transform: translateX(4px);
+}
+
+.teaser-preview {
+    margin-top: 8px;
+}
+
+.teaser-response {
+    color: var(--text-secondary);
+    font-style: italic;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(212, 165, 116, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 20px 5px rgba(212, 165, 116, 0.2);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== Quick Links under Terminal ===== */
