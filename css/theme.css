@@ -673,6 +673,251 @@ body.has-hero-avatar .nav-brand img {
     line-height: 1.5;
 }
 
+/* ===== AG16 Scroll-Triggered Flip Card ===== */
+
+/* Hide old mobile cards - no longer needed */
+.ag-mobile-card {
+    display: none !important;
+}
+
+/* Flip card container */
+.ag-flip-card {
+    perspective: 1200px;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+}
+
+/* Remove default project-card hover transforms on the flip card */
+.ag-flip-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Sparkle container */
+.ag-sparkles {
+    position: absolute;
+    inset: -20px;
+    pointer-events: none;
+    z-index: 20;
+    overflow: visible;
+}
+
+.ag-sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(0.5px);
+}
+
+/* Individual sparkle animations - triggered by .ag-flipped */
+.ag-flip-card.ag-flipped .ag-sparkle { animation-play-state: running; }
+
+.ag-sparkle:nth-child(1)  { top: 10%; left: -5%;  animation: sparkleFloat 1.8s ease-out 0.0s infinite; }
+.ag-sparkle:nth-child(2)  { top: 20%; right: -5%; animation: sparkleFloat 2.0s ease-out 0.1s infinite; }
+.ag-sparkle:nth-child(3)  { top: 60%; left: -8%;  animation: sparkleFloat 1.6s ease-out 0.2s infinite; }
+.ag-sparkle:nth-child(4)  { top: 80%; right: -3%; animation: sparkleFloat 2.2s ease-out 0.3s infinite; }
+.ag-sparkle:nth-child(5)  { top: 40%; left: -4%;  animation: sparkleFloat 1.9s ease-out 0.15s infinite; }
+.ag-sparkle:nth-child(6)  { top: 5%;  right: -6%; animation: sparkleFloat 2.1s ease-out 0.25s infinite; }
+.ag-sparkle:nth-child(7)  { top: 90%; left: -6%;  animation: sparkleFloat 1.7s ease-out 0.35s infinite; }
+.ag-sparkle:nth-child(8)  { top: 50%; right: -7%; animation: sparkleFloat 2.3s ease-out 0.05s infinite; }
+.ag-sparkle:nth-child(9)  { top: 30%; left: 50%;  animation: sparkleFloat 1.5s ease-out 0.4s infinite; top: -6%; }
+.ag-sparkle:nth-child(10) { bottom: -6%; left: 40%; animation: sparkleFloat 2.0s ease-out 0.2s infinite; top: auto; }
+.ag-sparkle:nth-child(11) { top: 70%; right: -4%; animation: sparkleFloat 1.8s ease-out 0.45s infinite; }
+.ag-sparkle:nth-child(12) { top: 15%; left: -3%;  animation: sparkleFloat 2.4s ease-out 0.1s infinite; }
+
+@keyframes sparkleFloat {
+    0% {
+        opacity: 0;
+        transform: scale(0) translateY(0);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1.2) translateY(-8px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.8) translateY(-20px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translateY(-40px);
+    }
+}
+
+/* Golden glow ring on flip */
+.ag-flip-card::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0), rgba(212, 165, 116, 0));
+    z-index: -1;
+    transition: all 0.8s ease;
+    opacity: 0;
+}
+
+.ag-flip-card.ag-flipped::before {
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.6), rgba(247, 215, 148, 0.3), rgba(212, 165, 116, 0.6));
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(212, 165, 116, 0.3), 0 0 60px rgba(212, 165, 116, 0.15);
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(212, 165, 116, 0.2), 0 0 40px rgba(212, 165, 116, 0.1); }
+    50%      { box-shadow: 0 0 35px rgba(212, 165, 116, 0.4), 0 0 70px rgba(212, 165, 116, 0.2); }
+}
+
+/* Flip inner */
+.ag-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.ag-flip-card.ag-flipped .ag-flip-inner {
+    transform: rotateY(180deg);
+}
+
+.ag-flip-face {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 12px;
+}
+
+.ag-flip-front {
+    position: relative;
+    z-index: 2;
+}
+
+.ag-flip-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(180deg);
+    z-index: 1;
+    overflow: hidden;
+    background: var(--bg-card);
+    border-radius: 12px;
+}
+
+.ag-flip-back .project-card-content {
+    padding: 24px 24px 28px;
+}
+
+.ag-flip-back .project-card-content h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* AI Supercharged badge */
+.ag-supercharged-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #fa709a 0%, #f7971e 100%);
+    color: #fff;
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    z-index: 10;
+    box-shadow: 0 2px 12px rgba(250, 112, 154, 0.4);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+.ag-supercharged-badge i {
+    margin-right: 4px;
+}
+
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 2px 12px rgba(250, 112, 154, 0.4); }
+    50% { box-shadow: 0 2px 20px rgba(250, 112, 154, 0.7); }
+}
+
+/* AG16 image — show in full color, no gold filter */
+.ag16-image img {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Inline story badge next to AG16 title */
+.ag-story-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(212, 165, 116, 0.05));
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.58em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.ag-flip-card:hover .ag-story-badge {
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.25), rgba(212, 165, 116, 0.1));
+    box-shadow: 0 0 15px rgba(212, 165, 116, 0.2);
+}
+
+/* Flip hint text */
+.ag-flip-hint {
+    text-align: center;
+    font-size: 0.75em;
+    color: var(--text-dim);
+    margin-top: 8px;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+}
+
+.ag-flip-hint i {
+    margin-right: 4px;
+    color: var(--accent);
+}
+
+.ag-flip-card.ag-flipped .ag-flip-hint {
+    opacity: 0;
+}
+
+/* Version label */
+.ag-version-label {
+    font-size: 0.6em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--bg-surface);
+    color: var(--text-dim);
+    padding: 2px 8px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.ag-version-label.ag-version-new {
+    background: linear-gradient(135deg, #fa709a 0%, #f7971e 100%);
+    color: #fff;
+}
+
 /* ===== Social Links ===== */
 .social-links {
     display: flex;

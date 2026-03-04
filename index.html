@@ -22,6 +22,7 @@
         <!-- Preload project images -->
         <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
         <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
+        <link rel="preload" as="image" href="svgs/ag16-logo.svg">
         <link rel="preload" as="image" href="svgs/pascal-triangle.svg">
         <link rel="preload" as="image" href="svgs/brg-logo.svg">
         <link rel="preload" as="image" href="svgs/darkforest.svg">
@@ -151,16 +152,29 @@
                         </div>
                     </a>
                 </div>
-                <div class="project-card">
-                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
-                        <div class="project-card-image">
-                            <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid">
+                <div class="project-card ag-flip-card" data-ag-flip>
+                    <div class="ag-sparkles" aria-hidden="true"></div>
+                    <div class="ag-flip-inner">
+                        <div class="ag-flip-face ag-flip-front">
+                            <div class="project-card-image">
+                                <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid">
+                            </div>
+                            <div class="project-card-content">
+                                <h3>Arrowgrid</h3>
+                                <p>Draw arrows, generate melodies. An interactive music toy.</p>
+                            </div>
                         </div>
-                        <div class="project-card-content">
-                            <h3>Arrowgrid</h3>
-                            <p>Draw arrows, generate melodies. An interactive music toy.</p>
+                        <div class="ag-flip-face ag-flip-back">
+                            <div class="ag-supercharged-badge"><i class="fas fa-wand-magic-sparkles"></i> Backlog → Gold</div>
+                            <div class="project-card-image ag16-image">
+                                <img src="svgs/ag16-logo.svg" alt="AG16">
+                            </div>
+                            <div class="project-card-content">
+                                <h3>AG16 <span class="ag-story-badge">See full story</span></h3>
+                                <p>Backlog → gold mine. A decade of ideas, realized by AI.</p>
+                            </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <div class="project-card">
                     <a href="https://pascalsmusicbox.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
@@ -251,5 +265,6 @@
         <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script defer src="./index.js" type="text/javascript"></script>
         <script defer src="./terminal.js" type="text/javascript"></script>
+        <script defer src="./ag16-flip.js" type="text/javascript"></script>
     </body>
 </html>

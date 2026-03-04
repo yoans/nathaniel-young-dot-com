@@ -22,6 +22,7 @@
         <!-- Preload project images -->
         <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
         <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
+        <link rel="preload" as="image" href="svgs/ag16-logo.svg">
         <link rel="preload" as="image" href="svgs/pascal-triangle.svg">
         <link rel="preload" as="image" href="svgs/brg-logo.svg">
         <link rel="preload" as="image" href="svgs/darkforest.svg">
@@ -136,22 +137,43 @@
                     </a>
                 </div>
 
-                <!-- Arrowgrid -->
-                <div class="project-card">
-                    <a href="https://arrowgrid.sagaciasoft.com" target="_blank" rel="noopener noreferrer">
-                        <div class="project-card-image">
-                            <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid">
-                        </div>
-                        <div class="project-card-content">
-                            <h3>Arrowgrid</h3>
-                            <p>An interactive music toy. Draw arrows on a grid to create melodies. No musical training needed — just draw and listen to the patterns come alive.</p>
-                            <div class="skill-tags" style="margin-top: 12px;">
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">Web Audio</span>
-                                <span class="skill-tag">Canvas</span>
+                <!-- AG16 — Scroll-triggered Flip Card -->
+                <div class="project-card ag-flip-card" data-ag-flip>
+                    <!-- Sparkle particles -->
+                    <div class="ag-sparkles" aria-hidden="true"></div>
+                    <div class="ag-flip-inner">
+                        <!-- FRONT: Original Arrowgrid -->
+                        <div class="ag-flip-face ag-flip-front">
+                            <div class="project-card-image">
+                                <img src="svgs/arrowgrid-logo.svg" alt="Arrowgrid">
+                            </div>
+                            <div class="project-card-content">
+                                <h3>Arrowgrid</h3>
+                                <p>An interactive music toy. Draw arrows on a grid to create melodies. No musical training needed — just draw and listen to the patterns come alive.</p>
+                                <div class="skill-tags" style="margin-top: 12px;">
+                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">Web Audio</span>
+                                    <span class="skill-tag">Canvas</span>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                        <!-- BACK: AG16 — AI Supercharged -->
+                        <div class="ag-flip-face ag-flip-back">
+                            <div class="ag-supercharged-badge"><i class="fas fa-wand-magic-sparkles"></i> Backlog → Gold</div>
+                            <div class="project-card-image ag16-image">
+                                <img src="svgs/ag16-logo.svg" alt="AG16">
+                            </div>
+                            <div class="project-card-content">
+                                <h3>AG16 <span class="ag-story-badge">See full story</span></h3>
+                                <p>A decade-old backlog becomes a gold mine. Rebuilt from the ground up with AI — every feature I ever dreamed of, realized.</p>
+                                <div class="skill-tags" style="margin-top: 12px;">
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Vite</span>
+                                    <span class="skill-tag">AI-Built</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Pascal's Music Box -->
@@ -255,5 +277,6 @@
         <!-- Scripts -->
         <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script defer src="./index.js" type="text/javascript"></script>
+        <script defer src="./ag16-flip.js" type="text/javascript"></script>
     </body>
 </html>
