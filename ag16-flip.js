@@ -3,6 +3,26 @@ document.addEventListener('DOMContentLoaded', function () {
   var flipCards = document.querySelectorAll('[data-ag-flip]');
   if (!flipCards.length) return;
 
+  function scheduleFlip(card, delayMs) {
+    if (card.classList.contains('ag-flipped') || card.dataset.flipScheduled === 'true') {
+      return;
+    }
+
+    card.dataset.flipScheduled = 'true';
+    setTimeout(function () {
+      card.classList.add('ag-flipped');
+      card.dataset.flipScheduled = 'false';
+    }, delayMs);
+  }
+
+  function isCardInViewport(card) {
+    var rect = card.getBoundingClientRect();
+    var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    var visiblePx = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    var visibleRatio = visiblePx / Math.max(rect.height, 1);
+    return visibleRatio >= 0.2;
+  }
+
   // Generate sparkle particles for each card
   flipCards.forEach(function (card) {
     var sparkleContainer = card.querySelector('.ag-sparkles');
@@ -42,25 +62,40 @@ document.addEventListener('DOMContentLoaded', function () {
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
           // Delay the flip slightly so the user sees the card first
-          setTimeout(function () {
-            entry.target.classList.add('ag-flipped');
-          }, 750);
+          scheduleFlip(entry.target, 750);
+          observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.5,
-      rootMargin: '0px 0px -10% 0px'
+      threshold: [0, 0.15, 0.3],
+      rootMargin: '0px 0px -5% 0px'
     });
 
     flipCards.forEach(function (card) {
       observer.observe(card);
     });
-  } else {
-    // Fallback: flip all immediately
-    flipCards.forEach(function (card) {
-      card.classList.add('ag-flipped');
-    });
   }
+
+  // Additional viewport fallback for environments where IntersectionObserver is inconsistent
+  var checkScheduled = false;
+  function checkViewportFallback() {
+    flipCards.forEach(function (card) {
+      if (!card.classList.contains('ag-flipped') && isCardInViewport(card)) {
+        scheduleFlip(card, 750);
+      }
+    });
+    checkScheduled = false;
+  }
+
+  function requestViewportCheck() {
+    if (checkScheduled) return;
+    checkScheduled = true;
+    window.requestAnimationFrame(checkViewportFallback);
+  }
+
+  requestViewportCheck();
+  window.addEventListener('scroll', requestViewportCheck, { passive: true });
+  window.addEventListener('resize', requestViewportCheck, { passive: true });
 });
