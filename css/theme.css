@@ -680,16 +680,19 @@ body.has-hero-avatar .nav-brand img {
     display: none !important;
 }
 
-/* Flip card container */
-.ag-flip-card {
+/* Flip card container — override project-card overflow to preserve 3D context */
+.project-card.ag-flip-card {
+    -webkit-perspective: 1200px;
     perspective: 1200px;
     position: relative;
-    overflow: visible;
+    overflow: visible !important;   /* Must override project-card overflow:hidden */
     cursor: pointer;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 /* Remove default project-card hover transforms on the flip card */
-.ag-flip-card:hover {
+.project-card.ag-flip-card:hover {
     transform: none;
     box-shadow: none;
 }
@@ -773,44 +776,72 @@ body.has-hero-avatar .nav-brand img {
     50%      { box-shadow: 0 0 35px rgba(212, 165, 116, 0.4), 0 0 70px rgba(212, 165, 116, 0.2); }
 }
 
-/* Flip inner */
+/* Flip inner — the element that actually rotates */
 .ag-flip-inner {
     position: relative;
     width: 100%;
     height: 100%;
+    -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
     transition: transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
+    -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .ag-flip-card.ag-flipped .ag-flip-inner {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
 
+/* Both faces share these properties */
 .ag-flip-face {
     display: block;
     text-decoration: none;
     color: inherit;
-    backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     border-radius: 12px;
 }
 
+/* Front face — in flow so it sizes the container */
 .ag-flip-front {
     position: relative;
     z-index: 2;
 }
 
+/* Back face — absolutely positioned, pre-rotated 180° */
 .ag-flip-back {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
     z-index: 1;
     overflow: hidden;
     background: var(--bg-card);
     border-radius: 12px;
+}
+
+/*
+ * Opacity fallback — ensures the back face is hidden even when
+ * backface-visibility is unsupported or broken by the host browser.
+ * The 0.45s delay lets the card rotate ~halfway before cross-fading.
+ */
+.ag-flip-front {
+    opacity: 1;
+    transition: opacity 0.01s 0.45s;
+}
+.ag-flip-back {
+    opacity: 0;
+    transition: opacity 0.01s 0.45s;
+}
+.ag-flip-card.ag-flipped .ag-flip-front {
+    opacity: 0;
+}
+.ag-flip-card.ag-flipped .ag-flip-back {
+    opacity: 1;
 }
 
 .ag-flip-back .project-card-content {
