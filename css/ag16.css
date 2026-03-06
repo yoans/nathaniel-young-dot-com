@@ -44,7 +44,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+}
+
+/* Logo-as-link interactive card */
+.ag16-logo-link {
+    text-decoration: none;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--bg-card);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.ag16-logo-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.ag16-logo-link-new {
+    border-color: rgba(212, 165, 116, 0.4);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(212, 165, 116, 0.03));
+}
+
+.ag16-logo-link-new:hover {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), rgba(212, 165, 116, 0.08));
+    box-shadow: 0 8px 28px rgba(212, 165, 116, 0.18);
 }
 
 .ag16-logo-before img,
@@ -52,6 +80,7 @@
     width: 80px;
     height: 80px;
     object-fit: contain;
+    transition: all 0.25s ease;
 }
 
 .ag16-logo-before img {
@@ -59,20 +88,43 @@
     opacity: 0.6;
 }
 
+.ag16-logo-link:hover .ag16-logo-before img,
+.ag16-logo-before.ag16-logo-link:hover img {
+    opacity: 0.9;
+}
+
 .ag16-logo-after img {
     filter: none;
 }
 
-.ag16-logo-before span,
-.ag16-logo-after span {
+.ag16-logo-link-name {
     font-family: var(--font-mono);
     font-size: 0.85em;
     color: var(--text-secondary);
+    font-weight: 600;
+    transition: color 0.25s ease;
 }
 
-.ag16-logo-after span {
+.ag16-logo-link-new .ag16-logo-link-name {
     color: var(--accent);
-    font-weight: 600;
+}
+
+.ag16-logo-link:hover .ag16-logo-link-name {
+    color: var(--accent);
+}
+
+.ag16-logo-link-caption {
+    font-size: 0.7em;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.4;
+    font-style: italic;
+    max-width: 130px;
+    transition: color 0.25s ease;
+}
+
+.ag16-logo-link:hover .ag16-logo-link-caption {
+    color: var(--text-secondary);
 }
 
 .ag16-hero-arrow {
@@ -115,48 +167,6 @@
     max-width: 600px;
     opacity: 0;
     animation: fadeInUp 0.6s ease 0.45s forwards;
-}
-
-.ag16-hero-links {
-    margin-top: 20px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeInUp 0.6s ease 0.55s forwards;
-}
-
-.ag16-hero-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    background: var(--bg-card);
-    font-size: 0.9em;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.ag16-hero-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-}
-
-.ag16-hero-link-primary {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(212, 165, 116, 0.05));
-}
-
-.ag16-hero-link-primary:hover {
-    background: linear-gradient(135deg, rgba(212, 165, 116, 0.25), rgba(212, 165, 116, 0.1));
-    box-shadow: 0 0 16px rgba(212, 165, 116, 0.2);
 }
 
 /* Sections */
@@ -630,13 +640,22 @@
     }
 
     .ag16-hero-logos {
-        gap: 20px;
+        gap: 12px;
+    }
+
+    .ag16-logo-link {
+        padding: 12px 14px;
     }
 
     .ag16-logo-before img,
     .ag16-logo-after img {
         width: 56px;
         height: 56px;
+    }
+
+    .ag16-logo-link-caption {
+        max-width: 110px;
+        font-size: 0.65em;
     }
 
     .ag16-compare-grid {
