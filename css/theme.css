@@ -633,12 +633,58 @@ body.has-hero-avatar .nav-brand img {
 }
 
 .project-card-image {
+    position: relative;
     height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--bg-surface);
     padding: 30px;
+}
+
+.project-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 165, 116, 0.35);
+    background: rgba(26, 22, 18, 0.82);
+    color: var(--accent-hover);
+    font-size: 0.65em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+}
+
+.patent-badge {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.varimuse-card .project-card-content h3 {
+    color: var(--text-primary);
+}
+
+.varimuse-image {
+    background:
+        radial-gradient(circle at 25% 20%, rgba(50, 208, 199, 0.22), transparent 34%),
+        radial-gradient(circle at 78% 28%, rgba(212, 165, 116, 0.18), transparent 30%),
+        linear-gradient(180deg, #13161a 0%, #1b2025 100%);
+    border-bottom: 1px solid rgba(212, 165, 116, 0.16);
+}
+
+.varimuse-image img {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: translateY(4px);
+}
+
+.varimuse-card:hover .varimuse-image img {
+    transform: translateY(2px) scale(1.01);
 }
 
 .project-card-image img {

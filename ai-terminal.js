@@ -57,7 +57,7 @@ SAGACIASOFT (Dec 2018 - Present, side business)
 - Built multiple generative-AI storefronts using Railway
 - Cross-platform apps with Svelte, Capacitor, SvelteKit, React.js
 - Clients in: IoT, generative AI, sports-recruiting, music, lead-generation
-- Products: Pet Protagonists, Dark Forest AI, client projects
+- Products: Varimuse, Pet Protagonists, Dark Forest AI, AG16, client projects
 
 MICROSOFT (Oct 2021 - Feb 2023)
 - Software Engineer II, Redmond WA (remote-ish)
@@ -99,11 +99,13 @@ Graduated December 2014, Ames, Iowa
 
 === PROJECTS & SIDE WORK ===
 1. Sagaciasoft (sagaciasoft.com) - AI consultancy, chatbots, voice agents
-2. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks
-3. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
-4. Arrowgrid - Interactive melody generator
-5. Pascal's Music Box - Mathematical music from Pascal's triangle
-6. Dark Forest AI - Autonomous multi-agent blog network
+2. Varimuse (varimuse.ai) - Patent-pending AI exploration platform for orchestrated multi-agent variation generation and branching
+3. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks
+4. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
+5. Arrowgrid - Interactive melody generator
+6. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
+7. Pascal's Music Box - Mathematical music from Pascal's triangle
+8. Dark Forest AI - Autonomous multi-agent blog network
 
 === INTERESTS & HOBBIES ===
 - Music production (has a SoundCloud)
@@ -135,6 +137,7 @@ Making technology accessible and empowering people to build the future they want
 - **AI Native**: Not just using AI tools - fundamentally rethinking how to build software in an AI-first world. Follows trends obsessively and experiments constantly.
 - **Context Over Syntax**: Values the judgment and organizational context from 10+ years over just knowing languages. Sees programming languages as tools, not identities.
 - **Builder + Teacher**: Ships products (Pet Protagonists, Bible Repair Game, client work) AND loves mentoring developers and presenting to teams.
+- **Creative AI Product Builder**: Uses AI both as product surface and production leverage, from patent-pending exploration systems like Varimuse to backlog-revival builds like AG16.
 - **"Wielder of Agency"**: Doesn't wait for permission. Sees opportunities and builds solutions.
 
 === JOB MATCH EVALUATION ===
@@ -533,6 +536,8 @@ function generateLocalResponse(input) {
 
 **Creative Technologist**: His side projects include an AI pet storybook generator and music-generating apps. He brings creative thinking to technical problems.
 
+**New AI Product Energy**: Varimuse shows where he's pushing next: a patent-pending AI system for exploring creative possibility space through orchestrated variations and branching.
+
 **"Wielder of Agency"**: His tagline isn't just branding — he doesn't wait for permission to solve problems. He sees an opportunity and builds.
 
 Want to hear about any of these in more depth?`;
@@ -559,8 +564,10 @@ Want to hear about any of these in more depth?`;
 
 **Hands-on Building**:
 • Built AI chatbots and voice agents through Sagaciasoft
+• Built Varimuse, a patent-pending multi-agent AI exploration platform
 • Created Pet Protagonists (AI-generated illustrated storybooks)
 • Runs Dark Forest AI (autonomous multi-agent blog network)
+• Rebuilt Arrowgrid into AG16 by harnessing AI to realize a decade-old product backlog
 
 **Enterprise AI**:
 • At Microsoft: Designed AI self-service that cut tickets by 41%
@@ -618,6 +625,9 @@ He's most dangerous with TypeScript + AWS + AI integration — that's the curren
 **Sagaciasoft** (sagaciasoft.com)
 → AI consultancy — chatbots, voice agents, business automation
 
+**Varimuse** (varimuse.ai)
+→ Patent-pending AI exploration platform for generating, comparing, and branching creative directions
+
 **Pet Protagonists** (petprotagonists.com)
 → Upload pet photos → AI generates custom illustrated storybook
 
@@ -626,6 +636,9 @@ He's most dangerous with TypeScript + AWS + AI integration — that's the curren
 
 **Dark Forest AI**
 → Autonomous multi-agent blog network (experimental)
+
+**AG16**
+→ A music tool reborn by AI, turning an old Arrowgrid backlog into a richer playable instrument
 
 **Arrowgrid & Pascal's Music Box**
 → Creative coding projects generating music from patterns
@@ -709,7 +722,9 @@ What would you like to know? Or if you've got a job description, paste it in and
     // Default
     return `Good question! Let me give you a helpful answer:
 
-I can tell you about Nathaniel's **experience** (10+ years at Microsoft, John Deere, Principal), his **technical skills** (AWS, TypeScript, AI/ML), his **projects** (Sagaciasoft, Pet Protagonists, etc.), or what makes him **unique** as a developer.
+I can tell you about Nathaniel's **experience** (10+ years at Microsoft, John Deere, Principal), his **technical skills** (AWS, TypeScript, AI/ML), his **projects** (Sagaciasoft, Varimuse, Pet Protagonists, etc.), or what makes him **unique** as a developer.
+
+I can also speak specifically about **Varimuse** as one of his flagship AI projects and **AG16** as a concrete example of using AI to turn backlog into product.
 
 You can also **paste a job description** and I'll analyze how well he matches the requirements.
 
