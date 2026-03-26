@@ -1,0 +1,245 @@
+/* ===== AG16 Pipeline Experiment Page ===== */
+
+/* Badge variant */
+.pipeline-badge {
+    background: linear-gradient(135deg, rgba(130, 180, 130, 0.2), rgba(130, 180, 130, 0.05));
+    border-color: #82b482;
+    color: #82b482;
+}
+
+/* Back link */
+.pipeline-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    transition: color 0.2s ease;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.6s forwards;
+}
+
+.pipeline-back-link:hover {
+    color: var(--accent);
+}
+
+/* ===== Agent Flow ===== */
+.pipeline-flow {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.pipeline-step {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s ease;
+}
+
+.pipeline-step:hover {
+    border-color: var(--accent);
+}
+
+.pipeline-step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.pipeline-step-content h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.1em;
+    color: var(--text-primary);
+}
+
+.pipeline-step-content p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.92em;
+    line-height: 1.6;
+}
+
+.pipeline-step-content code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent);
+    background: rgba(212, 165, 116, 0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.pipeline-step-file {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    color: var(--text-dim);
+    background: var(--bg-surface);
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.pipeline-connector {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    color: var(--text-dim);
+    font-size: 0.9em;
+}
+
+/* ===== Why This Isn't a Demo ===== */
+.pipeline-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.pipeline-point {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s ease;
+}
+
+.pipeline-point:hover {
+    border-color: var(--accent);
+}
+
+.pipeline-point-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 1em;
+    margin-bottom: 16px;
+}
+
+.pipeline-point h4 {
+    margin: 0 0 8px 0;
+    font-size: 1em;
+    color: var(--text-primary);
+}
+
+.pipeline-point p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+.pipeline-point code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent);
+    background: rgba(212, 165, 116, 0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+/* ===== Daily Schedule ===== */
+.pipeline-schedule {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.pipeline-schedule-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.pipeline-schedule-row:last-child {
+    border-bottom: none;
+}
+
+.pipeline-time {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+.pipeline-action {
+    color: var(--text-secondary);
+    font-size: 0.92em;
+    line-height: 1.5;
+}
+
+.pipeline-action code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent);
+    background: rgba(212, 165, 116, 0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.pipeline-schedule-human {
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.08), transparent);
+}
+
+.pipeline-schedule-human .pipeline-time {
+    color: var(--text-primary);
+}
+
+.pipeline-schedule-human .pipeline-action {
+    color: var(--text-primary);
+    font-style: italic;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .pipeline-points {
+        grid-template-columns: 1fr;
+    }
+
+    .pipeline-step {
+        padding: 18px;
+        gap: 14px;
+    }
+
+    .pipeline-schedule-row {
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+        padding: 14px 20px;
+    }
+
+    .pipeline-time {
+        min-width: unset;
+    }
+}

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>The Pipeline Experiment — AG16 | Nathaniel Young</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="An autonomous multi-step agent that produces YouTube Shorts for AG16 — from git commits to published script, with zero manual intervention.">
+        <link rel="canonical" href="https://www.nathaniel-young.com/ag16-pipeline.html">
+
+        <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/ag16.css">
+        <link rel="stylesheet" href="css/ag16-pipeline.css">
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="site-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="https://avatars0.githubusercontent.com/u/5156592" alt="Nathaniel Young">
+                <span>Nathaniel Young</span>
+            </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+            <label for="nav-toggle" class="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="ai.html" class="nav-ai"><i class="fa-solid fa-brain"></i> AI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Particles Background -->
+        <div id="particles-js"></div>
+
+        <!-- Hero -->
+        <section class="ag16-hero">
+            <div class="ag16-hero-badge pipeline-badge">
+                <i class="fas fa-flask"></i> Experiment
+            </div>
+            <h1>The <span class="ag16-gold">Content Pipeline</span></h1>
+            <p class="ag16-hero-sub">After rebuilding AG16, the next question: can the content production be automated too?</p>
+            <a href="ag16.html" class="pipeline-back-link">
+                <i class="fas fa-arrow-left"></i> Back to the AG16 story
+            </a>
+        </section>
+
+        <!-- The Problem -->
+        <section class="section ag16-section">
+            <div class="ag16-story">
+                <h2>The Problem</h2>
+                <p>
+                    AG16 was shipped. The YouTube channel existed. But producing even a 60-second Short
+                    every week required context-switching between a dozen tasks: reviewing what changed in the code,
+                    picking an angle, writing a script that matched the channel voice, and tracking what performed.
+                </p>
+                <p>
+                    The content wasn't hard to make. Remembering to make it — and keeping it consistent — was.
+                    What if the entire production chain was an autonomous agent?
+                </p>
+            </div>
+        </section>
+
+        <!-- The Flow -->
+        <section class="section ag16-section">
+            <h2 class="ag16-section-title">The Agent Flow</h2>
+            <p class="ag16-section-sub">Five steps. Zero manual intervention. Runs every day on cron.</p>
+
+            <div class="pipeline-flow">
+                <div class="pipeline-step">
+                    <div class="pipeline-step-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="pipeline-step-content">
+                        <h4>Harvest</h4>
+                        <p>Scans git history across all repos under <code>c:/bench</code>. Pulls yesterday's commits, diffs, and file changes into structured context.</p>
+                        <span class="pipeline-step-file">harvest.js</span>
+                    </div>
+                </div>
+
+                <div class="pipeline-connector"><i class="fas fa-arrow-down"></i></div>
+
+                <div class="pipeline-step">
+                    <div class="pipeline-step-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="pipeline-step-content">
+                        <h4>Direction</h4>
+                        <p>Emails three angle suggestions via Gmail API. Waits for a reply — 1, 2, 3, or a custom angle. Polls at noon and 3pm. No reply? No script. The human stays in the loop on <em>what</em>, not <em>how</em>.</p>
+                        <span class="pipeline-step-file">direction.js</span>
+                    </div>
+                </div>
+
+                <div class="pipeline-connector"><i class="fas fa-arrow-down"></i></div>
+
+                <div class="pipeline-step">
+                    <div class="pipeline-step-icon"><i class="fas fa-brain"></i></div>
+                    <div class="pipeline-step-content">
+                        <h4>Generate</h4>
+                        <p>Sends the chosen direction + channel voice guidelines to Claude. Returns a structured script: hook, demo, reveal, CTA — plus a title, thumbnail concept, and capture mode for the screen recorder.</p>
+                        <span class="pipeline-step-file">generate.js</span>
+                    </div>
+                </div>
+
+                <div class="pipeline-connector"><i class="fas fa-arrow-down"></i></div>
+
+                <div class="pipeline-step">
+                    <div class="pipeline-step-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="pipeline-step-content">
+                        <h4>Feedback</h4>
+                        <p>Pulls weekly YouTube Analytics — views, watch time, retention, click-through. Saves snapshots so the system builds a record of what works over time.</p>
+                        <span class="pipeline-step-file">feedback.js</span>
+                    </div>
+                </div>
+
+                <div class="pipeline-connector"><i class="fas fa-arrow-down"></i></div>
+
+                <div class="pipeline-step">
+                    <div class="pipeline-step-icon"><i class="fas fa-clock"></i></div>
+                    <div class="pipeline-step-content">
+                        <h4>Cron</h4>
+                        <p>Orchestrates the whole cycle. Harvest at 9am. Direction email at 9:05. Poll at noon and 3pm. Generate at 6pm. Analytics pull on Monday morning. All Node.js, all local.</p>
+                        <span class="pipeline-step-file">cron.js</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Makes It Different -->
+        <section class="section ag16-section">
+            <h2 class="ag16-section-title">Why This Isn't a Demo</h2>
+            <p class="ag16-section-sub">The difference between a toy and a tool.</p>
+
+            <div class="pipeline-points">
+                <div class="pipeline-point">
+                    <div class="pipeline-point-icon"><i class="fas fa-plug"></i></div>
+                    <h4>Real System Boundaries</h4>
+                    <p>This agent doesn't just call an API. It crosses four systems: git, Gmail, Claude, and YouTube Analytics. Each has its own auth, rate limits, and failure modes.</p>
+                </div>
+                <div class="pipeline-point">
+                    <div class="pipeline-point-icon"><i class="fas fa-user"></i></div>
+                    <h4>Approve Once, Execute Unattended</h4>
+                    <p>You approve the direction with a one-tap email reply. Everything after that — script generation, file output, analytics collection — runs autonomously on <code>pm2</code> with no further input. Human judgment on <em>what</em>. Full automation on <em>how</em>.</p>
+                </div>
+                <div class="pipeline-point">
+                    <div class="pipeline-point-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h4>Input Sanitization</h4>
+                    <p>Every external input — email replies, git commit messages, API responses — is sanitized before it touches a prompt. Length-limited. Pattern-stripped. Treated as data, not instructions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Schedule -->
+        <section class="section ag16-section">
+            <h2 class="ag16-section-title">Daily Schedule</h2>
+            <p class="ag16-section-sub">What the pipeline does while you're doing other things.</p>
+
+            <div class="pipeline-schedule">
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">9:00 AM</span>
+                    <span class="pipeline-action">Harvest yesterday's commits across all repos</span>
+                </div>
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">9:05 AM</span>
+                    <span class="pipeline-action">Email 3 angle suggestions based on recent work</span>
+                </div>
+                <div class="pipeline-schedule-row pipeline-schedule-human">
+                    <span class="pipeline-time">You</span>
+                    <span class="pipeline-action">Reply 1, 2, 3 — or write your own angle</span>
+                </div>
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">12:00 PM</span>
+                    <span class="pipeline-action">Poll Gmail for direction reply</span>
+                </div>
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">3:00 PM</span>
+                    <span class="pipeline-action">Second poll</span>
+                </div>
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">6:00 PM</span>
+                    <span class="pipeline-action">Generate script via Claude &rarr; save to <code>scripts/</code></span>
+                </div>
+                <div class="pipeline-schedule-row">
+                    <span class="pipeline-time">Mon 8 AM</span>
+                    <span class="pipeline-action">Pull YouTube Analytics &rarr; save weekly snapshot</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="section ag16-section">
+            <h2 class="ag16-section-title">Stack</h2>
+            <div class="ag16-stack-grid">
+                <div class="ag16-stack-item">
+                    <i class="fab fa-node-js"></i>
+                    <span>Node.js</span>
+                </div>
+                <div class="ag16-stack-item">
+                    <i class="fas fa-brain"></i>
+                    <span>Claude API</span>
+                </div>
+                <div class="ag16-stack-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Gmail API</span>
+                </div>
+                <div class="ag16-stack-item">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube API</span>
+                </div>
+                <div class="ag16-stack-item">
+                    <i class="fas fa-code-branch"></i>
+                    <span>Git</span>
+                </div>
+                <div class="ag16-stack-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Cron / pm2</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section ag16-section ag16-cta-section">
+            <div class="ag16-cta-card">
+                <div class="ag16-cta-sparkles"></div>
+                <h2>See the Product It Produces For</h2>
+                <p>AG16 is the app. The pipeline is the engine behind the content.</p>
+                <div class="ag16-cta-buttons">
+                    <a href="https://ag16.sagaciasoft.com/" target="_blank" rel="noopener noreferrer" class="ag16-btn-primary">
+                        <i class="fas fa-play"></i> Launch AG16
+                    </a>
+                    <a href="ag16.html" class="ag16-btn-secondary">
+                        <i class="fas fa-book-open"></i> Read the AG16 Story
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="social-links">
+                <a href="https://github.com/yoans" class="social-link" target="_blank" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/nathaniel-young-pro" class="social-link" target="_blank" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="https://soundcloud.com/nathaniel-pierce-young" class="social-link" target="_blank" aria-label="SoundCloud">
+                    <i class="fa-brands fa-soundcloud"></i>
+                </a>
+                <a href="https://facebook.com/youngmanathan" class="social-link" target="_blank" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com/nathanyoans" class="social-link" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="contact.html" class="social-link" aria-label="Contact">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+            <p style="margin-top: 24px;">&copy; 2026 Nathaniel Young. Built with purpose.</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script defer src="./index.js" type="text/javascript"></script>
+    </body>
+</html>

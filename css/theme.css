@@ -926,6 +926,26 @@ body.has-hero-avatar .nav-brand img {
     box-shadow: 0 0 15px rgba(212, 165, 116, 0.2);
 }
 
+/* Pipeline experiment tag on AG16 back face */
+.ag-pipeline-tag {
+    text-decoration: none;
+    color: #82b482 !important;
+    background: rgba(130, 180, 130, 0.12) !important;
+    border: 1px solid rgba(130, 180, 130, 0.3) !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ag-pipeline-tag:hover {
+    background: rgba(130, 180, 130, 0.25) !important;
+    border-color: #82b482 !important;
+}
+
+.ag-pipeline-tag i {
+    margin-right: 3px;
+    font-size: 0.85em;
+}
+
 /* Flip hint text */
 .ag-flip-hint {
     text-align: center;

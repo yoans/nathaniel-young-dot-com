@@ -169,6 +169,37 @@
     animation: fadeInUp 0.6s ease 0.45s forwards;
 }
 
+/* Skip-ahead link in hero */
+.ag16-skip-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #82b482;
+    background: rgba(130, 180, 130, 0.1);
+    border: 1px solid rgba(130, 180, 130, 0.3);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.6s forwards;
+}
+
+.ag16-skip-link:hover {
+    background: rgba(130, 180, 130, 0.2);
+    border-color: #82b482;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(130, 180, 130, 0.15);
+}
+
+.ag16-skip-link i {
+    font-size: 0.9em;
+}
+
 /* Sections */
 .ag16-section {
     max-width: 900px;

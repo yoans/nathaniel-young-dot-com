@@ -70,7 +70,9 @@ MICROSOFT (Oct 2021 - Feb 2023)
 JOHN DEERE (Two stints)
 - Senior Software Engineer (Feb 2023 - Aug 2023)
   - Payments platform, seller onboarding
-  - Serverless AWS with TypeScript + Terraform
+  - Serverless AWS with TypeScript + Terraform, Docker, CI/CD via Jenkins
+  - Evaluated GraphQL/Apollo vs DynamoDB for architecture — prototyped the GraphQL approach, team ultimately went with DynamoDB based on comfort level, but Nathaniel came away with solid understanding of the query/mutation model and reducing over-fetching
+  - Swagger-documented APIs defining seller-platform onboarding
 - Software Engineer (May 2017 - Oct 2020)
   - Mentored team on TDD practices
   - Built reusable React components for Deere UI community
@@ -85,12 +87,14 @@ EARLIER: INTL FCStone, ITA Group (2014-2017)
 === TECHNICAL SKILLS ===
 Languages: JavaScript, TypeScript, Python, C#, Java, SQL
 Frontend: React.js, SvelteKit, Angular, Vue, Knockout.js
-Backend: Node.js, .NET, C# APIs, Azure Functions
-Cloud: AWS (primary now), Azure (extensive), Terraform, Serverless
-AI/ML: GenAI, LangChain, VAPI Voice AI, Multi-agent systems
+Backend: Node.js, Express, .NET, C# APIs, Azure Functions
+API Layer: GraphQL/Apollo (evaluated and prototyped at John Deere Financial — understands the query/mutation model, reducing over-fetching, and when it fits vs. when it doesn't), REST
+Cloud: AWS (primary now — ECS, RDS, serverless), Azure (extensive — Service Bus, Cosmos DB, Functions, VMs), Terraform, Serverless Framework
+AI/ML: GenAI, Claude API, LangChain, VAPI Voice AI, Multi-agent systems, agentic workflows
+Containers: Docker (production use at John Deere and Principal, automated trading systems with Python analysis containers, publishing composed containers on Railway). Docker is his go-to for portable, hardware-agnostic compute environments.
 Mobile: Capacitor, React Native, iOS, Android, PWA
-Data: SQL Server, PostgreSQL, Cosmos DB, Firebase
-DevOps: Jenkins, Drone, GitHub Actions, CI/CD pipelines
+Data: PostgreSQL (current go-to for side projects), SQL Server (enterprise), DynamoDB (John Deere), Cosmos DB (Microsoft), Firebase. SQL experience goes back to the start of his career.
+DevOps: Jenkins, Drone, GitHub Actions, CI/CD pipelines, Docker Compose, Railway
 
 === EDUCATION ===
 Iowa State University of Science and Technology
@@ -100,12 +104,14 @@ Graduated December 2014, Ames, Iowa
 === PROJECTS & SIDE WORK ===
 1. Sagaciasoft (sagaciasoft.com) - AI consultancy, chatbots, voice agents
 2. Varimuse (varimuse.ai) - Patent-pending AI exploration platform for orchestrated multi-agent variation generation and branching
-3. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks
-4. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
-5. Arrowgrid - Interactive melody generator
-6. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
-7. Pascal's Music Box - Mathematical music from Pascal's triangle
-8. Dark Forest AI - Autonomous multi-agent blog network
+3. Sagaciasoft YT Pipeline - Autonomous multi-step agentic workflow for YouTube Short production. Cron-scheduled Node.js system that: (a) harvests git commits across 15+ repos, (b) emails angle options via Gmail API, (c) polls for reply and sets direction, (d) generates scripts via Claude API, (e) pulls YouTube Analytics. Zero manual intervention. Production system running daily.
+4. Portfolio OS / Second Brain - Agentic second brain managing priorities across 15+ active repos. Sub-agents triage initiatives, scan repo state, route tasks, and regenerate a living markdown dashboard. Every agent read/write is auditable. Separates orchestration logic from content so agents can act without touching the UI.
+5. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks
+6. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
+7. Arrowgrid - Interactive melody generator
+8. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
+9. Pascal's Music Box - Mathematical music from Pascal's triangle
+10. Dark Forest AI - Autonomous multi-agent blog network via GitHub Actions
 
 === INTERESTS & HOBBIES ===
 - Music production (has a SoundCloud)
@@ -137,6 +143,7 @@ Making technology accessible and empowering people to build the future they want
 - **AI Native**: Not just using AI tools - fundamentally rethinking how to build software in an AI-first world. Follows trends obsessively and experiments constantly.
 - **Context Over Syntax**: Values the judgment and organizational context from 10+ years over just knowing languages. Sees programming languages as tools, not identities.
 - **Builder + Teacher**: Ships products (Pet Protagonists, Bible Repair Game, client work) AND loves mentoring developers and presenting to teams.
+- **Agentic Systems Builder**: Has shipped production multi-step AI agents — from a fully autonomous YouTube pipeline (git harvest → LLM script gen → Gmail → YouTube Analytics) to a second brain with sub-agents that triage, route, and refresh priorities across 15+ repos. Knows what it takes to move from "demo" to "always-on."
 - **Creative AI Product Builder**: Uses AI both as product surface and production leverage, from patent-pending exploration systems like Varimuse to backlog-revival builds like AG16.
 - **"Wielder of Agency"**: Doesn't wait for permission. Sees opportunities and builds solutions.
 
@@ -565,6 +572,8 @@ Want to hear about any of these in more depth?`;
 **Hands-on Building**:
 • Built AI chatbots and voice agents through Sagaciasoft
 • Built Varimuse, a patent-pending multi-agent AI exploration platform
+• Built and runs the Sagaciasoft YT Pipeline — a fully autonomous multi-step agent (git harvest → direction email → LLM script gen → YouTube analytics) running on cron with zero manual intervention
+• Built Portfolio OS — a second brain with sub-agents that triage initiatives, scan repo state, route tasks, and regenerate a live priority dashboard across 15+ repos
 • Created Pet Protagonists (AI-generated illustrated storybooks)
 • Runs Dark Forest AI (autonomous multi-agent blog network)
 • Rebuilt Arrowgrid into AG16 by harnessing AI to realize a decade-old product backlog
@@ -609,11 +618,14 @@ That's 10+ years spanning enterprise systems, cloud architecture, and AI product
 
 **Languages**: JavaScript, TypeScript, Python, C#, SQL
 **Frontend**: React.js, SvelteKit, Angular, Vue
-**Backend**: Node.js, .NET, serverless functions
-**Cloud**: AWS (current focus), Azure (extensive), Terraform
-**AI/ML**: LangChain, VAPI Voice AI, OpenAI, multi-agent systems
+**Backend**: Node.js, Express, .NET, serverless functions
+**API Layer**: GraphQL/Apollo (prototyped at John Deere), REST
+**Cloud**: AWS (current focus — ECS, RDS, serverless), Azure (extensive), Terraform
+**Data**: PostgreSQL (current go-to), DynamoDB, Cosmos DB, SQL Server — SQL from day one of his career
+**Containers**: Docker (production at John Deere, Principal, and side projects — composed containers on Railway)
+**AI/ML**: Claude API, LangChain, VAPI Voice AI, multi-agent systems, agentic workflows
 **Mobile**: Capacitor, React Native, PWAs
-**DevOps**: GitHub Actions, Jenkins, CI/CD pipelines
+**DevOps**: GitHub Actions, Jenkins, CI/CD pipelines, Docker Compose
 
 He's most dangerous with TypeScript + AWS + AI integration — that's the current sweet spot. But he's been full-stack across enough ecosystems to pick up new tools quickly.`;
     }
@@ -777,6 +789,30 @@ function analyzeJobDescriptionLocally(jobDesc) {
     }
     if (jd.includes('terraform') || jd.includes('infrastructure as code')) {
         matches.push('Terraform/IaC (used at John Deere)');
+        score += 3;
+    }
+    if (jd.includes('graphql') || jd.includes('apollo')) {
+        matches.push('GraphQL/Apollo (evaluated and prototyped at John Deere Financial — solid grasp of query/mutation model and reducing over-fetching)');
+        score += 3;
+    }
+    if (jd.includes('docker') || jd.includes('container')) {
+        matches.push('Docker (production use at John Deere, Principal, and personal projects — go-to for portable compute environments, published composed containers on Railway)');
+        score += 4;
+    }
+    if (jd.includes('postgres') || jd.includes('postgresql') || jd.includes('relational database')) {
+        matches.push('PostgreSQL (current go-to for projects, plus deep SQL experience going back to career start)');
+        score += 4;
+    }
+    if (jd.includes('agent') || jd.includes('workflow') || jd.includes('multi-step')) {
+        matches.push('AI-driven workflow agents (built and runs autonomous multi-step production pipeline — git harvest, Gmail, Claude API, YouTube Analytics)');
+        score += 5;
+    }
+    if (jd.includes('kafka') || jd.includes('elasticsearch') || jd.includes('elasticache') || jd.includes('redis')) {
+        matches.push('Familiar with event-driven and caching architectures (AWS ecosystem experience)');
+        score += 3;
+    }
+    if (jd.includes('ci/cd') || jd.includes('cicd') || jd.includes('pipeline')) {
+        matches.push('CI/CD pipelines (Jenkins at John Deere, GitHub Actions, Azure DevOps)');
         score += 3;
     }
     if (jd.includes('serverless') || jd.includes('lambda')) {
