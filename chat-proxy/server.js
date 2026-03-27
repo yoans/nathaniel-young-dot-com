@@ -1,9 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
+const { initLogger, wrapOpenAI, traced } = require('braintrust');
+const OpenAI = require('openai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Braintrust observability
+initLogger({
+  projectName: 'nathaniel-young-dot-com',
+  apiKey: process.env.BRAINTRUST_API_KEY,
+});
+
+// OpenAI client wrapped for Braintrust tracing
+const openai = wrapOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
 
 // Resend email configuration
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -37,28 +48,27 @@ app.post('/chat', async (req, res) => {
       ...messages
     ];
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
+    const aiMessage = await traced(
+      async (span) => {
+        span.log({
+          metadata: {
+            messageCount: messageCount || messages.length,
+            userAgent: req.headers['user-agent'],
+            referrer: req.headers['referer'] || 'direct',
+          },
+        });
+
+        const completion = await openai.chat.completions.create({
+          model: 'gpt-3.5-turbo',
+          messages: conversationMessages,
+          max_tokens: 500,
+          temperature: 0.7,
+        });
+
+        return completion.choices[0].message.content;
       },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: conversationMessages,
-        max_tokens: 500,
-        temperature: 0.7
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error('OpenAI API error:', error);
-      return res.status(response.status).json({ error: 'Failed to get response from AI' });
-    }
-
-    const data = await response.json();
-    const aiMessage = data.choices[0].message.content;
+      { name: 'portfolio-chat', type: 'llm' },
+    );
 
     res.json({ response: aiMessage });
   } catch (error) {
