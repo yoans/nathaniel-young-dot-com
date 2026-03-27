@@ -2,14 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
 const { initLogger, wrapOpenAI, traced } = require('braintrust');
-const OpenAI = require('openai');
+const { OpenAI } = require('openai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Braintrust observability
+if (!process.env.BRAINTRUST_API_KEY) {
+  console.warn('[braintrust] BRAINTRUST_API_KEY not set — logging disabled');
+} else {
+  console.log('[braintrust] Initializing logger for project Sagaciasoft');
+}
 initLogger({
-  projectName: 'nathaniel-young-dot-com',
+  projectName: 'Sagaciasoft',
   apiKey: process.env.BRAINTRUST_API_KEY,
 });
 
@@ -67,7 +72,7 @@ app.post('/chat', async (req, res) => {
 
         return completion.choices[0].message.content;
       },
-      { name: 'portfolio-chat', type: 'llm' },
+      { name: 'portfolio-chat', type: 'task' },
     );
 
     res.json({ response: aiMessage });
