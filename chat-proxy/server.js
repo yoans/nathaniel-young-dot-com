@@ -14,10 +14,10 @@ const openai = wrapOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
 if (!process.env.BRAINTRUST_API_KEY) {
   console.warn('[braintrust] BRAINTRUST_API_KEY not set — logging disabled');
 } else {
-  console.log('[braintrust] Initializing logger for project Sagaciasoft');
+  console.log('[braintrust] Initializing logger for project nathaniel-young-dot-com');
 }
 const logger = initLogger({
-  projectName: 'Sagaciasoft',
+  projectName: 'nathaniel-young-dot-com',
   apiKey: process.env.BRAINTRUST_API_KEY,
 });
 
