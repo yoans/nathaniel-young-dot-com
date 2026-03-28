@@ -1,25 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
-const { initLogger, wrapOpenAI, traced } = require('braintrust');
+const { initLogger, wrapOpenAI } = require('braintrust');
 const { OpenAI } = require('openai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Braintrust observability
+// OpenAI client wrapped for Braintrust tracing
+const openai = wrapOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
+
+// Braintrust observability — initLogger after wrapOpenAI per recommended pattern
 if (!process.env.BRAINTRUST_API_KEY) {
   console.warn('[braintrust] BRAINTRUST_API_KEY not set — logging disabled');
 } else {
   console.log('[braintrust] Initializing logger for project Sagaciasoft');
 }
-initLogger({
+const logger = initLogger({
   projectName: 'Sagaciasoft',
   apiKey: process.env.BRAINTRUST_API_KEY,
 });
-
-// OpenAI client wrapped for Braintrust tracing
-const openai = wrapOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
 
 // Resend email configuration
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -53,27 +53,12 @@ app.post('/chat', async (req, res) => {
       ...messages
     ];
 
-    const aiMessage = await traced(
-      async (span) => {
-        span.log({
-          metadata: {
-            messageCount: messageCount || messages.length,
-            userAgent: req.headers['user-agent'],
-            referrer: req.headers['referer'] || 'direct',
-          },
-        });
-
-        const completion = await openai.chat.completions.create({
-          model: 'gpt-3.5-turbo',
-          messages: conversationMessages,
-          max_tokens: 500,
-          temperature: 0.7,
-        });
-
-        return completion.choices[0].message.content;
-      },
-      { name: 'portfolio-chat', type: 'task' },
-    );
+    const aiMessage = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: conversationMessages,
+        max_tokens: 500,
+        temperature: 0.7,
+      }).then(c => c.choices[0].message.content);
 
     res.json({ response: aiMessage });
   } catch (error) {
