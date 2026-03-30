@@ -90,7 +90,7 @@ Frontend: React.js, SvelteKit, Angular, Vue, Knockout.js
 Backend: Node.js, Express, .NET, C# APIs, Azure Functions
 API Layer: GraphQL/Apollo (evaluated and prototyped at John Deere Financial — understands the query/mutation model, reducing over-fetching, and when it fits vs. when it doesn't), REST
 Cloud: AWS (primary now — ECS, RDS, serverless), Azure (extensive — Service Bus, Cosmos DB, Functions, VMs), Terraform, Serverless Framework
-AI/ML: GenAI, Claude API, LangChain, VAPI Voice AI, Multi-agent systems, agentic workflows
+AI/ML: GenAI, Claude API, LangChain, VAPI Voice AI, Multi-agent systems, agentic workflows, Braintrust (LLM observability, evals, and prompt regression testing — deployed across portfolio site, Varimuse, and Pet Protagonists)
 Containers: Docker (production use at John Deere and Principal, automated trading systems with Python analysis containers, publishing composed containers on Railway). Docker is his go-to for portable, hardware-agnostic compute environments.
 Mobile: Capacitor, React Native, iOS, Android, PWA
 Data: PostgreSQL (current go-to for side projects), SQL Server (enterprise), DynamoDB (John Deere), Cosmos DB (Microsoft), Firebase. SQL experience goes back to the start of his career.
@@ -103,10 +103,10 @@ Graduated December 2014, Ames, Iowa
 
 === PROJECTS & SIDE WORK ===
 1. Sagaciasoft (sagaciasoft.com) - AI consultancy, chatbots, voice agents
-2. Varimuse (varimuse.ai) - Patent-pending AI exploration platform for orchestrated multi-agent variation generation and branching
+2. Varimuse (varimuse.ai) - Patent-pending AI exploration platform for orchestrated multi-agent variation generation and branching. Instrumented with Braintrust for LLM tracing, eval scoring, and prompt quality iteration
 3. Sagaciasoft YT Pipeline - Autonomous multi-step agentic workflow for YouTube Short production. Cron-scheduled Node.js system that: (a) harvests git commits across 15+ repos, (b) emails angle options via Gmail API, (c) polls for reply and sets direction, (d) generates scripts via Claude API, (e) pulls YouTube Analytics. Zero manual intervention. Production system running daily.
 4. Portfolio OS / Second Brain - Agentic second brain managing priorities across 15+ active repos. Sub-agents triage initiatives, scan repo state, route tasks, and regenerate a living markdown dashboard. Every agent read/write is auditable. Separates orchestration logic from content so agents can act without touching the UI.
-5. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks
+5. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks. Instrumented with Braintrust for production LLM observability and cost tracking
 6. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
 7. Arrowgrid - Interactive melody generator
 8. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
