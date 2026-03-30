@@ -9,10 +9,11 @@
  * Requires: OPENAI_API_KEY and BRAINTRUST_API_KEY env vars
  */
 
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const { Eval, initLogger } = require('braintrust');
 const { Factuality } = require('autoevals');
 const { OpenAI } = require('openai');
-
 // ── OpenAI client (plain — Braintrust Eval instruments it automatically) ──
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
