@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Stand and Salute | Nathaniel Young</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Case study: Stand and Salute automated flag pole engineering for Dreamforge LLC. Proof of concept running. Fleet deployment ahead.">
+        <link rel="canonical" href="https://www.nathaniel-young.com/work-flag-pole.html">
+        <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/work.css">
+    </head>
+    <body>
+        <nav class="site-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="https://avatars0.githubusercontent.com/u/5156592" alt="Nathaniel Young">
+                <span>Nathaniel Young</span>
+            </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+            <label for="nav-toggle" class="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </label>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="ai.html" class="nav-ai"><i class="fa-solid fa-brain"></i> AI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div id="particles-js"></div>
+
+        <article class="case-wrap">
+            <a class="case-back" href="work.html"><i class="fa-solid fa-arrow-left"></i> All work</a>
+            <p class="case-eyebrow">Field systems · Dreamforge LLC</p>
+            <h1>Stand and Salute: automated flag pole engineering</h1>
+            <p class="case-meta">Contract engineering lead · Sagaciasoft LLC · July 2025 to present</p>
+
+            <section>
+                <h2>The situation</h2>
+                <p>Stand and Salute is an automated flag pole product. Dreamforge was hired to develop it. The product has to raise and lower a flag, move to half-staff when observance calls for it, and stay trustworthy when nobody is standing at the pole.</p>
+                <p>That is a harder problem than it sounds. The unit lives outdoors. It has a motor. It is often far from whoever is responsible for it. When something goes wrong, the failure is public: a flag in the wrong position on a day that may matter, in front of a building that people look at.</p>
+            </section>
+
+            <section>
+                <h2>The risk</h2>
+                <p>The early system leaned on an off-the-shelf cloud platform for its intelligence. For unattended outdoor hardware, that is a brittle foundation. If the cloud hiccups, the pole is stuck waiting on a vendor Dreamforge does not control.</p>
+                <p>Software teams can usually tolerate a flaky dependency for a while. A physical product with a public face cannot. Reliability had to become something Dreamforge owns, including when the network is gone.</p>
+            </section>
+
+            <section>
+                <h2>What had to be true</h2>
+                <p>Before a larger fleet makes sense, a few questions have to clear:</p>
+                <ul>
+                    <li>Can the unit behave correctly with no internet?</li>
+                    <li>Can it be watched and commanded remotely when the network is available?</li>
+                    <li>Can safe motion behavior live at the machine, independent of the cloud?</li>
+                    <li>Can a technician bring up a unit without an engineer on site?</li>
+                </ul>
+                <p>The work has been aimed at answering those questions with a running proof of concept, then hardening the path to a larger deployment.</p>
+            </section>
+
+            <section>
+                <h2>What I was responsible for</h2>
+                <p>Full ownership of the software system across the device and the cloud, plus the operational path to hand it off.</p>
+                <ul>
+                    <li>On-device software for motion behavior, operator controls, safety, and status</li>
+                    <li>Cloud backend and operator dashboard for fleet visibility, scheduling, and remote command</li>
+                    <li>Offline-capable operation so the unit keeps doing the right thing through outages</li>
+                    <li>Provisioning and update tooling for repeatable builds</li>
+                    <li>Field documentation, technician setup, troubleshooting, and acceptance checks</li>
+                    <li>A software test approach that can validate behavior without a physical pole in the room</li>
+                </ul>
+                <p><strong>Competencies:</strong> embedded Linux, safety-conscious motion control, IoT fleet lifecycle, offline-first design, cloud backend and dashboard development, hardware and software integration, technician-grade documentation.</p>
+            </section>
+
+            <section>
+                <h2>Where it stands</h2>
+                <p>A proof of concept is running and has shown strong results. The next step is a larger fleet deployment. The reliability path now sits with Dreamforge rather than with a vendor they cannot control.</p>
+            </section>
+
+            <section>
+                <h2>The shape of this work</h2>
+                <p>A physical product, a small team, no internal software organization, and a reliability problem that sits at the intersection of hardware, field operations, and cloud. The job is to retire the scary unknowns early, leave behind something the client's people can run, and earn the right to scale.</p>
+                <p>If your project has that shape, <a href="https://buildbeyondbelief.com">let's talk at Build Beyond Belief</a>.</p>
+            </section>
+
+            <nav class="case-nav">
+                <a href="work-museum.html">Next: Museum exhibits →</a>
+                <a href="https://buildbeyondbelief.com/work/flag-pole">Also on B3 ↗</a>
+            </nav>
+        </article>
+
+        <footer class="site-footer">
+            <p>© 2026 Nathaniel Young · <a href="https://buildbeyondbelief.com">Build Beyond Belief</a> · <a href="https://sagaciasoft.com">Sagaciasoft</a></p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

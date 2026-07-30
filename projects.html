@@ -18,8 +18,10 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/work.css">
         
         <!-- Preload project images -->
+        <link rel="preload" as="image" href="svgs/b3-logo.svg">
         <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
         <link rel="preload" as="image" href="svgs/varimuseai.svg">
         <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
@@ -46,6 +48,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="experience.html">Experience</a></li>
                 <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="work.html">Work</a></li>
                 <li><a href="ai.html" class="nav-ai"><i class="fa-solid fa-brain"></i> AI</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -66,6 +69,25 @@
         <!-- Projects Section -->
         <section class="section" style="padding-top: 0;">
             <div class="projects-grid">
+                <!-- Build Beyond Belief -->
+                <div class="project-card">
+                    <a href="https://buildbeyondbelief.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/b3-logo.svg" alt="Build Beyond Belief">
+                        </div>
+                        <div class="project-card-content">
+                            <span class="property-badge">Property</span>
+                            <h3>Build Beyond Belief</h3>
+                            <p>Got an idea? Let's build it. Expert judgment, fast proofs, and staff coaching for ambitious one-off projects. Hardware, exhibits, field systems, ops.</p>
+                            <div class="skill-tags" style="margin-top: 12px;">
+                                <span class="skill-tag">Coaching</span>
+                                <span class="skill-tag">Hardware</span>
+                                <span class="skill-tag">Exhibits</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
                 <!-- Sagaciasoft -->
                 <div class="project-card">
                     <a href="https://sagaciasoft.com" target="_blank" rel="noopener noreferrer">
@@ -73,12 +95,45 @@
                             <img src="svgs/sagaciasoft-logo.svg" alt="Sagaciasoft">
                         </div>
                         <div class="project-card-content">
+                            <span class="property-badge">Property</span>
                             <h3>Sagaciasoft</h3>
                             <p>My AI consultancy. We build custom chatbots, voice agents, and automation solutions for businesses. Save 97% on support costs with AI that learns your business.</p>
                             <div class="skill-tags" style="margin-top: 12px;">
                                 <span class="skill-tag">OpenAI</span>
                                 <span class="skill-tag">Voice AI</span>
                                 <span class="skill-tag">Chatbots</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stand and Salute -->
+                <div class="project-card">
+                    <a href="work-flag-pole.html">
+                        <div class="project-card-content" style="padding-top: 28px;">
+                            <span class="property-badge">Client work</span>
+                            <h3>Stand and Salute</h3>
+                            <p>Automated flag pole engineering for Dreamforge. Raise, lower, half-staff, remote visibility. Reliability that has to live outdoors, unattended.</p>
+                            <div class="skill-tags" style="margin-top: 12px;">
+                                <span class="skill-tag">Embedded</span>
+                                <span class="skill-tag">IoT</span>
+                                <span class="skill-tag">Cloud</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Museum -->
+                <div class="project-card">
+                    <a href="work-museum.html">
+                        <div class="project-card-content" style="padding-top: 28px;">
+                            <span class="property-badge">Client work</span>
+                            <h3>DSM Children's Museum</h3>
+                            <p>Interactive exhibits: phone stations, Fire House sensing, and a Construction House pipe wall designed in-browser before fabrication.</p>
+                            <div class="skill-tags" style="margin-top: 12px;">
+                                <span class="skill-tag">Exhibits</span>
+                                <span class="skill-tag">Sensors</span>
+                                <span class="skill-tag">Audio</span>
                             </div>
                         </div>
                     </a>

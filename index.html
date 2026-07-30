@@ -18,8 +18,10 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/work.css">
         
         <!-- Preload project images -->
+        <link rel="preload" as="image" href="svgs/b3-logo.svg">
         <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
         <link rel="preload" as="image" href="svgs/varimuseai.svg">
         <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
@@ -46,6 +48,7 @@
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="experience.html">Experience</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="work.html">Work</a></li>
                 <li><a href="ai.html" class="nav-ai"><i class="fa-solid fa-brain"></i> AI</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -116,18 +119,49 @@
         <section class="section" id="projects">
             <div class="section-header">
                 <h2>Featured Projects</h2>
-                <p>Products I've built that blend creativity with technology</p>
+                <p>Products, properties, and client work</p>
             </div>
 
             <div class="projects-grid">
+                <div class="project-card">
+                    <a href="https://buildbeyondbelief.com" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card-image">
+                            <img src="svgs/b3-logo.svg" alt="Build Beyond Belief">
+                        </div>
+                        <div class="project-card-content">
+                            <span class="property-badge">Property</span>
+                            <h3>Build Beyond Belief</h3>
+                            <p>Got an idea? Let's build it. Expert judgment, fast proofs, and staff coaching for ambitious one-off projects.</p>
+                        </div>
+                    </a>
+                </div>
                 <div class="project-card">
                     <a href="https://sagaciasoft.com" target="_blank" rel="noopener noreferrer">
                         <div class="project-card-image">
                             <img src="svgs/sagaciasoft-logo.svg" alt="Sagaciasoft">
                         </div>
                         <div class="project-card-content">
+                            <span class="property-badge">Property</span>
                             <h3>Sagaciasoft</h3>
                             <p>AI consultancy. Custom chatbots, voice agents, and business automation.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="work-flag-pole.html">
+                        <div class="project-card-content" style="padding-top: 28px;">
+                            <span class="property-badge">Client work</span>
+                            <h3>Stand and Salute</h3>
+                            <p>Automated flag pole engineering for Dreamforge. Reliability that has to live outdoors, unattended.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="project-card">
+                    <a href="work-museum.html">
+                        <div class="project-card-content" style="padding-top: 28px;">
+                            <span class="property-badge">Client work</span>
+                            <h3>DSM Children's Museum</h3>
+                            <p>Interactive exhibits: phones, Fire House sensing, and a playable pipe puzzle design tool.</p>
                         </div>
                     </a>
                 </div>

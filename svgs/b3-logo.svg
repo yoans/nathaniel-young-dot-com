@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <!-- Dark rounded background -->
+  <rect x="0" y="0" width="64" height="64" rx="12" ry="12" fill="#0b1020"/>
+  <!-- B1: back layer -->
+  <g transform="translate(38,32) rotate(-55,-2,0) scale(0.85)" opacity="0.7">
+    <path d="M-16,-28 L-16,28 L12,14 L-4,0 L12,-14 Z"
+      stroke="url(#g1)" stroke-width="5" fill="none"
+      stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <!-- B2: middle layer -->
+  <g transform="translate(38,32) rotate(-27,-2,0) scale(0.85)" opacity="0.85">
+    <path d="M-16,-28 L-16,28 L12,14 L-4,0 L12,-14 Z"
+      stroke="url(#g2)" stroke-width="5.5" fill="none"
+      stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <!-- B3: front layer -->
+  <g transform="translate(38,32) rotate(1,-2,0) scale(0.85)" opacity="1">
+    <path d="M-16,-28 L-16,28 L12,14 L-4,0 L12,-14 Z"
+      stroke="url(#g3)" stroke-width="6" fill="none"
+      stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+</svg>
