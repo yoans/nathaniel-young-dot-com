@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Stand and Salute | Nathaniel Young</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Case study: Stand and Salute automated flag pole engineering for Dreamforge LLC. Proof of concept running. Fleet deployment ahead.">
+        <meta name="description" content="Case study: pre-production automated flag pole engineering for Stand and Salute LLC, engaged through Dreamforge. Working proof of concept.">
         <link rel="canonical" href="https://www.nathaniel-young.com/work-flag-pole.html">
         <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,32 +39,32 @@
 
         <article class="case-wrap">
             <a class="case-back" href="work.html"><i class="fa-solid fa-arrow-left"></i> All work</a>
-            <p class="case-eyebrow">Field systems · Dreamforge LLC</p>
-            <h1>Stand and Salute: automated flag pole engineering</h1>
-            <p class="case-meta">Contract engineering lead · Sagaciasoft LLC · July 2025 to present</p>
+            <p class="case-eyebrow">Field systems · Stand and Salute LLC · via Dreamforge</p>
+            <h1>Stand and Salute: pre-production flag pole engineering</h1>
+            <p class="case-meta">Contract engineering lead · Sagaciasoft LLC · July 2025 to present · Working proof of concept</p>
 
             <section>
                 <h2>The situation</h2>
-                <p>Stand and Salute is an automated flag pole product. Dreamforge was hired to develop it. The product has to raise and lower a flag, move to half-staff when observance calls for it, and stay trustworthy when nobody is standing at the pole.</p>
-                <p>That is a harder problem than it sounds. The unit lives outdoors. It has a motor. It is often far from whoever is responsible for it. When something goes wrong, the failure is public: a flag in the wrong position on a day that may matter, in front of a building that people look at.</p>
+                <p>Stand and Salute LLC is building an automated flag pole system. Dreamforge LLC was hired to develop it. I came on through Dreamforge as contract engineering lead.</p>
+                <p>The product has to raise and lower a flag, move to half-staff when observance calls for it, and stay trustworthy when nobody is standing at the pole. Stand and Salute is still pre-production, so there is no public marketing site yet. The engineering problem is already real: the unit lives outdoors, it has a motor, and a wrong position is a public failure even before a brand website exists.</p>
             </section>
 
             <section>
                 <h2>The risk</h2>
-                <p>The early system leaned on an off-the-shelf cloud platform for its intelligence. For unattended outdoor hardware, that is a brittle foundation. If the cloud hiccups, the pole is stuck waiting on a vendor Dreamforge does not control.</p>
-                <p>Software teams can usually tolerate a flaky dependency for a while. A physical product with a public face cannot. Reliability had to become something Dreamforge owns, including when the network is gone.</p>
+                <p>Early versions leaned on an off-the-shelf cloud platform for intelligence. For unattended outdoor hardware, that is a brittle foundation. If the cloud hiccups, the pole waits on a vendor nobody on the team controls.</p>
+                <p>A consumer app can limp through flaky dependencies. Hardware that will one day sit in front of buildings cannot. Before production deployment, reliability has to belong to the product: including when the network is gone.</p>
             </section>
 
             <section>
-                <h2>What had to be true</h2>
-                <p>Before a larger fleet makes sense, a few questions have to clear:</p>
+                <h2>What had to be true before production</h2>
+                <p>A few questions have to clear before a fleet rollout makes sense:</p>
                 <ul>
                     <li>Can the unit behave correctly with no internet?</li>
                     <li>Can it be watched and commanded remotely when the network is available?</li>
                     <li>Can safe motion behavior live at the machine, independent of the cloud?</li>
                     <li>Can a technician bring up a unit without an engineer on site?</li>
                 </ul>
-                <p>The work has been aimed at answering those questions with a running proof of concept, then hardening the path to a larger deployment.</p>
+                <p>The current work answers those with a running proof of concept, then hardens the path to production.</p>
             </section>
 
             <section>
@@ -72,23 +72,23 @@
                 <p>Full ownership of the software system across the device and the cloud, plus the operational path to hand it off.</p>
                 <ul>
                     <li>On-device software for motion behavior, operator controls, safety, and status</li>
-                    <li>Cloud backend and operator dashboard for fleet visibility, scheduling, and remote command</li>
+                    <li>Cloud backend and operator dashboard for device visibility, scheduling, and remote command</li>
                     <li>Offline-capable operation so the unit keeps doing the right thing through outages</li>
                     <li>Provisioning and update tooling for repeatable builds</li>
                     <li>Field documentation, technician setup, troubleshooting, and acceptance checks</li>
                     <li>A software test approach that can validate behavior without a physical pole in the room</li>
                 </ul>
-                <p><strong>Competencies:</strong> embedded Linux, safety-conscious motion control, IoT fleet lifecycle, offline-first design, cloud backend and dashboard development, hardware and software integration, technician-grade documentation.</p>
+                <p><strong>Competencies:</strong> embedded Linux, safety-conscious motion control, IoT device lifecycle, offline-first design, cloud backend and dashboard development, hardware and software integration, technician-grade documentation.</p>
             </section>
 
             <section>
                 <h2>Where it stands</h2>
-                <p>A proof of concept is running and has shown strong results. The next step is a larger fleet deployment. The reliability path now sits with Dreamforge rather than with a vendor they cannot control.</p>
+                <p>Pre-production. A working proof of concept is running and has shown strong results. The next step is production fleet deployment. The reliability path is being built so Stand and Salute owns it, rather than renting it from a vendor they cannot control.</p>
             </section>
 
             <section>
                 <h2>The shape of this work</h2>
-                <p>A physical product, a small team, no internal software organization, and a reliability problem that sits at the intersection of hardware, field operations, and cloud. The job is to retire the scary unknowns early, leave behind something the client's people can run, and earn the right to scale.</p>
+                <p>A physical product still heading toward production, a small team, no internal software organization, and a reliability problem at the intersection of hardware, field operations, and cloud. The job is to retire the scary unknowns early, leave behind something the client's people can run, and earn the right to scale.</p>
                 <p>If your project has that shape, <a href="https://buildbeyondbelief.com">let's talk at Build Beyond Belief</a>.</p>
             </section>
 
