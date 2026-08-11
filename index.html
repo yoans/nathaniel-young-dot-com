@@ -21,8 +21,9 @@
         <link rel="stylesheet" href="css/work.css">
         
         <!-- Preload project images -->
-        <link rel="preload" as="image" href="svgs/b3-logo.svg">
         <link rel="preload" as="image" href="svgs/sagaciasoft-logo.svg">
+        <link rel="preload" as="image" href="svgs/stand-and-salute.svg">
+        <link rel="preload" as="image" href="svgs/dsm-museum.svg">
         <link rel="preload" as="image" href="svgs/varimuseai.svg">
         <link rel="preload" as="image" href="svgs/arrowgrid-logo.svg">
         <link rel="preload" as="image" href="svgs/ag16-logo.svg">
@@ -123,10 +124,10 @@
             </div>
 
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card b3-card">
                     <a href="https://buildbeyondbelief.com" target="_blank" rel="noopener noreferrer">
-                        <div class="project-card-image">
-                            <img src="svgs/b3-logo.svg" alt="Build Beyond Belief">
+                        <div class="project-card-image b3-card-image">
+                            <div class="b3-logo-mount" data-b3-logo aria-hidden="true"></div>
                         </div>
                         <div class="project-card-content">
                             <span class="property-badge">Property</span>
@@ -149,7 +150,10 @@
                 </div>
                 <div class="project-card">
                     <a href="work-flag-pole.html">
-                        <div class="project-card-content" style="padding-top: 28px;">
+                        <div class="project-card-image">
+                            <img src="svgs/stand-and-salute.svg" alt="Stand and Salute">
+                        </div>
+                        <div class="project-card-content">
                             <span class="property-badge">Client work</span>
                             <h3>Stand and Salute</h3>
                             <p>Pre-production automated flag pole engineering for Stand and Salute LLC, via Dreamforge. Working proof of concept.</p>
@@ -158,7 +162,10 @@
                 </div>
                 <div class="project-card">
                     <a href="work-museum.html">
-                        <div class="project-card-content" style="padding-top: 28px;">
+                        <div class="project-card-image">
+                            <img src="svgs/dsm-museum.svg" alt="DSM Children's Museum">
+                        </div>
+                        <div class="project-card-content">
                             <span class="property-badge">Client work</span>
                             <h3>DSM Children's Museum</h3>
                             <p>Interactive exhibits: phones, Fire House sensing, and a playable pipe puzzle design tool.</p>
@@ -313,5 +320,6 @@
         <script defer src="./index.js" type="text/javascript"></script>
         <script defer src="./terminal.js" type="text/javascript"></script>
         <script defer src="./ag16-flip.js" type="text/javascript"></script>
+        <script defer src="./b3-logo-anim.js" type="text/javascript"></script>
     </body>
 </html>

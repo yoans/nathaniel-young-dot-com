@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Classical museum: pediment + columns -->
+  <path d="M16 42 L60 18 L104 42" stroke="#000" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M20 42 H100" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+  <rect x="28" y="48" width="8" height="40" rx="1.5" fill="#000"/>
+  <rect x="48" y="48" width="8" height="40" rx="1.5" fill="#000"/>
+  <rect x="64" y="48" width="8" height="40" rx="1.5" fill="#000"/>
+  <rect x="84" y="48" width="8" height="40" rx="1.5" fill="#000"/>
+  <rect x="18" y="90" width="84" height="10" rx="2" fill="#000"/>
+  <rect x="14" y="100" width="92" height="6" rx="2" fill="#000"/>
+</svg>
