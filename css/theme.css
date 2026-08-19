@@ -1055,6 +1055,12 @@ body.has-hero-avatar .nav-brand img {
     transform: translateY(-2px);
 }
 
+.social-link svg {
+    width: 1.15em;
+    height: 1.15em;
+    display: block;
+}
+
 /* ===== Footer ===== */
 .site-footer {
     padding: 40px;
