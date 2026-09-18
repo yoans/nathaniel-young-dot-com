@@ -1,10 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 90" width="140" height="90" fill="none">
-  <rect x="8" y="10" width="36" height="22" rx="3" stroke="#000" stroke-width="3"/>
-  <rect x="52" y="10" width="36" height="22" rx="3" stroke="#000" stroke-width="3"/>
-  <rect x="96" y="10" width="36" height="22" rx="3" stroke="#000" stroke-width="3"/>
-  <path d="M26 32 v12 M70 32 v12 M114 32 v12" stroke="#000" stroke-width="3"/>
-  <path d="M26 44 H114" stroke="#000" stroke-width="3"/>
-  <rect x="40" y="56" width="60" height="24" rx="3" stroke="#000" stroke-width="3"/>
-  <path d="M70 44 v12" stroke="#000" stroke-width="3"/>
-  <path d="M62 18 l8-6 8 6 M78 72 l-8 6 -8-6" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 108" width="148" height="108" fill="none" aria-hidden="true">
+  <g stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <!-- open: mid body, longer lower wick -->
+    <line x1="23" y1="26" x2="23" y2="38"/>
+    <rect x="13.5" y="38" width="19" height="42" rx="4"/>
+    <line x1="23" y1="80" x2="23" y2="96"/>
+
+    <!-- lift -->
+    <line x1="56" y1="16" x2="56" y2="28"/>
+    <rect x="47" y="28" width="18" height="32" rx="4"/>
+    <line x1="56" y1="60" x2="56" y2="82"/>
+
+    <!-- range high -->
+    <line x1="90" y1="8" x2="90" y2="16"/>
+    <rect x="79.5" y="16" width="21" height="46" rx="4"/>
+    <line x1="90" y1="62" x2="90" y2="76"/>
+
+    <!-- small close -->
+    <line x1="124" y1="40" x2="124" y2="50"/>
+    <rect x="115.5" y="50" width="17" height="26" rx="4"/>
+    <line x1="124" y1="76" x2="124" y2="90"/>
+  </g>
 </svg>
