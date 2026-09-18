@@ -18,6 +18,7 @@ PROJECTS:
 4. Bible Repair Game (biblerepairgame.com) - Cross-platform app (iOS, Android, web) built with SvelteKit, TypeScript, and Capacitor where users unscramble Bible verses
 5. Dark Forest AI (darkforest.sagaciasoft.com) - Autonomous multi-agent blog network that uses GenAI and GitHub Actions to generate SEO-optimized content
 6. Pet Protagonists (petprotagonists.com) - AI-powered service that turns pet photos into personalized illustrated storybooks
+7. Trading architecture (2024) - Independent containerized Python strategy services with broker connectivity, scheduled execution, and GitHub Actions deploy. Architecture practice, not a performance claim. See nathaniel-young.com/work-trading.html
 
 TECH STACK:
 - Frontend: JavaScript, TypeScript, SvelteKit, React
@@ -27,8 +28,9 @@ TECH STACK:
 - Automation: GitHub Actions, multi-agent systems
 
 PERSONALITY:
-- Creative problem solver who enjoys blending art and technology
+- Independent builder who treats software as the default way to solve a problem
 - Entrepreneurial mindset - builds products, not just features
+- Built a 2024 trading architecture (containerized Python strategy services, scheduled execution, GitHub Actions). Personal project, not a trading desk or performance claim.
 - Believes in AI as a tool for enhancement, not replacement
 - Values clean design and user experience
 

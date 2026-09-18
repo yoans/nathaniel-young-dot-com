@@ -54,10 +54,12 @@ CURRENT: Principal Financial Group (Feb 2024 - Present)
 
 SAGACIASOFT (Dec 2018 - Present, side business)
 - Founded product development and AI consultancy
+- Independent builder: treats software as the default way to solve a problem
 - Built multiple generative-AI storefronts using Railway
 - Cross-platform apps with Svelte, Capacitor, SvelteKit, React.js
 - Clients in: IoT, generative AI, sports-recruiting, music, lead-generation
 - Products: Varimuse, Pet Protagonists, Dark Forest AI, AG16, client projects
+- Trading architecture (2024, independent): containerized Python strategy services (one process per symbol), IBKR gateway, APScheduler with NYSE calendar awareness, GitHub Actions deploy, health-check service. Personal/educational system. Do NOT claim P&L, AUM, a live trading desk, or that it currently runs in production. Call it "trading architecture," not a fund.
 
 MICROSOFT (Oct 2021 - Feb 2023)
 - Software Engineer II, Redmond WA (remote-ish)
@@ -91,7 +93,7 @@ Backend: Node.js, Express, .NET, C# APIs, Azure Functions
 API Layer: GraphQL/Apollo (evaluated and prototyped at John Deere Financial — understands the query/mutation model, reducing over-fetching, and when it fits vs. when it doesn't), REST
 Cloud: AWS (primary now — ECS, RDS, serverless), Azure (extensive — Service Bus, Cosmos DB, Functions, VMs), Terraform, Serverless Framework
 AI/ML: GenAI, Claude API, LangChain, VAPI Voice AI, Multi-agent systems, agentic workflows, Braintrust (LLM observability, evals, and prompt regression testing — deployed across portfolio site, Varimuse, and Pet Protagonists)
-Containers: Docker (production use at John Deere and Principal, automated trading systems with Python analysis containers, publishing composed containers on Railway). Docker is his go-to for portable, hardware-agnostic compute environments.
+Containers: Docker (production use at John Deere and Principal, independent 2024 trading architecture with Python strategy containers and a broker gateway, publishing composed containers on Railway). Docker is his go-to for portable, hardware-agnostic compute environments.
 Mobile: Capacitor, React Native, iOS, Android, PWA
 Data: PostgreSQL (current go-to for side projects), SQL Server (enterprise), DynamoDB (John Deere), Cosmos DB (Microsoft), Firebase. SQL experience goes back to the start of his career.
 DevOps: Jenkins, Drone, GitHub Actions, CI/CD pipelines, Docker Compose, Railway
@@ -112,6 +114,7 @@ Graduated December 2014, Ames, Iowa
 8. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
 9. Pascal's Music Box - Mathematical music from Pascal's triangle
 10. Dark Forest AI - Autonomous multi-agent blog network via GitHub Actions
+11. Trading architecture (2024) - Independent system: Python strategy services as Docker containers per symbol, broker gateway, scheduled execution, health checks, GitHub Actions deploy. Architecture and operations practice, not a performance track record. Case study: nathaniel-young.com/work-trading.html
 
 === INTERESTS & HOBBIES ===
 - Music production (has a SoundCloud)
@@ -138,7 +141,8 @@ Nathaniel expects to play a key role instrumenting large enterprises for using A
 Making technology accessible and empowering people to build the future they want to see. The democratization of software creation through AI excites him immensely.
 
 === WHAT MAKES NATHANIEL UNIQUE ===
-- **Enterprise + Entrepreneur**: Serious enterprise experience (Microsoft, John Deere, Principal) AND runs his own AI consultancy. Can navigate corporate politics AND ship indie products.
+- **Enterprise + Entrepreneur**: Serious enterprise experience (Microsoft, John Deere, Principal) AND runs his own consultancy. Can navigate corporate politics AND ship indie products.
+- **Solves problems with software**: Does not wait for a ticket. Sees a gap and builds a system, from client products to a personal trading architecture.
 - **Technical + Strategic**: Can whiteboard architecture with executives and push production code the same day. Bridges the gap between vision and execution.
 - **AI Native**: Not just using AI tools - fundamentally rethinking how to build software in an AI-first world. Follows trends obsessively and experiments constantly.
 - **Context Over Syntax**: Values the judgment and organizational context from 10+ years over just knowing languages. Sees programming languages as tools, not identities.
@@ -149,12 +153,13 @@ Making technology accessible and empowering people to build the future they want
 
 === JOB MATCH EVALUATION ===
 When evaluating job descriptions, consider:
-- Nathaniel excels in roles requiring both technical depth and strategic thinking
-- Sweet spots: Solutions Architecture, Senior/Staff Engineer, AI Integration Lead, Engineering Manager
-- Strong at: AWS, TypeScript, React, AI/ML integration, cross-team collaboration, upskilling teams
-- Values: Interesting problems, autonomy, modern tech stack, AI-forward culture, impact over busywork
-- Open to: Remote work, interesting startups, AI-focused roles, architecture positions, leadership opportunities
-- Location flexibility: Currently Des Moines area, open to remote or relocation for the right opportunity
+- Nathaniel excels in roles requiring both technical depth and ownership
+- Sweet spots: Senior Engineer, Solutions Architecture, platform/data systems, financial services engineering
+- Strong at: AWS, TypeScript, Python, React, CI/CD, containers, production operations, cross-team collaboration
+- Relevant but not overstated for markets roles: INTL FCStone work with brokers and traders; independent 2024 trading architecture (systems design, not a professional desk)
+- Values: Interesting problems, autonomy, modern delivery, impact over busywork
+- Open to: Remote work, Chicago-area or remote trading/fintech teams, architecture positions, leadership opportunities
+- Location flexibility: Currently Des Moines / Norwalk IA (America/Chicago), open to remote or relocation for the right opportunity
 
 === COMMON RECRUITER/HIRING MANAGER QUESTIONS ===
 

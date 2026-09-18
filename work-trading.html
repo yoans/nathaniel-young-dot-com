@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Trading architecture | Nathaniel Young</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Independent trading architecture: containerized Python strategy services, broker connectivity, scheduled execution, and deploy automation.">
+        <link rel="canonical" href="https://www.nathaniel-young.com/work-trading.html">
+        <link rel="shortcut icon" href="https://avatars0.githubusercontent.com/u/5156592" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/work.css">
+    </head>
+    <body>
+        <nav class="site-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="https://avatars0.githubusercontent.com/u/5156592" alt="Nathaniel Young">
+                <span>Nathaniel Young</span>
+            </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+            <label for="nav-toggle" class="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </label>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="ai.html" class="nav-ai"><i class="fa-solid fa-brain"></i> AI</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div id="particles-js"></div>
+
+        <article class="case-wrap">
+            <a class="case-back" href="projects.html"><i class="fa-solid fa-arrow-left"></i> All projects</a>
+            <p class="case-eyebrow">Independent systems · 2024</p>
+            <h1>Trading architecture</h1>
+            <p class="case-meta">Personal project · Python, Docker, GitHub Actions · Not a professional desk, and not a claim about returns</p>
+
+            <section>
+                <h2>Why it exists</h2>
+                <p>I solve problems with software. A few years ago the problem was: I wanted to understand market systems by building the plumbing, not by reading about it.</p>
+                <p>The interesting part was never a single indicator. It was how you run strategy code as a real system: isolated processes, a broker connection that can fail, a calendar that is not Monday through Friday in the abstract, logs you can trust, and a deploy path that does not require sitting at a terminal at 8:55 a.m.</p>
+            </section>
+
+            <section>
+                <h2>What I built</h2>
+                <p>A small architecture of loosely coupled services:</p>
+                <ul>
+                    <li>A broker gateway container as the shared connection point</li>
+                    <li>Strategy services as separate Docker containers, one process per symbol, so one bad actor could not take down the rest</li>
+                    <li>Scheduled execution with market-calendar awareness, not a naive cron string</li>
+                    <li>Retry and backoff around a flaky broker API</li>
+                    <li>A health-check service for connectivity and market-data sanity</li>
+                    <li>GitHub Actions to rebuild and deploy instead of a manual ritual</li>
+                </ul>
+                <p>The strategy code was Python. The packaging was Docker Compose. Two strategy implementations lived in that shape, plus a health-check utility. I treated it as production-shaped work even though it was only my own capital and curiosity on the line.</p>
+            </section>
+
+            <section>
+                <h2>What I was actually practicing</h2>
+                <p>Operational questions. What happens when the gateway is down? How do you avoid client-id collisions across containers? How do you keep jobs from firing on a holiday? Where does the log go so you can reconstruct a morning?</p>
+                <p>Those are the same muscles as any system that has to be correct, on time, and still standing after a bad night: services, data, deploy, and on-call thinking, just on a smaller stage.</p>
+            </section>
+
+            <section>
+                <h2>What this is not</h2>
+                <p>This was an independent architecture project. It is not a fund, not a trading desk, and not a performance track record. I do not publish returns. I am not claiming professional markets experience from it.</p>
+                <p>It is evidence of how I work when nobody assigns the problem: I design the system, I run it, and I keep going until the operations are honest.</p>
+            </section>
+
+            <nav class="case-nav">
+                <a href="projects.html">← Projects</a>
+                <a href="work.html">Client work →</a>
+            </nav>
+        </article>
+
+        <footer class="site-footer">
+            <p>© 2026 Nathaniel Young · <a href="https://buildbeyondbelief.com">Build Beyond Belief</a> · <a href="https://sagaciasoft.com">Sagaciasoft</a></p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
