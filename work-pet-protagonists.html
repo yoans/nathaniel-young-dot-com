@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pet Protagonists: from pet photo to printed book | Nathaniel Young</title>
+  <meta name="description" content="A complete illustrated book, the architecture that made it, and the work of taking an independent AI product from idea to delivery. Pet Protagonists, by Nathaniel Young.">
+  <link rel="canonical" href="https://nathaniel-young.com/work-pet-protagonists.html">
+  <meta property="og:title" content="Pet Protagonists | A pet photo became a book."><meta property="og:description" content="Read the actual book. Explore the system. See the iteration behind an independent AI product."><meta property="og:type" content="article"><meta property="og:image" content="https://nathaniel-young.com/assets/pet-protagonists/book/page-06.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css"><link rel="stylesheet" href="css/pet-case.css">
+</head>
+<body class="pet-case">
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="nav-brand" href="index.html"><img src="https://avatars0.githubusercontent.com/u/5156592" alt=""><span>Nathaniel Young</span></a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu"><label for="nav-toggle" class="hamburger"><span></span><span></span><span></span></label>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="experience.html">Experience</a></li><li><a href="projects.html">Projects</a></li><li><a href="work.html" class="active" aria-current="page">Work</a></li><li><a href="contact.html">Contact</a></li></ul>
+</nav>
+<main>
+  <div class="case-subnav"><a href="work.html">← Selected work</a><a href="#book">Read the book</a><a href="#architecture">The architecture</a><a href="#iterations">The iteration</a><a href="pet-protagonists/">Product archive ↗</a></div>
+  <header class="pet-hero">
+    <div><p class="eyebrow">Pet Protagonists / Independent product</p><h1>A pet photo.<br>A story.<br><em>A book you can hold.</em></h1><p class="lede">A personalized storybook service that took a pet's personality and photo through writing, illustration, review, and print-ready book production. I built the product and the system behind it.</p><div class="actions"><a class="btn" href="#book">Read the actual book ↓</a><a class="btn secondary" href="#architecture">See how it worked</a></div></div>
+    <figure class="hero-art"><div class="hero-book"><img src="assets/pet-protagonists/book/page-06.jpg" alt="Coda, a cream-colored dog, illustrated in a field of wildflowers" width="1200" height="1200" fetchpriority="high"><div class="book-label">Coda's Magical<br>Twilight Adventure</div></div><figcaption>Actual generated artwork / preserved from the book PDF</figcaption></figure>
+  </header>
+  <div class="facts"><div><span>Role</span><strong>Product, engineering &amp; operations</strong></div><div><span>Build history</span><strong>October 2025 – August 2026</strong></div><div><span>What survives</span><strong>The book, the experience, the engineering</strong></div></div>
+
+  <section class="chapter" id="idea"><div class="section-head"><p class="eyebrow">01 / The idea</p><div class="section-copy"><h2>Make something personal enough to keep.</h2><p>Pet Protagonists started with an approachable idea: put someone's own pet at the center of a story. The name, the odd little habits, the recognizable face. Let the customer choose a setting and an illustration style, then turn it into a keepsake.</p><p>The interesting engineering question was how to make that experience repeatable. <strong>A paid order had to become a coherent story, a consistent set of characters, a usable preview, and a deliverable book.</strong> Each handoff added real product work.</p><p>That became the project: connecting creative generation to the practical details of payments, storage, retries, email, and printing.</p></div></div></section>
+
+  <section class="chapter" id="book"><div class="section-head"><p class="eyebrow">02 / The result</p><div class="section-copy"><h2>Start with the thing it made.</h2><p>This is <em>Coda's Magical Twilight Adventure</em>, created for the Youngs. The preserved PDF includes my dedication: “I know I enjoyed making it!” Browse the actual pages below, or open the complete print file.</p></div></div>
+    <div class="artifact-stage" id="book-reader" tabindex="0" aria-label="Book reader. Use the previous and next buttons or arrow keys.">
+      <div class="artifact-top"><div><h3>Coda's Magical Twilight Adventure</h3><p>24-page interior · December 2025 · Preserved original</p></div><a class="btn" href="assets/pet-protagonists/book/codas-magical-twilight-adventure.pdf" target="_blank" rel="noopener">Open full PDF ↗</a></div>
+      <div class="spread"><img id="book-left" data-base="assets/pet-protagonists/book" src="assets/pet-protagonists/book/page-06.jpg" alt="Book PDF page 6" width="1200" height="1200" loading="lazy"><img id="book-right" src="assets/pet-protagonists/book/page-07.jpg" alt="Book PDF page 7" width="1200" height="1200" loading="lazy"></div>
+      <div class="reader-controls"><button id="book-prev" type="button">← Previous</button><span id="page-count" aria-live="polite">PDF pages 6–7 of 24</span><button id="book-next" type="button">Next →</button></div>
+      <p class="artifact-caption">Rendered directly from the original generated PDF, with its original credits and dedication preserved in the full file.</p>
+      <div class="book-links"><a href="assets/pet-protagonists/book/codas-magical-twilight-adventure.pdf" download>Download the original PDF</a><a href="pet-protagonists/">Explore the preserved product →</a></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="work"><div class="section-head"><p class="eyebrow">03 / The work</p><div class="section-copy"><h2>The work between the idea and the book.</h2><p>I worked across the customer-facing product and the systems that had to complete an order. The difficult parts showed up between steps.</p></div></div>
+    <div class="work-detail-grid">
+      <article class="work-detail"><span class="number">01 / Character identity</span><h3>The same pet, page after page.</h3><p>Extract character descriptions, build reference images, and carry those anchors into each scene. Later iterations tightened which characters could appear and varied retry prompts without losing the original identity.</p></article>
+      <article class="work-detail"><span class="number">02 / Durable generation</span><h3>A long job with a recoverable path.</h3><p>Story writing, scene extraction, illustration, storage, and delivery run through background workflows. Saved progress, bounded concurrency, retry limits, and order states make individual failures manageable.</p></article>
+      <article class="work-detail"><span class="number">03 / Physical output</span><h3>Pixels had to become print files.</h3><p>Image processing and PDF layout had to account for trim, bleed, safe areas, page counts, and a wraparound cover. The printing workflow included preview, approval, an admin review step, and a Lulu integration.</p></article>
+      <article class="work-detail"><span class="number">04 / Running a product</span><h3>The unglamorous parts counted too.</h3><p>Stripe checkout, gift flows, coupon handling, customer emails, analytics, an admin workshop, evaluation datasets, tracing, and a social-content pipeline all sit around the generation itself.</p></article>
+    </div>
+  </section>
+
+  <section class="chapter" id="architecture"><div class="section-head"><p class="eyebrow">04 / The system</p><div class="section-copy"><h2>One experience. Several cooperating systems.</h2><p>The application coordinated the customer journey. Background workflows carried work across model calls and failures. Database records held progress; object storage held the resulting images and print files.</p></div></div>
+    <div class="diagram-scroll"><img class="diagram" src="svgs/pet-protagonists-architecture.svg" alt="Architecture: customer uses Next.js, Stripe confirms payment, Inngest coordinates story and illustration workflows, PostgreSQL stores order state, R2 stores assets, and approved books go through print review and Lulu." width="1120" height="560" loading="lazy"></div><div class="diagram-download"><a href="svgs/pet-protagonists-architecture.svg" target="_blank">Open architecture diagram ↗</a></div>
+    <p class="diagram-caption">Reconstructed from the application and workflow source. Simplified to show responsibilities and handoffs; this is a record of the built system.</p>
+    <div class="diagram-scroll"><img class="diagram" src="svgs/pet-protagonists-consistency.svg" alt="Character consistency: pet photos and descriptions feed shared character anchors; anchors feed per-scene prompts and generated illustrations; selected scenes can be retried while retaining the same character information." width="1120" height="340" loading="lazy"></div><div class="diagram-download"><a href="svgs/pet-protagonists-consistency.svg" target="_blank">Open character pipeline ↗</a></div>
+  </section>
+
+  <section class="chapter" id="iterations"><div class="section-head"><p class="eyebrow">05 / The iteration</p><div class="section-copy"><h2>A product takes more than its first version.</h2><p>The repository records a succession of concrete problems and improvements. This is the part of the build I want to preserve alongside the polished pages.</p></div></div>
+    <ol class="timeline">
+      <li><time>OCTOBER 2025</time><div><h3>Get the complete order path working.</h3><p>The first MVP joined story creation, checkout, email delivery, public story pages, analytics, and end-to-end test automation.</p></div></li>
+      <li><time>NOVEMBER 2025</time><div><h3>Make characters hold together.</h3><p>Character extraction and saved descriptions became part of scene generation. Model comparison work examined image quality, speed, and cost.</p></div></li>
+      <li><time>DECEMBER 2025</time><div><h3>Push through the printing details.</h3><p>Book interiors, covers, print-safe layout, and debug versions were generated and revised. Coda's preserved book comes from this phase.</p></div></li>
+      <li><time>FEBRUARY–APRIL 2026</time><div><h3>Make quality easier to inspect and improve.</h3><p>Reference-image handling, character descriptions, model updates, tracing, evaluation datasets, cover alignment, and selective retry behavior received further work.</p></div></li>
+      <li><time>MAY–AUGUST 2026</time><div><h3>Work on distribution and the customer experience.</h3><p>A social-content workflow, an admin workshop, saved form progress, and improvements to the creation flow extended the work beyond generation.</p></div></li>
+    </ol><p class="proof-note">Timeline based on repository history, implementation documents, and the preserved book files.</p>
+  </section>
+
+  <section class="closing"><div><p class="eyebrow">What I carry into the next build</p><h2>Follow the idea all the way to the artifact.</h2></div><div><p>This project brought product design, AI orchestration, payments, operational tooling, and physical output into one system. The useful evidence is here: a complete book, an inspectable architecture, and a record of iteration.</p><p>I like work that connects an ambitious idea to something people can actually use. If your problem needs that combination of curiosity, engineering, and follow-through, let's talk.</p><div class="actions"><a class="btn" href="contact.html">Talk about a build →</a><a class="btn secondary" href="work.html">More selected work</a></div></div></section>
+</main>
+<footer class="site-footer"><p>© 2026 Nathaniel Young · <a href="https://buildbeyondbelief.com">Build Beyond Belief</a> · <a href="pet-protagonists/">Pet Protagonists archive</a></p></footer>
+<script src="pet-book-reader.js"></script>
+</body></html>
