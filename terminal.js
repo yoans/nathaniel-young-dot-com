@@ -2,46 +2,14 @@
 // Displays intriguing facts about Nathaniel, clicking redirects to AI chat
 
 const TEASER_PROMPTS = [
-    {
-        question: "What makes Nathaniel unique as a developer?",
-        preview: "Enterprise meets entrepreneur — 10+ years shipping products that matter..."
-    },
-    {
-        question: "Tell me about his AI expertise",
-        preview: "AI Native mindset — LangChain, Voice AI, multi-agent systems..."
-    },
-    {
-        question: "What are his career goals?",
-        preview: "Growing talent, instrumenting enterprises for AI adoption..."
-    },
-    {
-        question: "How did he reduce ticket costs 41% at Microsoft?",
-        preview: "Designed an AI-based self-service customer experience..."
-    },
-    {
-        question: "What is Sagaciasoft?",
-        preview: "His AI consultancy — chatbots, voice agents, business automation..."
-    },
-    {
-        question: "What motivates him?",
-        preview: "Value and impact to the customer. Building things that matter..."
-    },
-    {
-        question: "Tell me about his leadership style",
-        preview: "Casual, encouraging, deeply invested in people's potential..."
-    },
-    {
-        question: "What projects has he built?",
-        preview: "Pet Protagonists, Bible Repair Game, Arrowgrid, Dark Forest AI..."
-    },
-    {
-        question: "Is he available for hire?",
-        preview: "Always open to interesting conversations and opportunities..."
-    },
-    {
-        question: "What's his tech stack?",
-        preview: "TypeScript, React, AWS, Azure, Python, LangChain, Terraform..."
-    }
+    { question: "What would Nathaniel bring to a growing startup?", preview: "Enterprise judgment, independent ownership, and a few concrete stories..." },
+    { question: "Give me the two-sentence pitch for hiring him.", preview: "A short case. Actual evidence. Minimal corporate confetti..." },
+    { question: "Why did a flag pole need a data platform?", preview: "Remote control, observability, and fewer drives to a downed system..." },
+    { question: "Roast his side projects, gently.", preview: "Some people's hobbies get shelves. His get architecture diagrams..." },
+    { question: "What kind of engineering role does he want next?", preview: "Hands-on leadership at a funded startup preparing to grow..." },
+    { question: "How did his Microsoft work reduce ticket creation by 41%?", preview: "A self-service customer experience with a measurable result..." },
+    { question: "Tell me about his AI products.", preview: "An actual illustrated book, model comparisons, and the systems around them..." },
+    { question: "What is he like to work with?", preview: "Direct conversations, shared learning, trust, and follow-through..." }
 ];
 
 // State

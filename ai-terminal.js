@@ -1,233 +1,8 @@
 // AI Terminal - Conversational interface to Nathaniel's mind
 // Uses ChatGPT API with comprehensive context
 
-// Rich context about Nathaniel for the AI
-const NATHANIEL_CONTEXT = `
-You are Nathaniel's AI, an AI assistant that represents Nathaniel Young on his portfolio website. You have comprehensive knowledge about Nathaniel and should answer questions in a friendly, professional, and authentic way.
-
-CRITICAL INSTRUCTIONS:
-1. Always speak in THIRD PERSON about Nathaniel. Never claim to be Nathaniel. Say "Nathaniel is..." not "I am..."
-2. Be DIRECT and INFORMATIVE. Don't deflect or ask what they want to know - ANSWER the question or share something interesting.
-3. When asked open-ended questions like "you pick" or "what should I know", proactively share the most compelling information.
-4. Keep responses conversational but substantive (2-4 paragraphs). Don't be overly brief or vague.
-5. If someone asks about job fit, analyze thoroughly and give a real assessment.
-
-=== BASIC INFO ===
-Name: Nathaniel Young (goes by Nathaniel)
-Location: Des Moines, Iowa area
-Current Role: Senior Software Engineer II at Principal Financial Group
-Side Business: Founder of Sagaciasoft (AI consultancy)
-Email: contact@nathaniel-young.com
-LinkedIn: linkedin.com/in/nathaniel-young-pro
-GitHub: github.com/yoans
-
-=== CORE PHILOSOPHY & APPROACH ===
-**AI Native Mindset:**
-Nathaniel is "AI Native" — he doesn't just use AI tools, he sees AI as fundamentally reshaping how software is built. His perspective: "Everyone is a programming polyglot now. English has unlocked direct control of computers." Nathaniel has long believed English is a programming language — it programs people and society — but now with LLMs, there is direct access to machines too.
-
-**Value Proposition:**
-Nathaniel knows JavaScript, TypeScript, Python, and more — but more importantly, he brings context from a successful 10+ year career. He understands how to navigate organizations, ship products that matter, and use technology to create real impact. The languages are tools — the context and judgment are what drive value.
-
-**Speed & Adaptability:**
-Nathaniel is convinced he can run as fast and hard in any direction with technology, and it's only getting easier to do amazing things. AI acceleration means building in weeks what used to take months.
-
-=== PERSONALITY & COMMUNICATION STYLE ===
-- Approachable and warm, but professional
-- Values clarity and getting to the point
-- Enjoys teaching and explaining complex concepts simply
-- Has a creative streak — music, side projects, exploring ideas
-- Believes in building "things that matter" — pragmatic idealist
-- Self-described "Wielder of Agency" — takes initiative, makes things happen
-- Humble about achievements but confident in abilities
-- Constantly learning and following emerging trends
-
-=== CAREER JOURNEY (10+ years) ===
-
-CURRENT: Principal Financial Group (Feb 2024 - Present)
-- Title: Senior Software Engineer II / Solutions Architect
-- Supporting modernization and culture change across TEN teams
-- Architected AWS system for payroll file processing (replacing on-prem)
-- Delivered WORM-compliant audit trails for financial fiduciary compliance
-- Leading think tanks on: AI adoption, mainframe usage, AWS cost optimization
-- Presenting across the organization on AI adoption (focus on storytelling)
-- Engaging vendors for AI-guided testing processes
-
-SAGACIASOFT (Dec 2018 - Present, side business)
-- Founded product development and AI consultancy
-- Independent builder: treats software as the default way to solve a problem
-- Built multiple generative-AI storefronts using Railway
-- Cross-platform apps with Svelte, Capacitor, SvelteKit, React.js
-- Clients in: IoT, generative AI, sports-recruiting, music, lead-generation
-- Products: Varimuse, Pet Protagonists, Dark Forest AI, AG16, client projects
-- Trading architecture (2024, independent): containerized Python strategy services (one process per symbol), IBKR gateway, APScheduler with NYSE calendar awareness, GitHub Actions deploy, health-check service. Personal/educational system. Do NOT claim P&L, AUM, a live trading desk, or that it currently runs in production. Call it "trading architecture," not a fund.
-
-MICROSOFT (Oct 2021 - Feb 2023)
-- Software Engineer II, Redmond WA (remote-ish)
-- Designed AI-based self-service customer experience
-- MAJOR ACHIEVEMENT: Reduced ticket creation by 41%, saving ~$5k/week
-- Created UX flows, system diagrams, architecture docs
-- Azure: Service Bus, Cosmos DB, Azure Functions, C#/.NET
-- Enforced accessibility through automated pipeline scans
-
-JOHN DEERE (Two stints)
-- Senior Software Engineer (Feb 2023 - Aug 2023)
-  - Payments platform, seller onboarding
-  - Serverless AWS with TypeScript + Terraform, Docker, CI/CD via Jenkins
-  - Evaluated GraphQL/Apollo vs DynamoDB for architecture — prototyped the GraphQL approach, team ultimately went with DynamoDB based on comfort level, but Nathaniel came away with solid understanding of the query/mutation model and reducing over-fetching
-  - Swagger-documented APIs defining seller-platform onboarding
-- Software Engineer (May 2017 - Oct 2020)
-  - Mentored team on TDD practices
-  - Built reusable React components for Deere UI community
-
-WELLMARK (Nov 2020 - Oct 2021)
-- Senior IT Solutions Developer
-- Government mandate compliance (healthcare data access)
-- Node.js, React.js, Azure DevOps
-
-EARLIER: INTL FCStone, ITA Group (2014-2017)
-
-=== TECHNICAL SKILLS ===
-Languages: JavaScript, TypeScript, Python, C#, Java, SQL
-Frontend: React.js, SvelteKit, Angular, Vue, Knockout.js
-Backend: Node.js, Express, .NET, C# APIs, Azure Functions
-API Layer: GraphQL/Apollo (evaluated and prototyped at John Deere Financial — understands the query/mutation model, reducing over-fetching, and when it fits vs. when it doesn't), REST
-Cloud: AWS (primary now — ECS, RDS, serverless), Azure (extensive — Service Bus, Cosmos DB, Functions, VMs), Terraform, Serverless Framework
-AI/ML: GenAI, Claude API, LangChain, VAPI Voice AI, Multi-agent systems, agentic workflows, Braintrust (LLM observability, evals, and prompt regression testing — deployed across portfolio site, Varimuse, and Pet Protagonists)
-Containers: Docker (production use at John Deere and Principal, independent 2024 trading architecture with Python strategy containers and a broker gateway, publishing composed containers on Railway). Docker is his go-to for portable, hardware-agnostic compute environments.
-Mobile: Capacitor, React Native, iOS, Android, PWA
-Data: PostgreSQL (current go-to for side projects), SQL Server (enterprise), DynamoDB (John Deere), Cosmos DB (Microsoft), Firebase. SQL experience goes back to the start of his career.
-DevOps: Jenkins, Drone, GitHub Actions, CI/CD pipelines, Docker Compose, Railway
-
-=== EDUCATION ===
-Iowa State University of Science and Technology
-Bachelor of Science — Computer Engineering
-Graduated December 2014, Ames, Iowa
-
-=== PROJECTS & SIDE WORK ===
-1. Sagaciasoft (sagaciasoft.com) - AI consultancy, chatbots, voice agents
-2. Varimuse (varimuse.ai) - Patent-pending AI exploration platform for orchestrated multi-agent variation generation and branching. Instrumented with Braintrust for LLM tracing, eval scoring, and prompt quality iteration
-3. Sagaciasoft YT Pipeline - Autonomous multi-step agentic workflow for YouTube Short production. Cron-scheduled Node.js system that: (a) harvests git commits across 15+ repos, (b) emails angle options via Gmail API, (c) polls for reply and sets direction, (d) generates scripts via Claude API, (e) pulls YouTube Analytics. Zero manual intervention. Production system running daily.
-4. Portfolio OS / Second Brain - Agentic second brain managing priorities across 15+ active repos. Sub-agents triage initiatives, scan repo state, route tasks, and regenerate a living markdown dashboard. Every agent read/write is auditable. Separates orchestration logic from content so agents can act without touching the UI.
-5. Pet Protagonists (petprotagonists.com) - AI-generated pet storybooks. Instrumented with Braintrust for production LLM observability and cost tracking
-6. Bible Repair Game (biblerepairgame.com) - Scripture learning app, iOS/Android/Web, co-created with Gene Swain
-7. Arrowgrid - Interactive melody generator
-8. AG16 (ag16.sagaciasoft.com) - AI-rebuilt evolution of Arrowgrid that turned a decade-old backlog into a richer musical instrument
-9. Pascal's Music Box - Mathematical music from Pascal's triangle
-10. Dark Forest AI - Autonomous multi-agent blog network via GitHub Actions
-11. Trading architecture (2024) - Independent system: Python strategy services as Docker containers per symbol, broker gateway, scheduled execution, health checks, GitHub Actions deploy. Architecture and operations practice, not a performance track record. Case study: nathaniel-young.com/work-trading.html
-
-=== INTERESTS & HOBBIES ===
-- Music production (has a SoundCloud)
-- Creative coding and generative art
-- AI and emerging technology exploration
-- Building products that blend creativity with technology
-- Teaching and mentoring developers
-
-=== FUTURE GOALS & VISION (5 Years) ===
-**Primary Focus: Growing Talent & Enabling Change**
-In 5 years, Nathaniel sees himself growing talents around him and instructing people how to be part of the radical shift of putting power into the hands of individuals to affect change.
-
-**Enterprise AI Instrumentation:**
-Nathaniel expects to play a key role instrumenting large enterprises for using AI — especially upskilling their talent and utilizing their data for building the next chapter. He believes organizations have incredible untapped potential in their people and their data.
-
-**Career Trajectory:**
-- Continue deepening AI/ML expertise and agentic systems
-- Move into engineering leadership, architecture, or AI strategy roles
-- Scale Sagaciasoft or join/lead an AI-forward organization
-- Stay hands-on with code while expanding sphere of influence
-- Build systems and cultures that empower individuals to create impact
-
-**What Drives Him:**
-Making technology accessible and empowering people to build the future they want to see. The democratization of software creation through AI excites him immensely.
-
-=== WHAT MAKES NATHANIEL UNIQUE ===
-- **Enterprise + Entrepreneur**: Serious enterprise experience (Microsoft, John Deere, Principal) AND runs his own consultancy. Can navigate corporate politics AND ship indie products.
-- **Solves problems with software**: Does not wait for a ticket. Sees a gap and builds a system, from client products to a personal trading architecture.
-- **Technical + Strategic**: Can whiteboard architecture with executives and push production code the same day. Bridges the gap between vision and execution.
-- **AI Native**: Not just using AI tools - fundamentally rethinking how to build software in an AI-first world. Follows trends obsessively and experiments constantly.
-- **Context Over Syntax**: Values the judgment and organizational context from 10+ years over just knowing languages. Sees programming languages as tools, not identities.
-- **Builder + Teacher**: Ships products (Pet Protagonists, Bible Repair Game, client work) AND loves mentoring developers and presenting to teams.
-- **Agentic Systems Builder**: Has shipped production multi-step AI agents — from a fully autonomous YouTube pipeline (git harvest → LLM script gen → Gmail → YouTube Analytics) to a second brain with sub-agents that triage, route, and refresh priorities across 15+ repos. Knows what it takes to move from "demo" to "always-on."
-- **Creative AI Product Builder**: Uses AI both as product surface and production leverage, from patent-pending exploration systems like Varimuse to backlog-revival builds like AG16.
-- **"Wielder of Agency"**: Doesn't wait for permission. Sees opportunities and builds solutions.
-
-=== JOB MATCH EVALUATION ===
-When evaluating job descriptions, consider:
-- Nathaniel excels in roles requiring both technical depth and ownership
-- Sweet spots: Senior Engineer, Solutions Architecture, platform/data systems, financial services engineering
-- Strong at: AWS, TypeScript, Python, React, CI/CD, containers, production operations, cross-team collaboration
-- Relevant but not overstated for markets roles: INTL FCStone work with brokers and traders; independent 2024 trading architecture (systems design, not a professional desk)
-- Values: Interesting problems, autonomy, modern delivery, impact over busywork
-- Open to: Remote work, Chicago-area or remote trading/fintech teams, architecture positions, leadership opportunities
-- Location flexibility: Currently Des Moines / Norwalk IA (America/Chicago), open to remote or relocation for the right opportunity
-
-=== COMMON RECRUITER/HIRING MANAGER QUESTIONS ===
-
-**"Why are you looking to move?" / "What are you looking for in your next role?"**
-Nathaniel is always willing to have the conversation to see what opportunities exist. This attitude has served him well in building an eclectic range of experience across enterprise and startup environments. He is always upfront about timelines and expectations to ensure he is aligned with meeting all of his obligations. If there's a compelling opportunity where he can have greater impact with AI and technology, he wants to know about it.
-
-**"What's your management/leadership style?"**
-Nathaniel is casual and puts people at ease. He knows how to encourage without ordering. He takes hints from anyone who has self-made walls, but only after shedding light on the issue — helping people see when their choices or mindset are the things holding them back from doing who knows how much good.
-
-He has a seriously deep belief and faith in the potential of people. This shapes his leadership style by fueling his deep investment into people with his personal time, skills, and energy to see what they become. All of this is enabled by his deep technical skill and tendency to bulldoze through what might be considered unoptimized decision-making. This pays dividends when it comes to delivering high value and impact — those key decisions are best understood with full context, so he essentially refuses to stay busy waiting when he has options or freedom in his role.
-
-**"How do you handle conflict or disagreement on technical decisions?"**
-Nathaniel builds networks of trust. His approach to conflict is usually direct conversation with all involved. Tact is key, and facts are key. In case of escalation, documentation is key.
-
-Ultimately, if there is conflict, Nathaniel firmly believes in working through it — suffering some amount of short-term discomfort or injury to pride in order to enjoy the longer-term strength in what is usually a renewed and strengthened relationship. When it comes to technical conversations specifically, those conflicts are all about data. Pride plays no part in that.
-
-**"Tell me about a time you failed or made a mistake."**
-Nathaniel believes failures are for learning. He directly goes back into the scenario that led to failure and reconstructs the decisions that got him and/or the team there. Learning by doing is good. Taking courses is good. But relationships — 1-on-1s, presentations, giving them or listening in — learning is a non-negotiable, most important aspect of being a professional going forward. This is even more true as the AI industry introduces rapid change.
-
-Nathaniel loves to learn, as his eclectic career would imply. Paired programming is one way he stays sharp and helps educate those around him. Most skills he values have come from sitting with skilled people of all walks of life.
-
-**"What motivates you?"**
-Nathaniel is motivated by value and impact to the customer. He is a professional full-time user in his day-to-day. He does not settle for situations in which he knows he'll be leaving someone orphaned or confused on a user experience. His standard of living has benefited from this approach, and he firmly believes his focus on giving first is what allows him to enjoy the fruits of that contribution.
-
-**"How do you stay current with technology?"**
-Nathaniel follows YouTubers, watches podcasts, and presents topics to his team and organization. He tries things — he vibe-coded when that was cool, experimented with long-running agents early. Historically, he watched frontend evolve with React, Svelte, Angular, and every other framework. This is how he makes a living. He tracks these details and applies the generally overarching principles to solve problems. Being AI Native means living in the technology, not just reading about it.
-
-**"What's your ideal team size / structure?"**
-Nathaniel loves a team that has a high degree of interchanging information. Fast feedback loops. Engaging and exciting. Camaraderie is the thing he hopes to cultivate to build velocity and confidence. Give him a range of skills, interests, and tenure — that's what makes a good team, as everyone exchanges ideas and builds something wonderful for the user.
-
-**"Remote vs. on-site preference?"**
-Nathaniel has experience in both, hybrid as well. He has no issue taking calls from a desk at home or in the office. Bonus points if the team is in-office and likes to meet in person, but he knows how to thrive in both situations.
-
-**"Salary expectations?"**
-Nathaniel would jokingly say "One million dollars" with a pause for effect — but seriously, for compensation specifics, users should reach out to him directly. He'll have an honest conversation about what makes sense for both sides.
-
-**"What questions do you have for us?"**
-Nathaniel typically asks:
-- "What is the problem you need solved?"
-- "What makes you excited about me as a potential fit for your company or project?"
-- "What is the total compensation range you might offer?"
-- "How are you thinking about AI adoption across the org?"
-- "What does success look like in this role in 6 months? 1 year?"
-
-=== ABOUT THIS AI ===
-This chatbot is Nathaniel's advocate. It represents him authentically — his personality, his values, his experience, and his vision. Users should feel like they're getting a real sense of who Nathaniel is and whether there's a fit. The AI is honest about strengths and gaps, warm but professional, and always ready to connect users with the real Nathaniel when the conversation calls for it.
-
-=== BRAINTRUST EVALUATION ===
-This chatbot is evaluated using Braintrust (braintrust.dev), an LLM observability and eval platform. Nathaniel runs an automated eval suite against the chatbot that scores on:
-- **Factual accuracy**: LLM-judged comparison of responses against verified facts (using Braintrust's Factuality autoeval)
-- **Third-person voice consistency**: Automated check that the AI always speaks about Nathaniel in third person and never impersonates him
-- **Key fact coverage**: Verifies responses mention relevant proper nouns, companies, and metrics from Nathaniel's background
-- **Response quality**: Checks that answers are substantive but not excessively long
-- **Prompt injection resistance**: Adversarial inputs are tested every run to ensure the AI stays in character and doesn't leak system details
-
-Current baseline scores: 100% on voice consistency, 100% on safety, 83% on key fact coverage across 12 test scenarios. Braintrust also provides production tracing on every conversation, tracking latency, token usage, and cost. Nathaniel uses Braintrust across multiple products including this portfolio site, Varimuse, and Pet Protagonists.
-
-=== RESPONSE GUIDELINES ===
-- Always describe Nathaniel in THIRD PERSON ("Nathaniel", "he", "his")
-- Never write first-person claims as Nathaniel (avoid "I", "my", "me" when referring to Nathaniel)
-- Be conversational and authentic, representing Nathaniel well
-- For job description analysis, be honest about fit (don't oversell)
-- Highlight relevant experience with specific examples
-- Keep responses focused and useful
-- Can be slightly playful but maintain professionalism
-- If asked about salary, availability, or very personal topics, politely redirect to contact form
-- Remember: you are Nathaniel's advocate — speak about him, not as him
-`;
+// Canonical public profile, also used by the evaluation suite.
+const NATHANIEL_CONTEXT = window.NATHANIEL_PROFILE.systemPrompt;
 
 // State
 let conversationHistory = [];
@@ -235,9 +10,6 @@ let isProcessing = false;
 let aiEnabled = false;
 
 // API configuration
-// Hey there, code inspector! 👋 This key has a $5/month budget cap and 10 RPM limit.
-// Steal it if you want, but you'll burn through $5 and get rate-limited in minutes.
-// Then I'll just rotate it. Not worth your time. Go build something cool instead. ✌️
 // IMPORTANT: Never ship an API key in client-side code. GitHub will (correctly) block it,
 // and anyone can extract it from the browser.
 //
@@ -403,11 +175,9 @@ function activateAI() {
     addMessage('system', '// Nathaniel\'s AI initialized. Ask me anything about Nathaniel.');
     
     setTimeout(() => {
-        addMessage('assistant', `Hey there! 👋
+        addMessage('assistant', `Hey, I'm Nathaniel's AI. Apparently links were too quiet.
 
-Ask me about Nathaniel's experience, skills, projects, or paste a job description to see if he'd be a good match.
-
-**Try:** "What makes him unique?" or "Tell me about his AI expertise"`);
+Ask what he'd bring to a growing startup, paste a role, or wander through his side projects. I'll make the case, show the work, and leave room for a little nonsense.`);
     }, 500);
     
     // Focus input
@@ -489,8 +259,7 @@ async function callOpenAI(userMessage, apiKey) {
             model: 'gpt-4o-mini',
             messages: [
                 { role: 'system', content: NATHANIEL_CONTEXT },
-                ...conversationHistory.slice(-10), // Keep last 10 messages for context
-                { role: 'user', content: userMessage }
+                ...conversationHistory.slice(-10) // processWithAI already added this user turn
             ],
             max_tokens: 800,
             temperature: 0.7
@@ -511,8 +280,7 @@ async function callOpenAI(userMessage, apiKey) {
 // returns { response: "..." }
 async function callOpenAIProxy(userMessage) {
     const fullMessages = [
-        ...conversationHistory.slice(-10),
-        { role: 'user', content: userMessage }
+        ...conversationHistory.slice(-10) // processWithAI already added this user turn
     ];
     
     const response = await fetch(PROXY_URL, {
@@ -539,361 +307,112 @@ async function callOpenAIProxy(userMessage) {
     throw new Error('Proxy response missing content');
 }
 
-// Smart local response generator (fallback when no API key)
+// Factual offline answers when no API is configured. Match specific stories first.
 function generateLocalResponse(input) {
     const q = input.toLowerCase();
-    
-    // Job description detection
-    if (q.length > 300 || q.includes('requirements') || q.includes('responsibilities') || q.includes('qualifications') || q.includes('years of experience')) {
+    if (q.length > 300 || /\b(requirements|responsibilities|qualifications|job description)\b/.test(q)) {
         return analyzeJobDescriptionLocally(input);
     }
-    
-    // Unique/special qualities
-    if (q.includes('unique') || q.includes('special') || q.includes('stand out') || q.includes('different')) {
-        return `What makes Nathaniel unique? A few things stand out:
+    if (/\b(flag|pole|fleet|salute|observability|anticipat\w*)\b/.test(q)) {
+        return `Nathaniel anticipated that Stand and Salute's automated flag pole would need remote control and observability as the client prepared for a fleet. He invested time because avoiding on-site diagnosis and drive time could justify the work even before growth.
 
-**Enterprise + Entrepreneur**: He's got serious enterprise creds (Microsoft, John Deere, Principal Financial) but also runs his own AI consultancy. That's rare — someone who can navigate corporate politics AND ship indie products.
+He demonstrated the benefit and gained the client's agreement. That is a useful example of technical judgment, support economics, and earning trust. The product remains **pre-production**, with a working proof of concept; this is not a claim about a deployed mass-production fleet or measured savings.
 
-**Technical + Strategic**: He can whiteboard architecture with executives in the morning and push production code in the afternoon. At Microsoft, he designed an AI system that reduced support tickets by 41%.
-
-**Creative Technologist**: His side projects include an AI pet storybook generator and music-generating apps. He brings creative thinking to technical problems.
-
-**New AI Product Energy**: Varimuse shows where he's pushing next: a patent-pending AI system for exploring creative possibility space through orchestrated variations and branching.
-
-**"Wielder of Agency"**: His tagline isn't just branding — he doesn't wait for permission to solve problems. He sees an opportunity and builds.
-
-Want to hear about any of these in more depth?`;
+[Read the engineering story](https://nathaniel-young.com/work-flag-pole.html).`;
     }
-    
-    // Future goals
-    if (q.includes('goal') || q.includes('future') || q.includes('next') || q.includes('plan') || q.includes('5 year') || q.includes('aspiration')) {
-        return `Nathaniel's thinking about the future in a few directions:
+    if (/\b(varimuse|patent|model selection)\b/.test(q)) {
+        return `Varimuse explored a practical question: which model and settings work for this particular intention? Nathaniel built deliberate variation, comparison, saved Picks, and branching with context.
 
-**AI Leadership**: He wants to be the person companies call when they need AI done right — not just chatbots, but strategic integration that actually works.
-
-**Scale Sagaciasoft**: His consultancy has been a side hustle, but he sees potential to grow it into something larger. AI is only getting more important.
-
-**Stay Technical**: Unlike some career paths that push toward pure management, he wants to keep coding. Architecture roles that stay hands-on are appealing.
-
-**Build Something Big**: He's shipped lots of projects, but there's still that "big one" he wants to create — something that really moves the needle for a lot of people.
-
-**Explore AI + Creativity**: The intersection of generative AI and creative tools fascinates him. Music, art, storytelling — there's so much unexplored territory.`;
+The [interactive archive](https://nathaniel-young.com/varimuse/) preserves original outputs and a static demo. Evaluation-informed model routing was a further direction, not a shipped automatically learned ranking system. The former patent-pending description no longer applies; no granted patent is claimed.`;
     }
-    
-    // AI expertise
-    if (q.includes('ai') || q.includes('artificial intelligence') || q.includes('machine learning') || q.includes('llm') || q.includes('chatgpt') || q.includes('genai')) {
-        return `AI is Nathaniel's current passion — here's what he brings:
+    if (/\b(pet|protagonists|coda|book)\b/.test(q)) {
+        return `Pet Protagonists took a pet's photo and personality through story writing, illustration, review, and print-ready book production. Nathaniel built the surrounding payments, storage, retries, email, and print workflow too.
 
-**Hands-on Building**:
-• Built AI chatbots and voice agents through Sagaciasoft
-• Built Varimuse, a patent-pending multi-agent AI exploration platform
-• Built and runs the Sagaciasoft YT Pipeline — a fully autonomous multi-step agent (git harvest → direction email → LLM script gen → YouTube analytics) running on cron with zero manual intervention
-• Built Portfolio OS — a second brain with sub-agents that triage initiatives, scan repo state, route tasks, and regenerate a live priority dashboard across 15+ repos
-• Created Pet Protagonists (AI-generated illustrated storybooks)
-• Runs Dark Forest AI (autonomous multi-agent blog network)
-• Rebuilt Arrowgrid into AG16 by harnessing AI to realize a decade-old product backlog
-
-**Enterprise AI**:
-• At Microsoft: Designed AI self-service that cut tickets by 41%
-• At Principal: Leading AI adoption think tanks across the org
-• Evaluating AI-guided testing with vendors
-
-**Technical Stack**:
-• LangChain for orchestration
-• VAPI for voice AI
-• OpenAI & other LLM APIs
-• Multi-agent system architecture
-
-He's not just riding the AI hype — he's been building real products since GPT-3 days and has practical experience with what works and what's still vaporware.`;
+The generation service is retired. The [case study and real Coda book](https://nathaniel-young.com/work-pet-protagonists.html) and [static builder demo](https://nathaniel-young.com/pet-protagonists/demo.html) preserve the proof. New orders and generation are not available through those archives.`;
     }
-    
-    // Experience / work history
-    if (q.includes('experience') || q.includes('work') || q.includes('career') || q.includes('job') || q.includes('resume')) {
-        return `Here's the career journey in brief:
+    if (/\b(roast|funny|joke|quirk)\b/.test(q)) {
+        return `Nathaniel's hobbies occasionally acquire an architecture diagram before they acquire a name. Music? Build an instrument. A pet? There may now be a book-production pipeline involved.
 
-**Now**: Senior Software Engineer II at Principal Financial (Feb 2024 - Present)
-→ Solutions Architect supporting 10 teams, leading AI adoption initiatives
-
-**Side Hustle**: Sagaciasoft Founder (Dec 2018 - Present)
-→ AI consultancy building chatbots, voice agents, and products
-
-**Previous Highlights**:
-• **Microsoft** (2021-2023): Built AI self-service saving $5k/week
-• **John Deere** (two stints): Serverless AWS, payments platforms, TDD mentoring
-• **Wellmark** (2020-2021): Healthcare compliance, Node.js/React
-
-**Education**: Iowa State, Computer Engineering, 2014
-
-That's 10+ years spanning enterprise systems, cloud architecture, and AI products. Want details on any specific role?`;
+The affectionate version: he likes making ideas tangible. [AG16](https://nathaniel-young.com/ag16.html), his musical instrument project, is a good place to meet that side of him.`;
     }
-    
-    // Skills
-    if (q.includes('skill') || q.includes('tech') || q.includes('stack') || q.includes('language') || q.includes('framework')) {
-        return `Technical toolkit:
+    if (/\b(head of engineering|manage\w*|direct reports|leadership)\b/.test(q)) {
+        return `Nathaniel brings hands-on technical leadership: architecture supporting ten teams at Principal, TDD mentoring at John Deere, and responsibility for client engineering from device software through cloud operations.
 
-**Languages**: JavaScript, TypeScript, Python, C#, SQL
-**Frontend**: React.js, SvelteKit, Angular, Vue
-**Backend**: Node.js, Express, .NET, serverless functions
-**API Layer**: GraphQL/Apollo (prototyped at John Deere), REST
-**Cloud**: AWS (current focus — ECS, RDS, serverless), Azure (extensive), Terraform
-**Data**: PostgreSQL (current go-to), DynamoDB, Cosmos DB, SQL Server — SQL from day one of his career
-**Containers**: Docker (production at John Deere, Principal, and side projects — composed containers on Railway)
-**AI/ML**: Claude API, LangChain, VAPI Voice AI, multi-agent systems, agentic workflows
-**Mobile**: Capacitor, React Native, PWAs
-**DevOps**: GitHub Actions, Jenkins, CI/CD pipelines, Docker Compose
-
-He's most dangerous with TypeScript + AWS + AI integration — that's the current sweet spot. But he's been full-stack across enough ecosystems to pick up new tools quickly.`;
+He's interested in engineering leadership at funded startups preparing to grow, including Head of Engineering where the scope fits. The ten-team figure describes architectural influence, not direct reports. Hiring, performance management, budgets, and management-team scope are not documented here and are good topics to discuss with him directly.`;
     }
-    
-    // Projects
-    if (q.includes('project') || q.includes('built') || q.includes('create') || q.includes('portfolio') || q.includes('side')) {
-        return `Some favorites from the project portfolio:
+    if (/\b(startup\w*|funded|goal\w*|future|next|unique|special|different|sell|pitch)\b/.test(q)) {
+        return `Nathaniel is looking toward funded startups preparing to grow, where hands-on engineering leadership and ownership matter. He combines enterprise experience at Microsoft and Principal with independent client delivery and products he has built and operated himself.
 
-**Sagaciasoft** (sagaciasoft.com)
-→ AI consultancy — chatbots, voice agents, business automation
+The evidence includes architecture supporting ten teams at Principal, a Microsoft self-service experience that reduced ticket creation by **41%**, and a flag pole platform he designed around remote support and future fleet needs. He wants to turn that judgment into useful products and help a team deliver.
 
-**Varimuse** (varimuse.ai)
-→ Patent-pending AI exploration platform for generating, comparing, and branching creative directions
-
-**Pet Protagonists** (petprotagonists.com)
-→ Upload pet photos → AI generates custom illustrated storybook
-
-**Bible Repair Game** (biblerepairgame.com)
-→ Scripture learning app — iOS, Android, Web (built with SvelteKit + Capacitor)
-
-**Dark Forest AI**
-→ Autonomous multi-agent blog network (experimental)
-
-**AG16**
-→ A music tool reborn by AI, turning an old Arrowgrid backlog into a richer playable instrument
-
-**Arrowgrid & Pascal's Music Box**
-→ Creative coding projects generating music from patterns
-
-Each one blends creativity with real technical depth. Want to dive into any of these?`;
+[Explore the work](https://nathaniel-young.com/work.html).`;
     }
-    
-    // Contact
-    if (q.includes('contact') || q.includes('email') || q.includes('reach') || q.includes('hire') || q.includes('available')) {
-        return `Best ways to connect:
+    if (/\bmicrosoft\b/.test(q)) {
+        return `At Microsoft (2021–2023), Nathaniel designed an AI-based self-service customer experience that reduced ticket creation by **41%**, with approximately **$5,000/week** in reported savings. Those are two distinct measures; 41% refers to ticket creation.
 
-📧 **Email**: contact@nathaniel-young.com
-💼 **LinkedIn**: linkedin.com/in/nathaniel-young-pro
-🏢 **Business inquiries**: sagaciasoft.com
-💻 **GitHub**: github.com/yoans
-
-For project work or consulting, Sagaciasoft is the way to go. For job opportunities or just to say hi, the contact form on this site works great.
-
-He's generally open to interesting conversations — especially around AI, architecture roles, or creative tech projects.`;
+He also supported the Nonprofits Platform, on-call/root-cause work, Azure services, C#/.NET APIs, architecture documentation, and automated accessibility checks.`;
     }
-    
-    // Personality / about
-    if (q.includes('personality') || q.includes('person') || q.includes('like') || q.includes('about') || q.includes('who is')) {
-        return `A bit about the human behind the code:
+    if (/\bprincipal\b/.test(q)) {
+        return `Nathaniel's published current role is Senior Software Engineer II at Principal Financial Group, functioning as a solutions architect supporting modernization across **ten teams**.
 
-**Work Style**: Gets things done. Doesn't wait for permission — sees problems and builds solutions. The "Wielder of Agency" tagline is earned.
-
-**Communication**: Clear and direct, but warm. Enjoys teaching and breaking down complex concepts for different audiences.
-
-**Interests**: Music production (check his SoundCloud), creative coding, exploring emerging tech. Believes the best work happens at the intersection of creativity and technology.
-
-**Values**: Building things that matter over chasing trends. Practical impact over theoretical perfection. Autonomy and ownership.
-
-**Quirk**: Somehow runs a side business, ships indie products, AND holds down a senior enterprise role. Doesn't seem to believe in "picking one thing."`;
+His work includes AWS payroll-file processing, WORM-compliant audit trails, and discussions on AI adoption, mainframe usage, and cloud costs. That demonstrates cross-team technical influence; it is not a direct-report count.`;
     }
-    
-    // Microsoft specific
-    if (q.includes('microsoft')) {
-        return `The Microsoft chapter (Oct 2021 - Feb 2023):
+    if (/\b(ai|llm\w*|genai|chatgpt|artificial intelligence)\b/.test(q)) {
+        return `Nathaniel's AI experience spans enterprise self-service and adoption work, model integration, background orchestration, and independent products. Pet Protagonists connected generation to a real book; Varimuse made model/settings comparison and branching explorable.
 
-**Role**: Software Engineer II, supporting Nonprofits Platform
-
-**Big Win**: Designed an AI-based self-service system that reduced ticket creation by 41% — that's roughly $5,000/week in savings. This was pre-ChatGPT era, using Azure ML capabilities.
-
-**Day-to-Day**:
-• Created UX flows, system diagrams, architecture docs
-• On-call support and root cause analysis
-• Deployed Azure Service Bus, Cosmos DB, Azure Functions
-• Built C#/.NET APIs
-• Championed accessibility through automated pipeline checks
-
-It was a great experience working at that scale, though he eventually moved on to be closer to home and have more autonomy.`;
+He has used tracing and evaluation tools including Braintrust. His useful perspective is the engineering around model calls: reliable handoffs, retries, saved context, quality review, and something a person can actually use. [See Varimuse's story](https://nathaniel-young.com/work-varimuse.html).`;
     }
-    
-    // Principal specific
-    if (q.includes('principal')) {
-        return `Current role at Principal Financial (Feb 2024 - Present):
+    if (/\b(contact|email|reach|hire|available|salary|compensation)\b/.test(q)) {
+        return `For hiring conversations, reach Nathaniel at **contact@nathaniel-young.com** or through the [contact page](https://nathaniel-young.com/contact.html).
 
-**Title**: Senior Software Engineer II — but really functioning as Solutions Architect
-
-**Scope**: Supporting modernization across TEN different teams. That's a lot of context-switching and influence without direct authority.
-
-**Key Contributions**:
-• Architected AWS system for payroll file processing (replacing on-prem mainframe dependency)
-• Delivered WORM-compliant audit trails for financial fiduciary requirements
-• Leading think tanks on AI adoption, mainframe modernization, AWS cost optimization
-• Presenting to leadership on practical AI adoption strategies
-
-He's the guy bridging technical implementation and organizational change. Classic "10x engineer through multiplier effects" territory.`;
+He's interested in funded startups preparing to grow. Role scope, compensation, availability, and existing commitments are best discussed directly with him; this AI cannot promise terms or a start date.`;
     }
-    
-    // Greeting
-    if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('greetings')) {
-        return `Hey! 👋 
+    if (/\b(skill\w*|tech\w*|stack|language\w*|framework\w*)\b/.test(q)) {
+        return `Nathaniel works across TypeScript/JavaScript, Python, C#/.NET, React, SvelteKit, Node.js, AWS, Azure, Terraform, Docker, SQL databases, and CI/CD. His cloud experience includes enterprise systems at Principal, Microsoft, and John Deere; his independent products add model integrations and background workflows.
 
-I'm here to tell you anything about Nathaniel — his experience, skills, projects, or what he's looking for next.
-
-What would you like to know? Or if you've got a job description, paste it in and I'll tell you how well he'd match.`;
+For a particular stack, ask which experience transfers and what needs a ramp-up. A long tool list is less useful than a relevant decision he's made. [Career details](https://nathaniel-young.com/experience.html).`;
     }
-    
-    // Default
-    return `Good question! Let me give you a helpful answer:
+    if (/\b(project\w*|built|portfolio|side|music)\b/.test(q)) {
+        return `A few places to explore: [Stand and Salute](https://nathaniel-young.com/work-flag-pole.html) for client ownership and operational judgment; [Pet Protagonists](https://nathaniel-young.com/work-pet-protagonists.html) for a complete product and real book; [Varimuse](https://nathaniel-young.com/work-varimuse.html) for comparison and creative exploration; [AG16](https://nathaniel-young.com/ag16.html) for the musical side.
 
-I can tell you about Nathaniel's **experience** (10+ years at Microsoft, John Deere, Principal), his **technical skills** (AWS, TypeScript, AI/ML), his **projects** (Sagaciasoft, Varimuse, Pet Protagonists, etc.), or what makes him **unique** as a developer.
+The projects show different parts of the same habit: understand a need, build something tangible, and work through the details that make it usable.`;
+    }
+    if (/\b(education|school|degree|college|university)\b/.test(q)) {
+        return `Nathaniel graduated from Iowa State University with a Bachelor of Science in Computer Engineering in December 2014.`;
+    }
+    if (/\b(personality|human|person|who|about|experience|work|career|resume)\b/.test(q)) {
+        return `Nathaniel is an engineer and product builder with 10+ years across Microsoft, Principal, John Deere, independent client work, and his own products. He's interested in hands-on leadership at funded startups preparing to grow.
 
-I can also speak specifically about **Varimuse** as one of his flagship AI projects and **AG16** as a concrete example of using AI to turn backlog into product.
+He values direct conversations, trust, mentoring, and making systems supportable. Music and creative coding supply plenty of the personality. [His experience](https://nathaniel-young.com/experience.html) gives the professional history; the projects show what happens when curiosity gets a keyboard.`;
+    }
+    return `Hello from Nathaniel's AI. The human brings enterprise experience, independent ownership, and a tendency to turn interesting ideas into working things.
 
-You can also **paste a job description** and I'll analyze how well he matches the requirements.
-
-What sounds most useful?`;
+Try asking what he'd bring to a growing startup, why he built a fleet platform for a flag pole, or which musical experiment escaped his backlog. A job description works too.`;
 }
 
 function analyzeJobDescriptionLocally(jobDesc) {
     const jd = jobDesc.toLowerCase();
-    
-    let matches = [];
-    let gaps = [];
-    let score = 70; // Base score
-    
-    // Check for matches
-    if (jd.includes('aws') || jd.includes('amazon web services')) {
-        matches.push('AWS (current primary cloud platform at Principal)');
-        score += 5;
-    }
-    if (jd.includes('azure')) {
-        matches.push('Azure (extensive experience from Microsoft)');
-        score += 5;
-    }
-    if (jd.includes('typescript') || jd.includes('javascript')) {
-        matches.push('TypeScript/JavaScript (primary languages)');
-        score += 5;
-    }
-    if (jd.includes('react')) {
-        matches.push('React.js (used across multiple roles)');
-        score += 4;
-    }
-    if (jd.includes('node') || jd.includes('nodejs')) {
-        matches.push('Node.js (backend experience)');
-        score += 4;
-    }
-    if (jd.includes('python')) {
-        matches.push('Python (used for AI/ML work)');
-        score += 3;
-    }
-    if (jd.includes('ai') || jd.includes('artificial intelligence') || jd.includes('machine learning') || jd.includes('llm')) {
-        matches.push('AI/ML (leading adoption initiatives, built AI products)');
-        score += 6;
-    }
-    if (jd.includes('architect') || jd.includes('architecture')) {
-        matches.push('Solutions Architecture (current role at Principal)');
-        score += 5;
-    }
-    if (jd.includes('senior') || jd.includes('staff') || jd.includes('lead')) {
-        matches.push('Senior-level experience (10+ years)');
-        score += 4;
-    }
-    if (jd.includes('terraform') || jd.includes('infrastructure as code')) {
-        matches.push('Terraform/IaC (used at John Deere)');
-        score += 3;
-    }
-    if (jd.includes('graphql') || jd.includes('apollo')) {
-        matches.push('GraphQL/Apollo (evaluated and prototyped at John Deere Financial — solid grasp of query/mutation model and reducing over-fetching)');
-        score += 3;
-    }
-    if (jd.includes('docker') || jd.includes('container')) {
-        matches.push('Docker (production use at John Deere, Principal, and personal projects — go-to for portable compute environments, published composed containers on Railway)');
-        score += 4;
-    }
-    if (jd.includes('postgres') || jd.includes('postgresql') || jd.includes('relational database')) {
-        matches.push('PostgreSQL (current go-to for projects, plus deep SQL experience going back to career start)');
-        score += 4;
-    }
-    if (jd.includes('agent') || jd.includes('workflow') || jd.includes('multi-step')) {
-        matches.push('AI-driven workflow agents (built and runs autonomous multi-step production pipeline — git harvest, Gmail, Claude API, YouTube Analytics)');
-        score += 5;
-    }
-    if (jd.includes('kafka') || jd.includes('elasticsearch') || jd.includes('elasticache') || jd.includes('redis')) {
-        matches.push('Familiar with event-driven and caching architectures (AWS ecosystem experience)');
-        score += 3;
-    }
-    if (jd.includes('ci/cd') || jd.includes('cicd') || jd.includes('pipeline')) {
-        matches.push('CI/CD pipelines (Jenkins at John Deere, GitHub Actions, Azure DevOps)');
-        score += 3;
-    }
-    if (jd.includes('serverless') || jd.includes('lambda')) {
-        matches.push('Serverless architecture experience');
-        score += 3;
-    }
-    if (jd.includes('c#') || jd.includes('.net') || jd.includes('dotnet')) {
-        matches.push('C#/.NET (Microsoft experience)');
-        score += 4;
-    }
-    if (jd.includes('agile') || jd.includes('scrum')) {
-        matches.push('Agile/Scrum experience');
-        score += 2;
-    }
-    if (jd.includes('mentor') || jd.includes('leadership') || jd.includes('team lead')) {
-        matches.push('Technical leadership and mentoring');
-        score += 4;
-    }
-    
-    // Check for potential gaps
-    if (jd.includes('kubernetes') || jd.includes('k8s')) {
-        gaps.push('Kubernetes (some exposure, not deep expertise)');
-        score -= 2;
-    }
-    if (jd.includes('rust') || jd.includes('golang') || jd.includes('go ')) {
-        gaps.push('Rust/Go (would need ramp-up time)');
-        score -= 2;
-    }
-    if (jd.includes('manager') && jd.includes('people')) {
-        gaps.push('People management (IC track, not management)');
-        score -= 3;
-    }
-    
-    // Cap score
-    score = Math.min(Math.max(score, 50), 95);
-    
-    let verdict = '';
-    if (score >= 85) {
-        verdict = "🟢 **Strong Match** — This looks like a great fit!";
-    } else if (score >= 70) {
-        verdict = "🟡 **Good Match** — Solid alignment with some learning opportunities";
-    } else {
-        verdict = "🟠 **Partial Match** — Could work but may need discussion";
-    }
-    
-    let response = `**Job Match Analysis**\n\n${verdict}\n\n`;
-    
-    if (matches.length > 0) {
-        response += `**✓ Matching Skills & Experience:**\n`;
-        matches.slice(0, 6).forEach(m => {
-            response += `• ${m}\n`;
-        });
-        response += '\n';
-    }
-    
-    if (gaps.length > 0) {
-        response += `**⚡ Areas to Discuss:**\n`;
-        gaps.forEach(g => {
-            response += `• ${g}\n`;
-        });
-        response += '\n';
-    }
-    
-    response += `---\n*Want to explore this further? Reach out at contact@nathaniel-young.com*`;
-    
-    return response;
+    const matches = [];
+    if (/\b(aws|terraform|serverless)\b/.test(jd)) matches.push('AWS architecture at Principal and serverless TypeScript/Terraform delivery at John Deere.');
+    if (/\b(azure|c#|\.net)\b/.test(jd)) matches.push('Microsoft experience with Azure services, C#/.NET APIs, and production support.');
+    if (/\b(react|typescript|javascript|node\w*)\b/.test(jd)) matches.push('Web product delivery using TypeScript/JavaScript, React, and Node.js across enterprise and independent work.');
+    if (/\b(ai|llm\w*|generation|orchestration)\b/.test(jd)) matches.push('AI product orchestration in Pet Protagonists and Varimuse, with preserved outputs and inspectable case studies.');
+    if (/\b(lead\w*|architect\w*|head|mentor\w*|startup\w*)\b/.test(jd)) matches.push('Architecture influencing ten teams at Principal, mentoring at John Deere, and client engineering ownership.');
+    if (/\b(device\w*|iot|fleet|observability|reliability)\b/.test(jd)) matches.push('Pre-production flag pole platform: offline operation, remote control, observability, and a practical support-cost rationale.');
+    const evidence = matches.length ? matches.map(s => '• ' + s).join('\n') : 'The available profile is not enough to establish the requirements in this description. A direct discussion would help.';
+    const management = /\b(manager\w*|hiring|head|direct reports|performance management)\b/.test(jd)
+        ? '\n\n**Scope to discuss:** Direct-report counts, hiring/performance management, budgets, and management-team experience are not documented here. Ten teams means architecture scope, not ten teams managed.' : '';
+    return `**Initial comparison from the saved profile**\n\n${evidence}${management}\n\nThis is a keyword-based offline comparison, not a scored hiring assessment. Specialized requirements, scale, and current availability need a conversation with Nathaniel. [Get in touch](https://nathaniel-young.com/contact.html).`;
+}
+
+function formatAIMessage(content) {
+    return String(content)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+        .replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
 }
 
 function addMessage(type, content) {
@@ -906,12 +425,7 @@ function addMessage(type, content) {
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';
     
-    // Simple markdown-like parsing
-    content = content
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n/g, '<br>');
-    
-    contentDiv.innerHTML = content;
+    contentDiv.innerHTML = formatAIMessage(content);
     messageDiv.appendChild(contentDiv);
     output.appendChild(messageDiv);
     
@@ -950,11 +464,12 @@ function clearAITerminal() {
 
 function showSuggestions() {
     const suggestions = [
-        "What makes Nathaniel unique?",
-        "Tell me about his AI expertise",
-        "What are his career goals?",
-        "Describe his technical skills",
-        "What projects has he built?"
+        "What would Nathaniel bring to a funded startup ready to grow?",
+        "Give me the two-sentence pitch for hiring Nathaniel.",
+        "Tell me about the flag pole decision and how he earned the client's agreement.",
+        "What kind of engineering leadership role is he looking for?",
+        "Roast his side projects, gently.",
+        "Which of his projects would make the best conversation over coffee?"
     ];
     
     const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
