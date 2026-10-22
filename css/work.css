@@ -47,7 +47,7 @@
 }
 
 .work-card-link p {
-    color: var(--text-dim);
+    color: var(--text-secondary);
     margin: 0 0 16px;
     line-height: 1.55;
 }
@@ -69,7 +69,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--text-dim);
+    color: var(--text-secondary);
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 0.85rem;
@@ -96,7 +96,7 @@
 }
 
 .case-meta {
-    color: var(--text-dim);
+    color: var(--text-secondary);
     margin-bottom: 36px;
 }
 
@@ -111,7 +111,7 @@
 
 .case-wrap p,
 .case-wrap li {
-    color: var(--text-dim);
+    color: var(--text-secondary);
     line-height: 1.7;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .case-nav a {
-    color: var(--text-dim);
+    color: var(--text-secondary);
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 0.85rem;
@@ -164,3 +164,25 @@
     color: var(--accent);
     margin-bottom: 8px;
 }
+
+/* A quiet introduction and consistent labels for completed product chapters. */
+.hero-intro .hero-summary {
+    max-width: 680px;
+    margin: 22px auto 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.75;
+}
+.archive-badge {
+    border-color: var(--border);
+    color: var(--text-secondary);
+}
+.venture-status {
+    padding: 16px 20px;
+    border-left: 3px solid var(--accent);
+    background: var(--bg-card);
+    border-radius: 0 8px 8px 0;
+}
+
+.case-wrap .case-eyebrow { color: var(--accent); }
+.venture-status strong { color: var(--text-primary); }

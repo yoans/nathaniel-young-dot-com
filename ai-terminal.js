@@ -320,6 +320,20 @@ He demonstrated the benefit and gained the client's agreement. That is a useful 
 
 [Read the engineering story](https://nathaniel-young.com/work-flag-pole.html).`;
     }
+    if (/\b(dark ?forest|ai slop|blog network)\b/.test(q)) {
+        return `Dark Forest AI was a learning experiment: a small ecosystem of blogs, agents handing work around, advertising still only a plan. Nathaniel got the prototype publishing, then stopped before buying the tokens that would have made it a sustained publication.
+
+His line on it: let's see if I can build a slop ecosystem. Wait. Maybe I shouldn't. The useful work was the agent handoffs and the publishing machinery, plus the judgment to stop. There is no claim of a proven audience or advertising revenue.
+
+[Read the experiment](https://nathaniel-young.com/work-darkforest.html).`;
+    }
+    if (/\b(sagaciasoft|distribution)\b/.test(q)) {
+        return `Sagaciasoft AI Chatbots, an earlier product offering, combined website information with multiple AI backends and a Stripe checkout. Nathaniel found that it could give people useful product answers quickly and inexpensively.
+
+Sagaciasoft remains an active business. The original chatbot offering drew enthusiastic reactions but no paying clients, which became an early lesson in distribution and finding a path to buyers. The dated offering is preserved as a product chapter.
+
+Custom AI-agent setups are still available by working directly with Nathaniel. [Read the story](https://nathaniel-young.com/work-sagaciasoft.html), or [discuss a setup](https://sagaciasoft.com/ai.html).`;
+    }
     if (/\b(varimuse|patent|model selection)\b/.test(q)) {
         return `Varimuse explored a practical question: which model and settings work for this particular intention? Nathaniel built deliberate variation, comparison, saved Picks, and branching with context.
 
