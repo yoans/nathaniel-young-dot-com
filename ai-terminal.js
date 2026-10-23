@@ -337,6 +337,8 @@ Custom AI-agent setups are still available by working directly with Nathaniel. [
     if (/\b(varimuse|patent|model selection)\b/.test(q)) {
         return `Varimuse explored a practical question: which model and settings work for this particular intention? Nathaniel built deliberate variation, comparison, saved Picks, and branching with context.
 
+About 15 people created accounts on their own. Some used every free token. None bought tokens. Image generation is crowded with free credits, and each image still cost money through Replicate, so unpaid use was a loss. He closed live generation. He will not race to the bottom on free credits. The demand that showed up included work he will not put his name on. He has not pinned the channel that brought people in.
+
 The [interactive archive](https://nathaniel-young.com/varimuse/) preserves original outputs and a static demo. Evaluation-informed model routing was a further direction, not a shipped automatically learned ranking system. The former patent-pending description no longer applies; no granted patent is claimed.`;
     }
     if (/\b(pet|protagonists|coda|book)\b/.test(q)) {
